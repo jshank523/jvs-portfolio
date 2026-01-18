@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jacob V. Shankel | Mechanical Engineer Portfolio</title>
+
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" />
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: #ffffff;
+      color: #000000;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      padding-top: 70px; /* offset for fixed navbar */
+    }
+
+    /* Sticky navbar */
+    #navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+      background-color: #001f3f; /* navy */
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    /* Gold hover */
+    .w3-hover-gold:hover,
+    .dropdown-content a:hover,
+    .w3-button:hover {
+      background-color: #FFD700 !important;
+      color: #001f3f !important;
+    }
+
+    /* Dropdown */
+    .dropdown-content {
+      background-color: #001f3f;
+      border-radius: 6px;
+      min-width: 220px;
+    }
+    .dropdown-content a {
+      color: white !important;
+      font-weight: 500;
+    }
+    .fa-caret-down { margin-left: 6px; }
+
+    /* Media tiles (images + video) */
+    .project-media {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      display: block;
+    }
+    .project-media:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    video.project-media {
+      cursor: default; /* don’t imply it opens lightbox */
+      background: #000;
+    }
+
+    hr { border: 2px solid #000; }
+
+    footer {
+      background-color: #001f3f;
+      color: white;
+      padding: 40px 0;
+    }
+
+    /* LIGHTBOX */
+    #lightbox {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      padding-top: 60px;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+    }
+    #lightbox img {
+      margin: auto;
+      display: block;
+      max-width: 85%;
+      border-radius: 12px;
+    }
+    #lightbox span {
+      position: absolute;
+      top: 25px;
+      right: 35px;
+      color: #fff;
+      font-size: 44px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Contact buttons */
+    .contact-button {
+      display: inline-block;
+      margin: 10px 15px;
+      padding: 14px 26px;
+      background-color: #001f3f;
+      color: white;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .contact-button:hover {
+      background-color: #FFD700;
+      color: #001f3f;
+      border: 2px solid #001f3f;
+      box-shadow: 0 0 15px rgba(255,215,0,0.6);
+      transform: scale(1.03);
+    }
+    .contact-button i { margin-right: 8px; }
+
+    /* Resume button */
+    .resume-button {
+      display: inline-block;
+      background-color: #001f3f;
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .resume-button:hover {
+      background-color: #FFD700;
+      color: #001f3f;
+      border: 2px solid #001f3f;
+      box-shadow: 0 0 15px rgba(255,215,0,0.6);
+      transform: scale(1.03);
+    }
+
+    /* Back to top */
+    #backToTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 999;
+      font-size: 22px;
+      border: none;
+      outline: none;
+      background-color: #001f3f;
+      color: white;
+      cursor: pointer;
+      padding: 14px 18px;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+    #backToTopBtn:hover {
+      background-color: #FFD700;
+      color: #001f3f;
+      box-shadow: 0 0 15px rgba(255,215,0,0.6);
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Home anchor for navbar -->
+  <div id="home"></div>
+
+  <!-- NAVIGATION BAR -->
+  <nav class="w3-bar" id="navbar">
+    <a href="#home" class="w3-bar-item w3-button w3-hover-gold">Home</a>
+
+    <div class="w3-dropdown-hover">
+      <button class="w3-button w3-hover-gold">Portfolio <i class="fa fa-caret-down"></i></button>
+      <div class="w3-dropdown-content w3-bar-block w3-card dropdown-content">
+        <a href="#capstone-projects" class="w3-bar-item w3-button">Capstone Projects</a>
+        <a href="#school-projects" class="w3-bar-item w3-button">School Projects</a>
+        <a href="#research" class="w3-bar-item w3-button">Research</a>
+      </div>
+    </div>
+
+    <a href="#resume" class="w3-bar-item w3-button w3-hover-gold">Resume</a>
+    <a href="#contact" class="w3-bar-item w3-button w3-hover-gold">Contact</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="w3-center w3-padding-64">
+    <h1>Welcome to My Website</h1>
+    <p>
+      I'm <strong>Jacob V. Shankel</strong> — a recent Mechanical Engineering graduate from the University of Dayton
+      with a passion for design, manufacturing, and mechanical systems.
+    </p>
+  </header>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio" class="w3-container w3-padding-64" style="background-color:#ffffff;">
+    <div class="w3-content" style="max-width:1200px;">
+      <h2 class="w3-center w3-xxlarge">Portfolio</h2>
+      <hr style="width:80px; border:3px solid #001f3f; margin:auto; margin-bottom:50px;">
+
+      <!-- CAPSTONE PROJECTS -->
+      <div id="capstone-projects" class="w3-padding-32">
+        <h3 class="w3-center w3-xlarge">Capstone Projects</h3>
+        <hr style="width:60px; margin:auto; margin-bottom:40px;">
+
+        <!-- Capstone 1: Saturn Strap (2 images + 1 video) -->
+        <div class="w3-row-padding w3-margin-bottom">
+          <div class="w3-col m6">
+            <div class="w3-row-padding">
+              <div class="w3-col s6">
+                <img src="HOUSINGV6.jpg" alt="Saturn Strap Housing" class="project-media" onclick="openLightbox(this)">
+              </div>
+              <div class="w3-col s6">
+                <img src="HOUSINGASSEMBLY.jpg" alt="Saturn Strap Assembly" class="project-media" onclick="openLightbox(this)">
+              </div>
+              <div class="w3-col s12">
+                <video class="project-media" controls playsinline preload="metadata">
+                  <source src="saturnstrap_demo.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+
+          <div class="w3-col m6">
+            <h4>Capstone Project 1 — Saturn Strap</h4>
+            <p>
+              Worked with a multidisciplinary team to design and prototype the <strong>Saturn Strap</strong> — an innovative
+              football helmet chin strap developed for startup <strong>Saturn Sports</strong>.
+              The device measures strap tension and alerts players when the strap is too loose, improving helmet safety.
+            </p>
+            <p>
+              I focused on <strong>mechanical design, CAD modeling, and prototype fabrication</strong>, ensuring proper sensor
+              integration, comfort, and manufacturability. The final prototype combined mechanical and electrical systems to
+              demonstrate real-time tension feedback.
+            </p>
+          </div>
+        </div>
+
+        <!-- Capstone 2: Calibration Cart (2 images) -->
+        <div class="w3-row-padding w3-margin-top">
+          <div class="w3-col m6">
+            <div class="w3-row-padding">
+              <div class="w3-col s6">
+                <img src="IMG_1908.jpg" alt="Calibration Cart Prototype" class="project-media" onclick="openLightbox(this)">
+              </div>
+              <div class="w3-col s6">
+                <img src="IMG_1875.jpeg" alt="Calibration Cart Testing" class="project-media" onclick="openLightbox(this)">
+              </div>
+            </div>
+          </div>
+
+          <div class="w3-col m6">
+            <h4>Capstone Project 2 — Dayton Photonics Calibration Cart</h4>
+            <p>
+              Worked with a team at <strong>Dayton Photonics</strong> to design and build a <strong>calibration cart</strong>
+              for the company’s <strong>Theia optical testing unit</strong>. The cart was designed to precisely pan and tilt
+              while supporting up to <strong>70 pounds</strong>, allowing for accurate and repeatable calibration positioning.
+            </p>
+            <p>
+              I contributed to the <strong>mechanical design, CAD modeling, and structural validation</strong> of the system,
+              ensuring stability and usability through <strong>physical testing</strong>. The completed prototype demonstrated
+              smooth operation and robust performance under load.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCHOOL PROJECTS -->
+      <div id="school-projects" class="w3-padding-32">
+        <h3 class="w3-center w3-xlarge">School Projects</h3>
+        <hr style="width:60px; margin:auto; margin-bottom:40px;">
+
+        <!-- Robot project (video tile) -->
+        <div class="w3-row-padding w3-margin-bottom">
+            </video>
+            <div class="w3-col s12">
+  <video class="project-media" controls preload="metadata">
+    <source src="D064A1DB-D0E7-432A-968F-89440C3574E4.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+          </div>
+
+          <div class="w3-col m6">
+            <h4>School Project — Autonomous Plant-Watering and Weed-Killing Robot</h4>
+            <p>
+              Solo project using <strong>Arduino, IR sensors, ultrasonic sensors, and servos</strong> to design a robot capable
+              of following a line and performing automated <strong>plant watering</strong> and <strong>weed removal</strong>
+              along its path.
+            </p>
+            <p>
+              Handled wiring, coding, and control logic independently, resulting in a fully functional autonomous prototype
+              demonstrating real-world automation principles.
+            </p>
+          </div>
+        </div>
+
+        <!-- Golf Ball Optimization -->
+        <div class="w3-row-padding w3-margin-top">
+          <div class="w3-col m12">
+            <h4>School Project — Golf Ball Path Optimization</h4>
+            <p>
+              Solo analytical project focused on determining the <strong>optimal path for a golf ball</strong> to reach the hole
+              by analyzing slope, friction, and ball dynamics.
+            </p>
+            <p>
+              Applied <strong>physics-based modeling, vector analysis, and MATLAB simulation</strong> to compare trajectories
+              and optimize performance under realistic conditions.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESEARCH -->
+      <div id="research" class="w3-padding-32" style="background-color:#f8f8f8;">
+        <h3 class="w3-center w3-xlarge">Research</h3>
+        <hr style="width:60px; border:2px solid #001f3f; margin:auto; margin-bottom:40px;">
+
+        <div class="w3-row-padding">
+          <div class="w3-col m6">
+            <img src="B8D028C0-DFF0-4AA0-B6A8-B7CFA638EF5C.JPG" alt="Research Project" class="project-media" onclick="openLightbox(this)">
+          </div>
+          <div class="w3-col m6">
+           <h4>Research Project — Recycling Plastic Waste into 3D Printing Filament</h4>
+<p>
+Worked with a faculty advisor to develop a process for <strong>recycling used plastic dining hall silverware</strong> into usable <strong>3D printer filament</strong>. The project focused on evaluating material properties, processing methods, and consistency of recycled plastics for additive manufacturing applications.
+</p>
+<p>
+My role included <strong>material preparation, shredding and extrusion testing.</strong>. The project demonstrated the feasibility of repurposing campus waste into functional manufacturing material while promoting sustainable engineering practices.
+</p>
+
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- RESUME -->
+  <section id="resume" class="w3-container w3-padding-64" style="background-color:#f5f5f5;">
+    <div class="w3-content" style="max-width:900px;">
+      <h3 class="w3-center w3-xlarge">Resume</h3>
+      <hr style="width:60px; margin:auto; margin-bottom:40px;">
+
+      <p class="w3-center" style="font-size:18px;">Download my full resume below or explore key highlights of my skills and experience.</p>
+
+      <div class="w3-center w3-margin-top">
+        <!-- Recommend renaming file to avoid special characters -->
+        <a href="JVS Résumé (1) (1).pdf" download class="resume-button">⬇ Download My Resume (PDF)</a>
+      </div>
+
+      <div class="w3-row-padding w3-margin-top">
+        <div class="w3-half w3-padding">
+          <h4 style="font-size:22px; margin-bottom:10px;">Technical Skills</h4>
+          <hr style="width:60px; border:2px solid #001f3f; margin:10px 0;">
+          <ul style="font-size:16px; line-height:1.8;">
+            <li><strong>CAD & Design:</strong> SolidWorks, Fusion 360, AutoCAD</li>
+            <li><strong>Simulation & Analysis:</strong> MATLAB</li>
+            <li><strong>Programming & Control:</strong> Arduino IDE, Python</li>
+            <li><strong>Fabrication & Prototyping:</strong> 3D Printing, CNC Machining</li>
+            <li><strong>Testing & Measurement:</strong> Oscilloscopes, Load Testing, Data Acquisition</li>
+            <li><strong>Other Tools:</strong> Microsoft Office, GD&T, Project Documentation</li>
+          </ul>
+        </div>
+
+        <div class="w3-half w3-padding">
+          <h4 style="font-size:22px; margin-bottom:10px;">Education</h4>
+          <hr style="width:60px; border:2px solid #001f3f; margin:10px 0;">
+          <ul style="font-size:16px; line-height:1.8;">
+            <li><strong>University of Dayton</strong> — Bachelors of Mechanical Engineering</li>
+            <li><strong>University of Bologna</strong> — Italian Design Summer School (Industrial Design)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="w3-container w3-padding-64" style="background-color:#ffffff;">
+    <div class="w3-content w3-center" style="max-width:700px;">
+      <h3 class="w3-center w3-xlarge">Contact Me</h3>
+      <hr style="width:60px; margin:auto; margin-bottom:40px;">
+
+      <p style="font-size:18px;">Feel free to reach out — I'm always open to discussing mechanical design, robotics, and engineering opportunities.</p>
+
+      <div class="w3-margin-top">
+        <a href="mailto:jshankel0228@gmail.com" class="contact-button">
+          <i class="fa fa-envelope"></i> Email Me
+        </a>
+        <a href="https://www.linkedin.com/in/jacobvshankel/" target="_blank" class="contact-button">
+          <i class="fa fa-linkedin"></i> LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <span onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="Expanded image">
+  </div>
+
+  <script>
+    function openLightbox(img) {
+      // Only use lightbox for images
+      if (img.tagName.toLowerCase() !== 'img') return;
+      document.getElementById("lightbox").style.display = "block";
+      document.getElementById("lightbox-img").src = img.src;
+    }
+    function closeLightbox() {
+      document.getElementById("lightbox").style.display = "none";
+    }
+
+    // Back to top visibility
+    window.addEventListener('scroll', function() {
+      const btn = document.getElementById("backToTopBtn");
+      if (document.documentElement.scrollTop > 300) btn.style.display = "block";
+      else btn.style.display = "none";
+    });
+
+    function topFunction() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
+  <!-- BACK TO TOP -->
+  <button onclick="topFunction()" id="backToTopBtn" title="Go to top">↑</button>
+
+  <!-- FOOTER -->
+  <footer class="w3-center">
+    <p>© 2025 Jacob V. Shankel | Mechanical Engineer</p>
+    <p>
+      <a href="https://www.linkedin.com/in/jacobvshankel/" target="_blank">
+        <i class="fa fa-linkedin w3-hover-opacity w3-xlarge"></i>
+      </a>
+    </p>
+    <p class="w3-small">Built with HTML & W3.CSS</p>
+  </footer>
+</body>
+</html>
