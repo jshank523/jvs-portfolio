@@ -173,6 +173,24 @@
       box-shadow: 0 0 15px rgba(255,215,0,0.6);
       transform: scale(1.1);
     }
+    /* Make sure dropdown can appear above everything */
+#navbar { overflow: visible; }
+
+.w3-dropdown-hover { position: relative; }
+
+/* Force dropdown menu to overlay content */
+.dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10000;
+  background-color: #001f3f;
+  min-width: 220px;
+  border-radius: 6px;
+}
+
+.dropdown-content a { color: white !important; }
+
   </style>
 </head>
 
@@ -181,30 +199,61 @@
   <div id="home"></div>
 
   <!-- NAVIGATION BAR -->
-  <nav class="w3-bar" id="navbar">
-    <a href="#home" class="w3-bar-item w3-button w3-hover-gold">Home</a>
+<nav class="w3-bar" id="navbar">
+  <a href="#home" class="w3-bar-item w3-button w3-hover-gold">Home</a>
 
-    <div class="w3-dropdown-hover">
-      <button class="w3-button w3-hover-gold">Portfolio <i class="fa fa-caret-down"></i></button>
-      <div class="w3-dropdown-content w3-bar-block w3-card dropdown-content">
-        <a href="#capstone-projects" class="w3-bar-item w3-button">Capstone Projects</a>
-        <a href="#school-projects" class="w3-bar-item w3-button">School Projects</a>
-        <a href="#research" class="w3-bar-item w3-button">Research</a>
-      </div>
+  <!-- Portfolio Dropdown -->
+  <div class="w3-dropdown-hover w3-bar-item">
+    <button class="w3-button w3-hover-gold">
+      Portfolio <i class="fa fa-caret-down"></i>
+    </button>
+
+    <div class="w3-dropdown-content w3-bar-block w3-card dropdown-content">
+      <a href="#capstone-projects" class="w3-bar-item w3-button">Capstone Projects</a>
+      <a href="#school-projects" class="w3-bar-item w3-button">School Projects</a>
+      <a href="#research" class="w3-bar-item w3-button">Research</a>
     </div>
+  </div>
 
-    <a href="#resume" class="w3-bar-item w3-button w3-hover-gold">Resume</a>
-    <a href="#contact" class="w3-bar-item w3-button w3-hover-gold">Contact</a>
-  </nav>
+  <a href="#resume" class="w3-bar-item w3-button w3-hover-gold">Resume</a>
+  <a href="#contact" class="w3-bar-item w3-button w3-hover-gold">Contact</a>
+</nav>
+
 
   <!-- HEADER -->
-  <header class="w3-center w3-padding-64">
-    <h1>Welcome to My Website</h1>
-    <p>
-      I'm <strong>Jacob V. Shankel</strong> — a recent Mechanical Engineering graduate from the University of Dayton
-      with a passion for design, manufacturing, and mechanical systems.
-    </p>
-  </header>
+<header class="w3-container w3-padding-64" style="background-color:#f8f8f8;">
+  <div class="w3-content" style="max-width:1100px;">
+    <div class="w3-row-padding w3-center">
+
+      <!-- Profile Image -->
+      <div class="w3-col m4 w3-padding">
+        <img src="IMG_2210.jpeg" 
+             alt="Jacob V. Shankel" 
+             style="width:220px; border-radius:50%; box-shadow:0 6px 15px rgba(0,0,0,0.3);">
+      </div>
+
+      <!-- Intro Text -->
+      <div class="w3-col m8 w3-padding" style="text-align:left;">
+        <h1 style="font-size:48px; margin-bottom:10px;">Jacob V. Shankel</h1>
+        <h3 style="color:#001f3f; margin-top:0;">
+          Mechanical Engineer
+        </h3>
+
+        <p style="font-size:20px; line-height:1.6; margin-top:20px;">
+          Recent Mechanical Engineering graduate from the <strong>University of Dayton</strong> with a strong
+          interest in mechanical design, manufacturing, and electromechanical systems. Experienced in CAD,
+          prototyping, and hands-on engineering projects ranging from product development to automation.
+        </p>
+
+        <a href="#portfolio" class="resume-button" style="margin-top:20px; display:inline-block;">
+          View My Work ↓
+        </a>
+      </div>
+
+    </div>
+  </div>
+</header>
+
 
   <!-- PORTFOLIO -->
   <section id="portfolio" class="w3-container w3-padding-64" style="background-color:#ffffff;">
@@ -227,7 +276,7 @@
               <div class="w3-col s6">
                 <img src="HOUSINGASSEMBLY.jpg" alt="Saturn Strap Assembly" class="project-media" onclick="openLightbox(this)">
               </div>
-             
+              
             </div>
           </div>
 
@@ -283,11 +332,16 @@
         <!-- Robot project (video tile) -->
         <div class="w3-row-padding w3-margin-bottom">
             </video>
-           
+            <div class="w3-col s12">
+ 
+
+</video>
+
+</div>
 
           </div>
 
-          <div class="w3-col m6">
+          <div class="w3-row-padding w3-margin-top">
             <h4>School Project — Autonomous Plant-Watering and Weed-Killing Robot</h4>
             <p>
               Solo project using <strong>Arduino, IR sensors, ultrasonic sensors, and servos</strong> to design a robot capable
@@ -332,7 +386,7 @@
 Worked with a faculty advisor to develop a process for <strong>recycling used plastic dining hall silverware</strong> into usable <strong>3D printer filament</strong>. The project focused on evaluating material properties, processing methods, and consistency of recycled plastics for additive manufacturing applications.
 </p>
 <p>
-My role included <strong>material preparation, shredding and extrusion testing.</strong>. The project demonstrated the feasibility of repurposing campus waste into functional manufacturing material while promoting sustainable engineering practices.
+My role included <strong>material preparation and shredding.</strong>. The project demonstrated the feasibility of repurposing campus waste into functional manufacturing material while promoting sustainable engineering practices.
 </p>
 
             </p>
@@ -353,7 +407,8 @@ My role included <strong>material preparation, shredding and extrusion testing.<
 
       <div class="w3-center w3-margin-top">
         <!-- Recommend renaming file to avoid special characters -->
-        <a href="JVS Résumé (1) (1).pdf" download class="resume-button">⬇ Download My Resume (PDF)</a>
+       <a href="JVS_Resum.pdf" target="_blank" rel="noopener" class="resume-button">View My Resume (PDF)</a>
+
       </div>
 
       <div class="w3-row-padding w3-margin-top">
@@ -374,7 +429,7 @@ My role included <strong>material preparation, shredding and extrusion testing.<
           <h4 style="font-size:22px; margin-bottom:10px;">Education</h4>
           <hr style="width:60px; border:2px solid #001f3f; margin:10px 0;">
           <ul style="font-size:16px; line-height:1.8;">
-            <li><strong>University of Dayton</strong> — Bachelors of Mechanical Engineering</li>
+            <li><strong>University of Dayton</strong> — Bachelors of Science in Mechanical Engineering</li>
             <li><strong>University of Bologna</strong> — Italian Design Summer School (Industrial Design)</li>
           </ul>
         </div>
