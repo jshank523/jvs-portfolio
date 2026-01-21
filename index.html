@@ -127,6 +127,92 @@
     }
     .contact-button i { margin-right: 8px; }
 
+   .edu-accordion {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+
+  text-align: left;
+  padding: 16px 20px;
+  margin-top: 12px;
+
+  background-color: #001f3f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+/* Video container */
+.video-wrapper {
+  max-width: 420px;      /* controls overall size */
+  margin: 0 auto;        /* center it */
+}
+
+/* Video itself */
+.video-wrapper video {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+}
+
+.edu-accordion:hover {
+  background-color: #FFD700;
+  color: #001f3f;
+}
+
+.edu-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edu-icon {
+  font-size: 18px;
+  opacity: 0.95;
+}
+
+/* Arrow rotation animation */
+.edu-arrow {
+  transition: transform 0.25s ease;
+}
+
+/* When open */
+.edu-accordion.is-open .edu-arrow {
+  transform: rotate(180deg);
+}
+
+/* Panel styling */
+.edu-panel {
+  display: none;
+  padding: 18px;
+  margin-top: 8px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+/* Photos */
+.edu-photo {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease;
+}
+
+.edu-photo:hover {
+  transform: scale(1.03);
+}
+
+
+
     /* Resume button */
     .resume-button {
       display: inline-block;
@@ -190,6 +276,109 @@
 }
 
 .dropdown-content a { color: white !important; }
+/* Capstone accordions */
+.cap-accordion {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  text-align: left;
+  padding: 12px 16px;
+  margin-top: 10px;
+
+  background-color: #001f3f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.cap-accordion:hover {
+  background-color: #FFD700;
+  color: #001f3f;
+}
+
+.cap-acc-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cap-acc-icon { opacity: 0.95; }
+
+.cap-acc-arrow { transition: transform 0.25s ease; }
+
+.cap-accordion.is-open .cap-acc-arrow {
+  transform: rotate(180deg);
+}
+
+.cap-panel {
+  display: none;
+  padding: 14px 16px;
+  margin-top: 8px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+/* Nested accordion container */
+.capstone-subsection {
+  margin-top: 20px;
+  padding-left: 20px;
+  border-left: 4px solid #001f3f;
+}
+
+/* Nested accordion buttons */
+.cap-accordion {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: left;
+  padding: 12px 16px;
+  margin-top: 10px;
+
+  background-color: #001f3f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.cap-accordion:hover {
+  background-color: #FFD700;
+  color: #001f3f;
+}
+
+/* Arrow animation */
+.cap-acc-arrow {
+  transition: transform 0.25s ease;
+}
+
+.cap-accordion.is-open .cap-acc-arrow {
+  transform: rotate(180deg);
+}
+
+/* Panel styling */
+.cap-panel {
+  display: none;
+  margin: 8px 0 12px 0;
+  padding: 14px 18px;
+  background-color: #f9f9f9;
+  border-left: 4px solid #001f3f;
+  border-radius: 6px;
+  font-size: 15px;
+}
 
   </style>
 </head>
@@ -287,11 +476,42 @@
               football helmet chin strap developed for startup <strong>Saturn Sports</strong>.
               The device measures strap tension and alerts players when the strap is too loose, improving helmet safety.
             </p>
-            <p>
-              I focused on <strong>mechanical design, CAD modeling, and prototype fabrication</strong>, ensuring proper sensor
-              integration, comfort, and manufacturability. The final prototype combined mechanical and electrical systems to
-              demonstrate real-time tension feedback.
-            </p>
+            <div class="capstone-subsection">
+
+  <button class="cap-accordion" onclick="toggleCap('saturnTab1', this)">
+    <span>
+      <i class="fa fa-cogs"></i> Design & Mechanical Architecture
+    </span>
+    <i class="fa fa-chevron-down cap-acc-arrow"></i>
+  </button>
+
+  <div id="saturnTab1" class="cap-panel">
+    <p>
+      The Saturn Strap design was constrained by existing football helmet patents, limiting modifications strictly to the chin strap housing. As a result, the design prioritized functionality over aesthetics while ensuring compatibility with current helmet systems. A rotating cylindrical mechanism was developed to allow the chin strap to pass through the housing, where sensor-based rotation measurements were used to determine strap tension. This approach enabled accurate fit detection while maintaining a compact and durable mechanical design.
+    </p>
+  </div>
+
+  <button class="cap-accordion" onclick="toggleCap('saturnTab2', this)">
+    <span>
+      <i class="fa fa-bar-chart"></i> Testing, Results, and Lessons Learned
+    </span>
+    <i class="fa fa-chevron-down cap-acc-arrow"></i>
+  </button>
+
+  <div id="saturnTab2" class="cap-panel">
+    <p>
+        Testing of the Saturn Strap focused on validating sensor performance, system reliability, and overall functionality under realistic use conditions. The prototype was evaluated by measuring chin strap tension and confirming proper system response through an LED indicator system, which displayed red when the strap was too loose and blue when proper tension was achieved. To improve accuracy across different users and helmet configurations, a calibration mode was implemented, allowing the system to establish a baseline tension value before operation. 
+      
+      
+    </p>
+      Working directly with a client added another layer of complexity, requiring the team to balance technical performance with real-world usability and design constraints. This experience strengthened skills in communication, adaptability, and engineering decision-making while emphasizing the importance of meeting client expectations within technical and patent-related limitations.
+  </div>
+
+</div>
+
+            
+           
+
           </div>
         </div>
 
@@ -315,11 +535,42 @@
               for the company’s <strong>Theia optical testing unit</strong>. The cart was designed to precisely pan and tilt
               while supporting up to <strong>70 pounds</strong>, allowing for accurate and repeatable calibration positioning.
             </p>
-            <p>
-              I contributed to the <strong>mechanical design, CAD modeling, and structural validation</strong> of the system,
-              ensuring stability and usability through <strong>physical testing</strong>. The completed prototype demonstrated
-              smooth operation and robust performance under load.
-            </p>
+            <div class="capstone-subsection">
+
+  <button class="cap-accordion" onclick="toggleCap('cartTab1', this)">
+    <span>
+      <i class="fa fa-wrench"></i> Pan/Tilt System & Load Design
+    </span>
+    <i class="fa fa-chevron-down cap-acc-arrow"></i>
+  </button>
+
+  <div id="cartTab1" class="cap-panel">
+    <p>
+      The Dayton Photonics calibration cart was designed to support and accurately position the company’s Theia optical unit, with primary design constraints centered around load capacity and controlled motion. The system was required to safely support a minimum load of 70 pounds while maintaining smooth and repeatable movement.
+
+
+    </p>
+    The final design incorporated a custom mounting interface, a 360-degree pan mechanism, and a ±50° tilt range, allowing precise alignment during calibration procedures. Structural components were selected and sized to ensure rigidity under load while maintaining ease of adjustment and transport.
+  </div>
+
+  <button class="cap-accordion" onclick="toggleCap('cartTab2', this)">
+    <span>
+      <i class="fa fa-check-square-o"></i> Validation & Performance Testing
+    </span>
+    <i class="fa fa-chevron-down cap-acc-arrow"></i>
+  </button>
+
+  <div id="cartTab2" class="cap-panel">
+    <p>
+     Testing focused on verifying load stability, smooth motion through the full pan and tilt range, and overall structural integrity under operating conditions. The project emphasized mechanical design tradeoffs, load analysis, and practical manufacturing considerations, while reinforcing the importance of designing to real-world constraints and client requirements.
+    </p>
+  </div>
+
+</div>
+
+           
+           
+
           </div>
         </div>
       </div>
@@ -330,30 +581,37 @@
         <hr style="width:60px; margin:auto; margin-bottom:40px;">
 
         <!-- Robot project (video tile) -->
-        <div class="w3-row-padding w3-margin-bottom">
-            </video>
-            <div class="w3-col s12">
- 
+<div class="w3-row-padding w3-margin-bottom">
+  <div class="w3-col m6">
+    <div class="video-wrapper">
+  <video controls playsinline preload="metadata">
+    <source src="ROBOTTRACKING.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  
 
-</video>
-
+  </video>
+    <p style="text-align:center; font-style:italic; margin-top:6px;">
+  Autonomous robot testing — line following and plant watering
+</p>
 </div>
 
-          </div>
+  </div>
 
-          <div class="w3-row-padding w3-margin-top">
-            <h4>School Project — Autonomous Plant-Watering and Weed-Killing Robot</h4>
-            <p>
-              Solo project using <strong>Arduino, IR sensors, ultrasonic sensors, and servos</strong> to design a robot capable
-              of following a line and performing automated <strong>plant watering</strong> and <strong>weed removal</strong>
-              along its path.
-            </p>
-            <p>
-              Handled wiring, coding, and control logic independently, resulting in a fully functional autonomous prototype
-              demonstrating real-world automation principles.
-            </p>
-          </div>
-        </div>
+  <div class="w3-col m6">
+    <h4>School Project — Autonomous Plant-Watering and Weed-Killing Robot</h4>
+    <p>
+      Solo project using <strong>Arduino, IR sensors, ultrasonic sensors, and servos</strong> to design a robot capable
+      of following a line and performing automated <strong>plant watering</strong> and <strong>weed removal</strong>
+      along its path.
+    </p>
+    <p>
+      Handled wiring, coding, and control logic independently, resulting in a fully functional autonomous prototype.
+    </p>
+  </div>
+</div>
+
+
+          
 
         <!-- Golf Ball Optimization -->
         <div class="w3-row-padding w3-margin-top">
@@ -407,14 +665,14 @@ My role included <strong>material preparation and shredding.</strong>. The proje
 
       <div class="w3-center w3-margin-top">
         <!-- Recommend renaming file to avoid special characters -->
-       <a href="JVS_Resum.pdf" target="_blank" rel="noopener" class="resume-button">View My Resume (PDF)</a>
+       <a href="JVS_Resume.pdf" target="_blank" rel="noopener" class="resume-button">View My Resume (PDF)</a>
 
       </div>
 
       <div class="w3-row-padding w3-margin-top">
         <div class="w3-half w3-padding">
           <h4 style="font-size:22px; margin-bottom:10px;">Technical Skills</h4>
-          <hr style="width:60px; border:2px solid #001f3f; margin:10px 0;">
+                   <hr style="width:60px; border:2px solid #001f3f; margin:10px 0;">
           <ul style="font-size:16px; line-height:1.8;">
             <li><strong>CAD & Design:</strong> SolidWorks, Fusion 360, AutoCAD</li>
             <li><strong>Simulation & Analysis:</strong> MATLAB</li>
@@ -424,19 +682,66 @@ My role included <strong>material preparation and shredding.</strong>. The proje
             <li><strong>Other Tools:</strong> Microsoft Office, GD&T, Project Documentation</li>
           </ul>
         </div>
+<!-- EDUCATION EXPERIENCE (Expandable) -->
+<!-- University of Dayton -->
+<button class="edu-accordion" onclick="toggleEdu('eduUD', this)">
+  <span class="edu-left">
+    <i class="fa fa-graduation-cap edu-icon"></i>
+    University of Dayton — B.S. Mechanical Engineering
+  </span>
+  <i class="fa fa-chevron-down edu-arrow"></i>
+</button>
 
-        <div class="w3-half w3-padding">
-          <h4 style="font-size:22px; margin-bottom:10px;">Education</h4>
-          <hr style="width:60px; border:2px solid #001f3f; margin:10px 0;">
-          <ul style="font-size:16px; line-height:1.8;">
-            <li><strong>University of Dayton</strong> — Bachelors of Science in Mechanical Engineering</li>
-            <li><strong>University of Bologna</strong> — Italian Design Summer School (Industrial Design)</li>
-          </ul>
-        </div>
+<div id="eduUD" class="edu-panel">
+  <p>
+    I earned my undergraduate degree in Mechanical Engineering from the University of Dayton, where I focused on mechanical design, manufacturing, and mechatronics. My experience includes hands-on prototyping using 3D printers and the wood shop, along with coursework in mechanics of machinery, MATLAB, and manufacturing processes. I enjoy translating ideas into functional designs through iterative prototyping, CAD, and practical fabrication, and I bring a strong blend of analytical thinking and hands-on problem-solving to my work.
+  </p>
+
+  <div class="w3-row-padding w3-margin-top">
+    <div class="w3-col m4">
+      <img src="IMG_1003.jpeg" class="edu-photo" onclick="openLightbox(this)" alt="University of Dayton 1">
+    </div>
+    <div class="w3-col m4">
+      <img src="IMG_1005.jpeg" class="edu-photo" onclick="openLightbox(this)" alt="University of Dayton 2">
+    </div>
+    <div class="w3-col m4">
+      <img src="IMG_1739.jpeg" class="edu-photo" onclick="openLightbox(this)" alt="University of Dayton 3">
+    </div>
+  </div>
+</div>
+
+<!-- University of Bologna -->
+<button class="edu-accordion" onclick="toggleEdu('eduBologna', this)">
+  <span class="edu-left">
+    <i class="fa fa-globe"></i>
+
+    University of Bologna — Italian Design Summer School
+  </span>
+  <i class="fa fa-chevron-down edu-arrow"></i>
+</button>
+
+<div id="eduBologna" class="edu-panel">
+  <p>
+   I completed a certificate program through the Italian Design Summer School in Bologna, where I studied industrial and product design through both coursework and hands-on experience. The program included visits to the Lamborghini and Ducati factories, as well as textile, chocolate, and gelato production facilities, providing insight into real-world manufacturing and design processes. I worked on a collaborative, multidisciplinary project with an international team to design a modular furniture concept using a ceramic material engineered to be glazed like marble. This experience strengthened my understanding of product design, material application, and cross-cultural collaboration within a professional design environment.
+  </p>
+
+  <div class="w3-row-padding w3-margin-top">
+    <div class="w3-col m4">
+      <img src="IMG_2099 (1).jpg" class="edu-photo" onclick="openLightbox(this)" alt="Bologna 1">
+    </div>
+    <div class="w3-col m4">
+      <img src="IMG_2432.jpeg" class="edu-photo" onclick="openLightbox(this)" alt="Bologna 2">
+    </div>
+    <div class="w3-col m4">
+      <img src="IMG_2117.jpeg" class="edu-photo" onclick="openLightbox(this)" alt="Bologna 3">
+    </div>
+  </div>
+</div>
+        
       </div>
     </div>
-  </section>
-
+    
+</section>
   <!-- CONTACT -->
   <section id="contact" class="w3-container w3-padding-64" style="background-color:#ffffff;">
     <div class="w3-content w3-center" style="max-width:700px;">
@@ -463,26 +768,52 @@ My role included <strong>material preparation and shredding.</strong>. The proje
   </div>
 
   <script>
-    function openLightbox(img) {
-      // Only use lightbox for images
-      if (img.tagName.toLowerCase() !== 'img') return;
-      document.getElementById("lightbox").style.display = "block";
-      document.getElementById("lightbox-img").src = img.src;
-    }
-    function closeLightbox() {
-      document.getElementById("lightbox").style.display = "none";
-    }
+  function openLightbox(img) {
+    if (img.tagName.toLowerCase() !== 'img') return;
+    document.getElementById("lightbox").style.display = "block";
+    document.getElementById("lightbox-img").src = img.src;
+  }
 
-    // Back to top visibility
-    window.addEventListener('scroll', function() {
-      const btn = document.getElementById("backToTopBtn");
-      if (document.documentElement.scrollTop > 300) btn.style.display = "block";
-      else btn.style.display = "none";
+  function closeLightbox() {
+    document.getElementById("lightbox").style.display = "none";
+  }
+
+  function topFunction() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  window.addEventListener('scroll', function() {
+    const btn = document.getElementById("backToTopBtn");
+    if (document.documentElement.scrollTop > 300) {
+      btn.style.display = "block";
+    } else {
+      btn.style.display = "none";
+    }
+  });
+
+  function toggleEdu(id, btn) {
+    const panel = document.getElementById(id);
+    const allPanels = document.querySelectorAll('.edu-panel');
+    const allButtons = document.querySelectorAll('.edu-accordion');
+
+    allPanels.forEach(p => {
+      if (p.id !== id) p.style.display = "none";
     });
 
-    function topFunction() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    allButtons.forEach(b => {
+      if (b !== btn) b.classList.remove("is-open");
+    });
+
+    const isOpen = panel.style.display === "block";
+    panel.style.display = isOpen ? "none" : "block";
+    btn.classList.toggle("is-open", !isOpen);
+  }
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+  
+
   </script>
 
   <!-- BACK TO TOP -->
@@ -490,13 +821,26 @@ My role included <strong>material preparation and shredding.</strong>. The proje
 
   <!-- FOOTER -->
   <footer class="w3-center">
-    <p>© 2025 Jacob V. Shankel | Mechanical Engineer</p>
-    <p>
-      <a href="https://www.linkedin.com/in/jacobvshankel/" target="_blank">
-        <i class="fa fa-linkedin w3-hover-opacity w3-xlarge"></i>
-      </a>
-    </p>
-    <p class="w3-small">Built with HTML & W3.CSS</p>
-  </footer>
-</body>
-</html>
+  <p>© <span id="year"></span> Jacob V. Shankel | Mechanical Engineer</p>
+
+  <p>
+    <a href="https://www.linkedin.com/in/jacobvshankel/" target="_blank" rel="noopener">
+      <i class="fa fa-linkedin w3-hover-opacity w3-xlarge"></i>
+    </a>
+  </p>
+
+  <p class="w3-small">Built with HTML & W3.CSS</p>
+</footer>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+<script>
+  function toggleCap(id, btn) {
+    const panel = document.getElementById(id);
+    const isOpen = panel.style.display === "block";
+    panel.style.display = isOpen ? "none" : "block";
+    btn.classList.toggle("is-open", !isOpen);
+  }
+</script>
+
