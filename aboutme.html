@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="About Me page for Jacob V. Shankel featuring hobbies, activities, personal background, and interactive decision-making challenges." />
+  <title>About Me | Jacob V. Shankel</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: rgba(255, 255, 255, 0.88);
+      --surface-strong: #ffffff;
+      --text: #132238;
+      --muted: #5d6b7f;
+      --navy: #0f2747;
+      --navy-2: #183761;
+      --accent: #f2c94c;
+      --accent-2: #fff2c4;
+      --success: #dff7e6;
+      --error: #fde4e4;
+      --border: rgba(15, 39, 71, 0.1);
+      --shadow: 0 18px 45px rgba(11, 25, 48, 0.12);
+      --radius: 24px;
+      --radius-sm: 16px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      padding-top: 96px;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(242, 201, 76, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(24, 55, 97, 0.12), transparent 24%),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 14px 18px;
+      backdrop-filter: blur(18px);
+      background: rgba(255, 255, 255, 0.82);
+      border-bottom: 1px solid rgba(15, 39, 71, 0.08);
+      overflow: visible;
+    }
+
+    .nav {
+      width: min(calc(100% - 32px), var(--max));
+      min-height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, var(--navy), var(--navy-2));
+      color: white;
+      box-shadow: 0 10px 24px rgba(15, 39, 71, 0.2);
+      gap: 12px;
+      margin-right: 8px;
+    }
+
+    .brand:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(15, 39, 71, 0.24);
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.12);
+      color: white;
+      font-size: 0.9rem;
+      box-shadow: none;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-links a,
+    .nav-links button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-weight: 700;
+      transition: 0.2s ease;
+      border: none;
+      background: transparent;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active,
+    .nav-dropdown:hover > a,
+    .nav-dropdown.is-open > a,
+    .nav-dropdown:focus-within > a,
+    .nav-dropdown > a.active {
+      background: var(--navy);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .nav-dropdown {
+      position: relative;
+      padding-bottom: 14px;
+      margin-bottom: -14px;
+    }
+
+    .nav-dropdown > a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-dropdown-content {
+      position: absolute;
+      top: calc(100% - 2px);
+      left: 0;
+      min-width: 240px;
+      padding: 8px;
+      display: block;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+      background: rgba(15, 39, 71, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(11, 25, 48, 0.25);
+      backdrop-filter: blur(14px);
+      z-index: 10000;
+    }
+
+    .nav-dropdown-content::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -14px;
+      height: 14px;
+    }
+
+    .nav-dropdown-content a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .nav-dropdown-content a:hover {
+      background: var(--navy);
+      color: #fff;
+      transform: none;
+    }
+
+    .nav-dropdown.is-open .nav-dropdown-content,
+    .nav-dropdown:hover .nav-dropdown-content,
+    .nav-dropdown:focus-within .nav-dropdown-content {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .hero {
+      padding: 72px 0 30px;
+    }
+
+    .hero-panel {
+      background: linear-gradient(135deg, rgba(15, 39, 71, 0.98), rgba(24, 55, 97, 0.94));
+      color: white;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .hero-panel::before,
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: -1;
+    }
+
+    .hero-panel::before {
+      width: 280px;
+      height: 280px;
+      top: -120px;
+      right: -40px;
+    }
+
+    .hero-panel::after {
+      width: 220px;
+      height: 220px;
+      bottom: -100px;
+      left: -60px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: center;
+      padding: 48px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      max-width: 62ch;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 1.06rem;
+      line-height: 1.7;
+      margin: 16px 0 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      font-size: 0.96rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #1d2b3d;
+      box-shadow: 0 14px 24px rgba(242, 201, 76, 0.28);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 12px 22px rgba(15, 39, 71, 0.18);
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .hero-card h2 {
+      margin: 0 0 16px;
+      font-size: 1.1rem;
+    }
+
+    .trait-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .trait-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 14px;
+      border-radius: 16px;
+    }
+
+    .trait-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(242, 201, 76, 0.22);
+      color: var(--accent);
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .section {
+      padding: 26px 0 72px;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      letter-spacing: -0.03em;
+    }
+
+    .section-heading p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 58ch;
+      line-height: 1.7;
+    }
+
+    .mini-note {
+      color: var(--muted);
+      font-size: 0.94rem;
+      white-space: nowrap;
+    }
+
+    .grid-2,
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .content-card {
+      padding: 26px;
+    }
+
+    .content-card h3,
+    .game-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    .lead {
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      background: #edf3fa;
+      color: var(--navy);
+      border: 1px solid rgba(15, 39, 71, 0.08);
+    }
+
+    .profile-list,
+    .hobby-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .profile-list li,
+    .hobby-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #f9fbff, #f3f7fc);
+      border: 1px solid rgba(15, 39, 71, 0.07);
+    }
+
+    .list-icon {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: rgba(15, 39, 71, 0.08);
+      font-weight: 800;
+      color: var(--navy);
+      flex-shrink: 0;
+    }
+
+    .stat-card {
+      padding: 22px;
+      text-align: left;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .stat-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .game-card {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .game-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .game-description {
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .challenge-prompt {
+      background: linear-gradient(180deg, #f9fbff, #f3f7fc);
+      border: 1px solid rgba(15, 39, 71, 0.07);
+      padding: 18px;
+      border-radius: 18px;
+      line-height: 1.6;
+      font-weight: 600;
+    }
+
+    .game-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .game-buttons button,
+    .card-actions .btn {
+      padding: 14px 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(15, 39, 71, 0.12);
+      background: white;
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.18s ease;
+      min-height: 54px;
+      box-shadow: 0 10px 22px rgba(15, 39, 71, 0.08);
+    }
+
+    .game-buttons button:hover:not(:disabled),
+    .card-actions .btn:hover {
+      border-color: rgba(15, 39, 71, 0.28);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(15, 39, 71, 0.08);
+    }
+
+    .game-buttons button:disabled {
+      cursor: default;
+      opacity: 0.92;
+    }
+
+    .correct {
+      background: var(--success) !important;
+      border-color: rgba(24, 140, 77, 0.25) !important;
+    }
+
+    .wrong {
+      background: var(--error) !important;
+      border-color: rgba(178, 67, 67, 0.2) !important;
+    }
+
+    .feedback {
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: #f7f9fc;
+      border: 1px solid rgba(15, 39, 71, 0.08);
+      min-height: 82px;
+    }
+
+    .feedback strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .score-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .progress {
+      width: 140px;
+      height: 10px;
+      border-radius: 999px;
+      background: #e8eef6;
+      overflow: hidden;
+    }
+
+    .progress > span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--navy), var(--accent));
+      transition: width 0.25s ease;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-card-primary {
+      background: var(--navy) !important;
+      color: white !important;
+    }
+
+    .btn-card-secondary {
+      background: white !important;
+      color: var(--navy) !important;
+      border: 1px solid rgba(15, 39, 71, 0.12);
+    }
+
+    .footer {
+      background: transparent;
+      color: var(--muted);
+      padding: 0 0 36px;
+    }
+
+    .footer .footer-inner {
+      width: min(calc(100% - 32px), 700px);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .footer p {
+      margin: 0 0 12px;
+      line-height: 1.7;
+    }
+
+    .footer a {
+      color: inherit;
+    }
+
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .activity-card {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      border-top: 4px solid transparent;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .activity-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .activity-card h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+    }
+
+    .activity-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.68;
+    }
+
+    .activity-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+      border: 1px solid rgba(15, 39, 71, 0.08);
+    }
+
+    .design-card {
+      border-top-color: var(--navy);
+      box-shadow: 0 18px 45px rgba(11, 25, 48, 0.12);
+    }
+
+    .design-card:hover {
+      box-shadow: 0 16px 32px rgba(15, 39, 71, 0.18);
+    }
+
+    .design-card .activity-icon {
+      background: rgba(15, 39, 71, 0.08);
+      color: var(--navy);
+    }
+
+    .golf-card {
+      border-top-color: #2e7d32;
+    }
+
+    .golf-card:hover {
+      box-shadow: 0 16px 32px rgba(46, 125, 50, 0.18);
+    }
+
+    .golf-card .activity-icon {
+      background: rgba(46, 125, 50, 0.12);
+      color: #2e7d32;
+    }
+
+    .ski-card {
+      border-top-color: #1976d2;
+    }
+
+    .ski-card:hover {
+      box-shadow: 0 16px 32px rgba(25, 118, 210, 0.18);
+    }
+
+    .ski-card .activity-icon {
+      background: rgba(25, 118, 210, 0.12);
+      color: #1976d2;
+    }
+
+    .travel-card {
+      border-top-color: var(--accent);
+    }
+
+    .travel-card:hover {
+      box-shadow: 0 16px 32px rgba(242, 201, 76, 0.25);
+    }
+
+    .travel-card .activity-icon {
+      background: rgba(242, 201, 76, 0.18);
+      color: #9a7600;
+    }
+
+    .activity-photo-button {
+      appearance: none;
+      border: none;
+      background: transparent;
+      padding: 0;
+      margin-top: auto;
+      width: 100%;
+      cursor: zoom-in;
+      text-align: left;
+      color: inherit;
+      display: block;
+    }
+
+    .activity-photo-frame {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(15, 39, 71, 0.96), rgba(24, 55, 97, 0.9));
+      border: 1px solid rgba(15, 39, 71, 0.08);
+      box-shadow: 0 12px 24px rgba(15, 39, 71, 0.12);
+    }
+
+    .activity-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.28s ease;
+    }
+
+    .activity-card:hover .activity-photo-frame img,
+    .activity-photo-button:focus-visible .activity-photo-frame img {
+      transform: scale(1.04);
+    }
+
+    .activity-photo-overlay {
+      position: absolute;
+      inset: auto 0 0 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 16px;
+      color: white;
+      background: linear-gradient(180deg, transparent, rgba(7, 16, 29, 0.86));
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .grid-2,
+      .grid-3,
+      .game-grid,
+      .activity-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid { padding: 34px; }
+      .section-heading { flex-direction: column; align-items: start; }
+      .mini-note { white-space: normal; }
+    }
+
+    @media (max-width: 760px) {
+      .lightbox-copy {
+        flex-direction: column;
+      }
+
+      .lightbox-close {
+        align-self: flex-end;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body { padding-top: 150px; }
+      .nav {
+        padding: 0;
+      }
+
+      .hero { padding-top: 34px; }
+      .hero-grid { padding: 24px; }
+      .content-card, .game-card { padding: 20px; }
+      .game-buttons { grid-template-columns: 1fr; }
+      .hero-actions, .card-actions, .nav-links { width: 100%; justify-content: flex-start; }
+      .nav-links a, .hero-actions a, .hero-actions button, .card-actions button { text-align: center; }
+      .progress { width: 100%; max-width: 180px; }
+      .footer-card { flex-direction: column; align-items: start; }
+    }
+
+
+    .photo-section {
+      padding-top: 0;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .photo-card {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .photo-button {
+      appearance: none;
+      border: none;
+      background: transparent;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      cursor: zoom-in;
+      text-align: left;
+      color: inherit;
+      display: block;
+    }
+
+    .photo-frame {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(15, 39, 71, 0.9), rgba(24, 55, 97, 0.85));
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.28s ease;
+    }
+
+    .photo-card:hover .photo-frame img,
+    .photo-button:focus-visible .photo-frame img {
+      transform: scale(1.04);
+    }
+
+    .photo-caption {
+      padding: 18px 20px 20px;
+    }
+
+    .photo-caption h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+    }
+
+    .photo-caption p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .photo-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 16, 29, 0.86);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 18px;
+      z-index: 2000;
+    }
+
+    .lightbox.is-open {
+      display: flex;
+    }
+
+    .lightbox-panel {
+      width: min(100%, 1040px);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    .lightbox-media {
+      background: #0f2747;
+    }
+
+    .lightbox-media img {
+      display: block;
+      width: 100%;
+      max-height: 76vh;
+      object-fit: contain;
+      background: linear-gradient(135deg, rgba(15, 39, 71, 1), rgba(24, 55, 97, 1));
+    }
+
+    .lightbox-copy {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: start;
+      padding: 18px 22px 22px;
+      color: white;
+    }
+
+    .lightbox-copy h3 {
+      margin: 0 0 6px;
+      font-size: 1.1rem;
+    }
+
+    .lightbox-copy p {
+      margin: 0;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.65;
+    }
+
+    .lightbox-close {
+      appearance: none;
+      border: none;
+      background: rgba(255,255,255,0.12);
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .lightbox-close:hover,
+    .lightbox-close:focus-visible {
+      background: rgba(255,255,255,0.2);
+    }
+
+  </style>
+</head>
+<body>
+  
+  <header class="site-header">
+    <div class="shell nav" aria-label="Primary navigation">
+      <a class="brand" href="index.html" aria-label="Jacob V. Shankel home page" data-nav-target="index.html">
+        <span class="brand-mark">JVS</span>
+        <span>Jacob V. Shankel</span>
+      </a>
+      <nav class="nav-links">
+        <div class="nav-dropdown">
+          <a href="index.html#portfolio" class="nav-dropdown-toggle" data-nav-target="index.html#portfolio">Portfolio <span aria-hidden="true">▾</span></a>
+          <div class="nav-dropdown-content">
+            <a href="index.html#capstone-projects" data-nav-target="index.html#capstone-projects">Capstone Projects</a>
+            <a href="index.html#school-projects" data-nav-target="index.html#school-projects">School Projects</a>
+            <a href="index.html#cad-projects" data-nav-target="index.html#cad-projects">CAD Models &amp; Drawings</a>
+            <a href="index.html#research" data-nav-target="index.html#research">Research</a>
+          </div>
+        </div>
+        <a href="interactive-engineering-games.html" data-nav-target="interactive-engineering-games.html">Engineering Games</a>
+        <a href="aboutme.html" data-nav-target="aboutme.html">About Me</a>
+        <a href="index.html#resume" data-nav-target="index.html#resume">Resume</a>
+        <a href="index.html#contact" data-nav-target="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <main>
+    <section class="hero" id="about">
+      <div class="shell">
+        <div class="hero-panel">
+          <div class="hero-grid">
+            <div>
+              <span class="eyebrow">About me · hobbies · activities · interactive profile</span>
+              <h1>The engineer behind the work.</h1>
+              <p>
+                I am a mechanical engineer who enjoys building practical solutions, learning through hands-on work,
+                and staying active outside of engineering. This page gives visitors a clearer picture of who I am,
+                how I think, and what I enjoy when I am not designing, prototyping, or solving technical problems.
+              </p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="#about-story">About me</a>
+                <a class="btn btn-secondary" href="#hobbies">Hobbies & activities</a>
+                <a class="btn btn-secondary" href="#games">Challenges</a>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about-story">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <h2>About me</h2>
+          </div>
+        </div>
+
+        
+        <div class="grid-2">
+          <article class="card content-card">
+            <h3>What drives me</h3>
+            <p class="lead">
+              I am motivated by solving real-world problems and building practical solutions that make a meaningful impact. I enjoy taking ideas from concept to reality through hands-on design, prototyping, and refining systems to improve performance and reliability.
+            </p>
+            <div class="tag-row">
+              <span class="pill">Mechanical Design</span>
+              <span class="pill">Problem Solving</span>
+              <span class="pill">Collaboration</span>
+              <span class="pill">Continuous Learning</span>
+            </div>
+          </article>
+
+          <article class="card content-card">
+            <h3>How I think</h3>
+            <p class="lead">
+              I approach problems by breaking them down into manageable parts and iterating toward effective solutions.
+              I value hands-on learning, attention to detail, and continuously improving designs based on real-world performance.
+            </p>
+            <div class="tag-row">
+              <span class="pill">Structured Thinking</span>
+              <span class="pill">Adaptability</span>
+              <span class="pill">Attention to Detail</span>
+              <span class="pill">Practical Execution</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section" id="hobbies">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <h2>Hobbies & activities</h2>
+          </div>
+          <div class="mini-note">Life outside class and projects</div>
+        </div>
+
+        
+        <div class="activity-grid">
+          <article class="card activity-card design-card">
+            <div class="activity-icon" aria-hidden="true">✏️</div>
+            <h3>Design</h3>
+            <p>
+              Design allows me to combine creativity with functionality. I enjoy developing ideas visually and refining
+              them into practical solutions that balance performance and usability.
+            </p>
+            <button class="activity-photo-button" type="button" onclick="openLightbox(this)" aria-label="Open design photo"
+              data-fullsrc="IMG_2432.jpeg"
+              data-title="Design"
+              data-caption="Italian leather and textile factory — gaining exposure to real-world design and manufacturing processes.">
+              <div class="activity-photo-frame">
+                <img src="IMG_2432.jpeg" alt="Design work">
+                <div class="activity-photo-overlay"><span>Design</span><span>Click to expand</span></div>
+              </div>
+            </button>
+          </article>
+
+          <article class="card activity-card golf-card">
+            <div class="activity-icon" aria-hidden="true">⛳</div>
+            <h3>Golf</h3>
+            <p>
+              Golf has taught me patience, focus, and disciplined decision-making, while reinforcing consistency,
+              adaptability, and forward thinking under pressure.
+            </p>
+            <button class="activity-photo-button" type="button" onclick="openLightbox(this)" aria-label="Open golf photo"
+              data-fullsrc="IMG_8374.JPEG"
+              data-title="Golf"
+              data-caption="Golfing in West Virginia — a great way I stay competitive and focused outside of engineering.">
+              <div class="activity-photo-frame">
+                <img src="IMG_8374.JPEG" alt="Golfing">
+                <div class="activity-photo-overlay"><span>Golf</span><span>Click to expand</span></div>
+              </div>
+            </button>
+          </article>
+
+          <article class="card activity-card ski-card">
+            <div class="activity-icon" aria-hidden="true">🎿</div>
+            <h3>Skiing</h3>
+            <p>
+              Skiing has strengthened my adaptability, awareness, and ability to make quick decisions in dynamic
+              environments while continuously improving technique.
+            </p>
+            <button class="activity-photo-button" type="button" onclick="openLightbox(this)" aria-label="Open skiing photo"
+              data-fullsrc="IMG_5397.jpeg"
+              data-title="Skiing"
+              data-caption="Skiing in Colorado — I enjoy challenging environments that require quick decision-making and control.">
+              <div class="activity-photo-frame">
+                <img src="IMG_5397.jpeg" alt="Skiing">
+                <div class="activity-photo-overlay"><span>Skiing</span><span>Click to expand</span></div>
+              </div>
+            </button>
+          </article>
+
+          <article class="card activity-card travel-card">
+            <div class="activity-icon" aria-hidden="true">🌍</div>
+            <h3>Travel</h3>
+            <p>
+              Traveling has broadened my perspective and strengthened my curiosity by exposing me to new environments,
+              cultures, and ways of thinking.
+            </p>
+            <button class="activity-photo-button" type="button" onclick="openLightbox(this)" aria-label="Open travel photo"
+              data-fullsrc="IMG_4259.jpeg"
+              data-title="Travel"
+              data-caption="Ancient ruins in Crete, Greece — experiencing history and engineering that has stood the test of time.">
+              <div class="activity-photo-frame">
+                <img src="IMG_4259.jpeg" alt="Travel">
+                <div class="activity-photo-overlay"><span>Travel</span><span>Click to expand</span></div>
+              </div>
+            </button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section class="section" id="games">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <h2>Interactive decision challenges</h2>
+          </div>
+        </div>
+
+        <div class="game-grid">
+          <article class="card game-card" aria-labelledby="sneakerTitle">
+            <div class="game-top">
+              <div>
+                <div class="pill">Product strategy</div>
+                <h3 id="sneakerTitle">Sneaker Strategy Challenge</h3>
+                <p class="game-description">Explore tradeoffs in comfort, performance, durability, and design priorities.</p>
+              </div>
+            </div>
+
+            <div id="sneakerPrompt" class="challenge-prompt" aria-live="polite"></div>
+            <div id="sneakerButtons" class="game-buttons"></div>
+
+            <div class="feedback" id="sneakerFeedback" aria-live="polite">
+              <strong>Choose an answer to begin.</strong>
+              <span id="sneakerInfo">You will see feedback here after each decision.</span>
+            </div>
+
+            <div class="meta-row">
+              <div class="score-box">Score <span id="sneakerScore">0</span>/<span id="sneakerTotal">0</span></div>
+              <div class="progress" aria-hidden="true"><span id="sneakerProgress"></span></div>
+            </div>
+
+            <div class="card-actions">
+              <button class="btn btn-card-primary" type="button" onclick="nextQuestion('sneaker')">Next question</button>
+              <button class="btn btn-card-secondary" type="button" onclick="resetGame('sneaker')">Reset</button>
+            </div>
+          </article>
+
+          <article class="card game-card" aria-labelledby="golfTitle">
+            <div class="game-top">
+              <div>
+                <div class="pill">Situational judgment</div>
+                <h3 id="golfTitle">Golf Decision Challenge</h3>
+                <p class="game-description">Focus on decision-making, adaptability, and discipline when conditions shift.</p>
+              </div>
+            </div>
+
+            <div id="golfPrompt" class="challenge-prompt" aria-live="polite"></div>
+            <div id="golfButtons" class="game-buttons"></div>
+
+            <div class="feedback" id="golfFeedback" aria-live="polite">
+              <strong>Choose an answer to begin.</strong>
+              <span id="golfInfo">You will see feedback here after each decision.</span>
+            </div>
+
+            <div class="meta-row">
+              <div class="score-box">Score <span id="golfScore">0</span>/<span id="golfTotal">0</span></div>
+              <div class="progress" aria-hidden="true"><span id="golfProgress"></span></div>
+            </div>
+
+            <div class="card-actions">
+              <button class="btn btn-card-primary" type="button" onclick="nextQuestion('golf')">Next question</button>
+              <button class="btn btn-card-secondary" type="button" onclick="resetGame('golf')">Reset</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Expanded image viewer">
+    <div class="lightbox-panel">
+      <div class="lightbox-media">
+        <img id="lightboxImage" src="" alt="Expanded highlight image">
+      </div>
+      <div class="lightbox-copy">
+        <div>
+          <h3 id="lightboxTitle">Photo highlight</h3>
+          <p id="lightboxCaption">Expanded photo preview.</p>
+        </div>
+        <button class="lightbox-close" type="button" aria-label="Close expanded image" onclick="closeLightbox()">×</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p>© <span id="year"></span> Jacob V. Shankel | Mechanical Engineer</p>
+      <p>
+        <a href="https://www.linkedin.com/in/jacobvshankel/" target="_blank" rel="noopener" aria-label="LinkedIn profile">
+          LinkedIn
+        </a>
+      </p>
+      <p>Built with HTML &amp; CSS</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+  <script>
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightboxImage");
+    const lightboxTitle = document.getElementById("lightboxTitle");
+    const lightboxCaption = document.getElementById("lightboxCaption");
+
+    lightboxImage.addEventListener("error", () => {
+      lightboxTitle.textContent = "Image not found";
+      lightboxCaption.textContent = "Make sure the image file is in the same folder as this HTML file and that the filename matches exactly.";
+    });
+
+    function openLightbox(button) {
+      if (!button || !lightbox) return;
+      const inlineImage = button.querySelector("img");
+      const fullSrc = button.getAttribute("data-fullsrc") || inlineImage?.getAttribute("src") || "";
+      const title = button.getAttribute("data-title") || inlineImage?.getAttribute("alt") || "Photo highlight";
+      const caption = button.getAttribute("data-caption") || "";
+      if (!fullSrc) return;
+      lightboxImage.src = fullSrc;
+      lightboxImage.alt = title;
+      lightboxTitle.textContent = title;
+      lightboxCaption.textContent = caption;
+      lightbox.classList.add("is-open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      if (!lightbox) return;
+      lightbox.classList.remove("is-open");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    if (lightbox) {
+      lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) closeLightbox();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && lightbox.classList.contains("is-open")) closeLightbox();
+      });
+    }
+
+    const games = {
+      sneaker: {
+        index: 0,
+        score: 0,
+        answered: false,
+        questions: [
+          {
+            prompt: "You are designing a running shoe for long-distance comfort. What should lead the decision?",
+            options: ["Max cushioning", "Lightweight design", "Style", "Grip"],
+            answer: "Lightweight design",
+            info: "For endurance-focused performance, reducing fatigue while preserving support is often the smartest balance."
+          },
+          {
+            prompt: "Which tradeoff matters most when making a performance sneaker?",
+            options: ["Style vs function", "Weight vs durability", "Color vs brand", "Laces vs slip-on"],
+            answer: "Weight vs durability",
+            info: "Strong engineering decisions usually come down to choosing the right tradeoff, not chasing every benefit at once."
+          },
+          {
+            prompt: "A shoe tests great in the lab but feels unstable during quick cuts. What is the better next step?",
+            options: ["Launch it anyway", "Rework the support platform", "Change the box design", "Lower the price"],
+            answer: "Rework the support platform",
+            info: "Good product thinking means using real-world feedback to improve function before release."
+          },
+          {
+            prompt: "A sneaker feels great underfoot but wears out too quickly in high-friction areas. What is the best redesign priority?",
+            options: ["Softer foam", "Stronger outsole material", "Brighter colors", "Less cushioning"],
+            answer: "Stronger outsole material",
+            info: "Good product design balances comfort with durability, especially in high-wear zones."
+          },
+          {
+            prompt: "A running shoe is lightweight but runners say it feels unstable in corners. What should be improved first?",
+            options: ["Packaging", "Upper support and platform geometry", "Logo placement", "Retail price"],
+            answer: "Upper support and platform geometry",
+            info: "Stability issues usually point to support structure and base geometry, not cosmetic changes."
+          },
+          {
+            prompt: "A new sneaker concept looks great but is difficult to manufacture consistently. What is the smartest next step?",
+            options: ["Launch it anyway", "Simplify the design for manufacturability", "Raise the price", "Reduce testing"],
+            answer: "Simplify the design for manufacturability",
+            info: "Strong engineering and product design consider manufacturability early, not just appearance."
+          }
+        ]
+      },
+      golf: {
+        index: 0,
+        score: 0,
+        answered: false,
+        questions: [
+          {
+            prompt: "You have 150 yards with water ahead. What is the strongest decision?",
+            options: ["Go aggressive", "Play safe center", "Lay up far short", "Swing harder"],
+            answer: "Play safe center",
+            info: "The best decision is often the one that manages risk while preserving a high-percentage outcome."
+          },
+          {
+            prompt: "The wind picks up right before your shot. What should you do?",
+            options: ["Ignore it", "Adjust club and shot", "Swing harder", "Rush the shot"],
+            answer: "Adjust club and shot",
+            info: "Adaptability matters when conditions change. Calm adjustments outperform forced confidence."
+          },
+          {
+            prompt: "You missed two straight fairways. What mindset gives you the best chance to recover?",
+            options: ["Take an even riskier line", "Reset and commit to fundamentals", "Blame the course", "Change everything"],
+            answer: "Reset and commit to fundamentals",
+            info: "Consistency under pressure comes from resetting quickly and returning to repeatable fundamentals."
+          },
+          {
+            prompt: "You are between clubs with trouble long and an open miss short. What is the smarter decision?",
+            options: ["Take more club", "Take less club", "Swing harder with less club", "Aim at the trouble"],
+            answer: "Take less club",
+            info: "Smart course management favors the miss that avoids the bigger penalty and keeps the next shot manageable."
+          },
+          {
+            prompt: "You are on a fast downhill putt. What matters most?",
+            options: ["Hit it firmly", "Focus on speed control", "Aim straight at the hole", "Take a longer backswing"],
+            answer: "Focus on speed control",
+            info: "On fast greens, controlling pace is usually more important than trying to force the line."
+          },
+          {
+            prompt: "After one bad hole, what gives you the best chance to recover over the next few holes?",
+            options: ["Play more aggressively", "Reset and stick to your routine", "Change your swing immediately", "Rush to regain momentum"],
+            answer: "Reset and stick to your routine",
+            info: "The best response to a mistake is staying composed and returning to repeatable fundamentals."
+          }
+        ]
+      }
+    };
+
+    function shuffle(arr) {
+      return [...arr].sort(() => Math.random() - 0.5);
+    }
+
+    function prepareGame(key) {
+      const game = games[key];
+      game.index = 0;
+      game.score = 0;
+      game.answered = false;
+      game.questions = shuffle(game.questions);
+    }
+
+    function renderGame(key) {
+      const game = games[key];
+      const q = game.questions[game.index];
+      const prompt = document.getElementById(`${key}Prompt`);
+      const buttons = document.getElementById(`${key}Buttons`);
+      const feedback = document.getElementById(`${key}Feedback`);
+      const score = document.getElementById(`${key}Score`);
+      const total = document.getElementById(`${key}Total`);
+      const progress = document.getElementById(`${key}Progress`);
+
+      game.answered = false;
+      prompt.textContent = q.prompt;
+      buttons.innerHTML = "";
+      total.textContent = game.questions.length;
+      score.textContent = game.score;
+      progress.style.width = `${((game.index + 1) / game.questions.length) * 100}%`;
+
+      feedback.innerHTML = `<strong>Choose an answer to begin.</strong><span id="${key}Info">You will see feedback here after each decision.</span>`;
+
+      shuffle(q.options).forEach((option) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = option;
+        button.addEventListener("click", () => checkAnswer(key, option, button));
+        buttons.appendChild(button);
+      });
+    }
+
+    function checkAnswer(key, choice, button) {
+      const game = games[key];
+      const q = game.questions[game.index];
+      if (game.answered) return;
+      game.answered = true;
+
+      const buttons = document.querySelectorAll(`#${key}Buttons button`);
+      buttons.forEach((btn) => {
+        btn.disabled = true;
+        if (btn.textContent === q.answer) btn.classList.add("correct");
+      });
+
+      const feedback = document.getElementById(`${key}Feedback`);
+      const score = document.getElementById(`${key}Score`);
+
+      if (choice === q.answer) {
+        game.score += 1;
+        button.classList.add("correct");
+        feedback.innerHTML = `<strong>Correct.</strong><span>${q.info}</span>`;
+      } else {
+        button.classList.add("wrong");
+        feedback.innerHTML = `<strong>Not quite.</strong><span>${q.info}</span>`;
+      }
+
+      score.textContent = game.score;
+    }
+
+    function nextQuestion(key) {
+      const game = games[key];
+      game.index = (game.index + 1) % game.questions.length;
+      renderGame(key);
+    }
+
+    function resetGame(key) {
+      prepareGame(key);
+      renderGame(key);
+    }
+
+    prepareGame('sneaker');
+    prepareGame('golf');
+    renderGame('sneaker');
+    renderGame('golf');
+  </script>
+
+<script>
+  (() => {
+    const rawPage = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    const normalizePage = (value) => {
+      if (!value || value === '/') return 'index.html';
+      if (value.startsWith('aboutme')) return 'aboutme.html';
+      if (value.startsWith('interactive-engineering-games')) return 'interactive-engineering-games.html';
+      if (value.startsWith('index')) return 'index.html';
+      return value;
+    };
+
+    const page = normalizePage(rawPage);
+    const hash = window.location.hash.toLowerCase();
+    const current = `${page}${hash}`;
+
+    document.querySelectorAll('[data-nav-target]').forEach(link => {
+      const target = (link.getAttribute('data-nav-target') || '').toLowerCase();
+      const targetPage = normalizePage(target.split('#')[0] || 'index.html');
+      const normalizedTarget = target.includes('#') ? `${targetPage}#${target.split('#')[1]}` : targetPage;
+      const isIndexDropdownChild = normalizedTarget.startsWith('index.html#capstone-projects')
+        || normalizedTarget.startsWith('index.html#school-projects')
+        || normalizedTarget.startsWith('index.html#cad-projects')
+        || normalizedTarget.startsWith('index.html#research');
+
+      let isActive = false;
+
+      if (normalizedTarget === current) {
+        isActive = true;
+      } else if (!hash && page === targetPage && (normalizedTarget === page || normalizedTarget === `${page}#portfolio`)) {
+        isActive = true;
+      } else if (page === 'index.html' && !hash && normalizedTarget === 'index.html#portfolio') {
+        isActive = true;
+      } else if (page === 'index.html' && hash && isIndexDropdownChild && normalizedTarget === current) {
+        isActive = true;
+      } else if (page === 'index.html' && hash && ['#capstone-projects', '#school-projects', '#cad-projects', '#research', '#portfolio'].includes(hash) && normalizedTarget === 'index.html#portfolio') {
+        isActive = true;
+      }
+
+      if (isActive) {
+        link.classList.add('active');
+        if (!link.hasAttribute('aria-current')) {
+          link.setAttribute('aria-current', 'page');
+        }
+      }
+    });
+
+    document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+      let closeTimer;
+      const open = () => {
+        clearTimeout(closeTimer);
+        dropdown.classList.add('is-open');
+      };
+      const close = () => {
+        clearTimeout(closeTimer);
+        closeTimer = setTimeout(() => {
+          dropdown.classList.remove('is-open');
+        }, 320);
+      };
+
+      dropdown.addEventListener('mouseenter', open);
+      dropdown.addEventListener('mouseleave', close);
+      dropdown.addEventListener('focusin', open);
+      dropdown.addEventListener('focusout', () => {
+        clearTimeout(closeTimer);
+        closeTimer = setTimeout(() => {
+          if (!dropdown.contains(document.activeElement)) {
+            dropdown.classList.remove('is-open');
+          }
+        }, 140);
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interactive Engineering Games | Jacob V. Shankel</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+
+    :root {
+      --bg: #f4f7fb;
+      --surface: rgba(255, 255, 255, 0.88);
+      --surface-strong: #ffffff;
+      --text: #132238;
+      --muted: #5d6b7f;
+      --navy: #0f2747;
+      --navy-2: #183761;
+      --accent: #f2c94c;
+      --accent-2: #fff2c4;
+      --success: #dff7e6;
+      --error: #fde4e4;
+      --border: rgba(15, 39, 71, 0.1);
+      --shadow: 0 18px 45px rgba(11, 25, 48, 0.12);
+      --radius: 24px;
+      --radius-sm: 16px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      padding-top: 96px;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(242, 201, 76, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(24, 55, 97, 0.12), transparent 24%),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+    /* Media tiles (images + video) */
+    .project-media {
+      width: 100%;
+      border-radius: 22px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 12px 24px rgba(15, 39, 71, 0.12);
+      border: 1px solid rgba(15, 39, 71, 0.08);
+      background: #fff;
+      display: block;
+    }
+    .project-media:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 32px rgba(15, 39, 71, 0.16);
+    }
+    video.project-media {
+      cursor: default;
+      background: #000;
+    }
+
+    hr { border: 2px solid #000; }
+
+    footer {
+      background-color: #001f3f;
+      color: white;
+      padding: 40px 0;
+    }
+
+    /* LIGHTBOX */
+    #lightbox {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      padding-top: 60px;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+    }
+    #lightbox img {
+      margin: auto;
+      display: block;
+      max-width: 85%;
+      border-radius: 12px;
+    }
+    #lightbox span {
+      position: absolute;
+      top: 25px;
+      right: 35px;
+      color: #fff;
+      font-size: 44px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Contact buttons */
+    .contact-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 10px 15px;
+      padding: 13px 18px;
+      background: var(--navy);
+      color: white;
+      border-radius: 999px;
+      font-size: 0.96rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      border: none;
+      box-shadow: 0 12px 22px rgba(15, 39, 71, 0.18);
+    }
+    .contact-button:hover {
+      background: linear-gradient(135deg, var(--navy), var(--navy-2));
+      color: white;
+      transform: translateY(-2px);
+    }
+    .contact-button i { margin-right: 8px; }
+
+   .edu-accordion {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+
+  text-align: left;
+  padding: 16px 20px;
+  margin-top: 12px;
+
+  background-color: #001f3f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+/* Video container */
+.video-wrapper {
+  max-width: 420px;      /* controls overall size */
+  margin: 0 auto;        /* center it */
+}
+
+/* Video itself */
+.video-wrapper video {
+  width: 100%;
+  border-radius: 22px;
+  border: 1px solid rgba(15, 39, 71, 0.08);
+  box-shadow: 0 12px 24px rgba(15, 39, 71, 0.12);
+  background: #fff;
+}
+
+.edu-accordion:hover {
+  background-color: #FFD700;
+  color: #001f3f;
+}
+
+.edu-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edu-icon {
+  font-size: 18px;
+  opacity: 0.95;
+}
+
+/* Arrow rotation animation */
+.edu-arrow {
+  transition: transform 0.25s ease;
+}
+
+/* When open */
+.edu-accordion.is-open .edu-arrow {
+  transform: rotate(180deg);
+}
+
+/* Panel styling */
+.edu-panel {
+  display: none;
+  padding: 18px;
+  margin-top: 10px;
+  border-radius: 18px;
+  background: #f9fbff;
+  border: 1px solid rgba(15, 39, 71, 0.08);
+  color: var(--text);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+}
+
+/* Photos */
+.edu-photo {
+  width: 100%;
+  border-radius: 22px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(15, 39, 71, 0.12);
+  border: 1px solid rgba(15, 39, 71, 0.08);
+  background: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.edu-photo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 32px rgba(15, 39, 71, 0.16);
+}
+
+
+
+    /* Resume button */
+    .resume-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #1d2b3d;
+      font-size: 0.96rem;
+      font-weight: 700;
+      padding: 13px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 14px 24px rgba(242, 201, 76, 0.28);
+      border: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+    .resume-button:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Back to top */
+    #backToTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 999;
+      font-size: 22px;
+      border: none;
+      outline: none;
+      background-color: #001f3f;
+      color: white;
+      cursor: pointer;
+      padding: 14px 18px;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+    #backToTopBtn:hover {
+      background-color: #FFD700;
+      color: #001f3f;
+      box-shadow: 0 0 15px rgba(255,215,0,0.6);
+      transform: scale(1.1);
+    }
+    /* Make sure dropdown can appear above everything */
+#navbar { overflow: visible; }
+
+.w3-dropdown-hover { position: relative; }
+
+/* Force dropdown menu to overlay content */
+.dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10000;
+  background-color: #001f3f;
+  min-width: 220px;
+  border-radius: 6px;
+}
+
+.dropdown-content a { color: white !important; }
+/* Capstone accordions */
+.cap-accordion {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: left;
+  padding: 14px 16px;
+  margin-top: 12px;
+  background: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-shadow: 0 12px 24px rgba(15, 39, 71, 0.14);
+}
+
+.cap-accordion:hover {
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
+  color: white;
+  transform: translateY(-1px);
+}
+
+.cap-acc-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cap-acc-icon { opacity: 0.95; }
+
+.cap-acc-arrow { transition: transform 0.25s ease; }
+
+.cap-accordion.is-open .cap-acc-arrow {
+  transform: rotate(180deg);
+}
+
+.cap-panel {
+  display: none;
+  margin-top: 10px;
+  padding: 18px;
+  border-radius: 18px;
+  background: #f9fbff;
+  border: 1px solid rgba(15, 39, 71, 0.08);
+  color: var(--text);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+}
+/* Nested accordion container */
+.capstone-subsection {
+  margin-top: 20px;
+  padding-left: 0;
+  border-left: none;
+}
+
+/* Nested accordion buttons */
+.cap-accordion {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: left;
+  padding: 12px 16px;
+  margin-top: 10px;
+
+  background-color: #001f3f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.cap-accordion:hover {
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* Arrow animation */
+.cap-acc-arrow {
+  transition: transform 0.25s ease;
+}
+
+.cap-accordion.is-open .cap-acc-arrow {
+  transform: rotate(180deg);
+}
+
+/* Tools Used Tag Box */
+.tools-used {
+  margin-top: 14px;
+  padding: 16px;
+  background: linear-gradient(180deg, #f9fbff, #f3f7fc);
+  border: 1px solid rgba(15, 39, 71, 0.07);
+  border-left: none;
+  border-radius: 18px;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.tools-used strong {
+  color: var(--navy);
+}
+
+.tool-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px 8px 0 0;
+  padding: 7px 12px;
+  background: #edf3fa;
+  color: var(--navy);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 1px solid rgba(15, 39, 71, 0.08);
+}
+
+  
+/* Gear Game */
+.gear-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  margin-top: 20px;
+}
+
+.gear-img {
+  width: 220px;
+  border-radius: 10px;
+  margin: 20px 0;
+  transition: transform 0.3s ease;
+}
+
+.gear-img:hover {
+  transform: scale(1.05);
+}
+
+.gear-buttons button {
+  margin: 6px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #001f3f;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.gear-buttons button:hover {
+  background-color: #FFD700;
+  color: #001f3f;
+}
+
+#gearResult {
+  font-weight: bold;
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+.gear-info {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.gear-score {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+
+
+
+/* Shared game cards */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 28px;
+  margin-top: 30px;
+}
+.game-card {
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  padding: 28px 24px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+  height: 100%;
+}
+.game-card h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #001f3f;
+}
+.game-card p {
+  line-height: 1.6;
+}
+.game-buttons button {
+  margin: 6px;
+  padding: 10px 16px;
+  border: 1px solid rgba(15, 39, 71, 0.12);
+  border-radius: 14px;
+  background: white;
+  color: var(--text);
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.18s ease;
+}
+.game-buttons button:hover {
+  border-color: rgba(15, 39, 71, 0.28);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(15, 39, 71, 0.08);
+  background: white;
+  color: var(--text);
+}
+.challenge-result {
+  font-weight: bold;
+  margin-top: 14px;
+  min-height: 28px;
+}
+.challenge-explanation {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  min-height: 58px;
+}
+.challenge-score {
+  margin-top: 12px;
+  font-weight: bold;
+}
+.challenge-prompt {
+  background: #f5f5f5;
+  border-left: 4px solid #001f3f;
+  padding: 14px;
+  border-radius: 8px;
+  text-align: left;
+  margin: 18px 0;
+}
+.challenge-tag {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #001f3f;
+  color: white;
+  font-size: 13px;
+}
+.section-intro {
+  max-width: 850px;
+  margin: 0 auto 10px auto;
+  text-align: center;
+}
+
+
+/* Active nav tab */
+.active-tab {
+  background-color: #FFD700 !important;
+  color: #001f3f !important;
+}
+
+/* More consistent game cards */
+.game-grid {
+  align-items: stretch;
+}
+.game-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.game-card .game-desc {
+  min-height: 48px;
+}
+.game-test-line {
+  font-size: 14px;
+  font-weight: 600;
+  color: #001f3f;
+  margin: 4px 0 12px 0;
+}
+.challenge-prompt {
+  min-height: 116px;
+}
+.challenge-result {
+  min-height: 48px;
+}
+.challenge-explanation {
+  min-height: 72px;
+}
+.button-row-bottom {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.reset-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  color: var(--text);
+  font-size: 0.96rem;
+  font-weight: 700;
+  padding: 13px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 10px 22px rgba(15, 39, 71, 0.08);
+  border: 1px solid rgba(15, 39, 71, 0.12);
+  transition: 0.18s ease;
+  cursor: pointer;
+}
+.reset-button:hover {
+  border-color: rgba(15, 39, 71, 0.28);
+  transform: translateY(-1px);
+}
+
+
+/* Difficulty controls */
+.difficulty-wrap {
+  margin-bottom: 14px;
+}
+.difficulty-btn {
+  margin: 6px;
+  padding: 10px 16px;
+  border: 1px solid rgba(15, 39, 71, 0.12);
+  border-radius: 999px;
+  background: white;
+  color: var(--text);
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.18s ease;
+}
+.difficulty-btn:hover,
+.difficulty-btn.active-difficulty {
+  background: var(--navy);
+  color: white;
+  border-color: rgba(15, 39, 71, 0.28);
+  transform: translateY(-1px);
+}
+#gearProgress {
+  min-height: auto !important;
+  margin-top: 12px;
+}
+#gearBadge {
+  min-height: 26px;
+  font-weight: 700;
+  color: #001f3f;
+}
+
+.gear-option.hidden-option {
+  display: none;
+}
+.gear-option.disabled-option {
+  background-color: #d9d9d9 !important;
+  color: #666666 !important;
+  cursor: not-allowed;
+  opacity: 0.8;
+  border: none;
+}
+
+
+/* Fastener difficulty controls */
+.fastener-difficulty-wrap {
+  margin-bottom: 14px;
+}
+.fastener-difficulty-btn {
+  margin: 6px;
+  padding: 10px 16px;
+  border: 1px solid rgba(15, 39, 71, 0.12);
+  border-radius: 999px;
+  background: white;
+  color: var(--text);
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.18s ease;
+}
+.fastener-difficulty-btn:hover,
+.fastener-difficulty-btn.active-difficulty {
+  background: var(--navy);
+  color: white;
+  border-color: rgba(15, 39, 71, 0.28);
+  transform: translateY(-1px);
+}
+#fastenerProgress {
+  min-height: auto !important;
+  margin-top: 12px;
+}
+#fastenerBadge {
+  min-height: 26px;
+  font-weight: 700;
+  color: #001f3f;
+}
+
+.fastener-option.hidden-option {
+  display: none;
+}
+.fastener-option.disabled-option {
+  background-color: #d9d9d9 !important;
+  color: #666666 !important;
+  cursor: not-allowed;
+  opacity: 0.8;
+  border: none;
+}
+
+
+
+/* Game polish */
+.progress-shell {
+  width: 100%;
+  height: 10px;
+  background: #ddd;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #001f3f;
+  transition: width 0.3s ease;
+}
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #333;
+  flex-wrap: wrap;
+}
+.streak-row {
+  margin-top: 10px;
+  font-weight: 700;
+  color: #001f3f;
+}
+.game-buttons button.correct,
+.gear-buttons button.correct {
+  background-color: #c8f7c5 !important;
+  color: #0b3d02 !important;
+}
+.game-buttons button.wrong,
+.gear-buttons button.wrong {
+  background-color: #f7c5c5 !important;
+  color: #6d0000 !important;
+}
+.question-counter {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: #001f3f;
+}
+.locked-difficulty {
+  opacity: 0.55;
+  cursor: not-allowed !important;
+}
+.final-message {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #f5f5f5;
+  border-left: 4px solid #001f3f;
+  font-weight: 600;
+}
+
+
+.site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 14px 18px;
+      backdrop-filter: blur(18px);
+      background: rgba(255, 255, 255, 0.82);
+      border-bottom: 1px solid rgba(15, 39, 71, 0.08);
+      overflow: visible;
+    }
+
+    .nav {
+      width: min(calc(100% - 32px), var(--max));
+      min-height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, var(--navy), var(--navy-2));
+      color: white;
+      box-shadow: 0 10px 24px rgba(15, 39, 71, 0.2);
+      gap: 12px;
+      margin-right: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .brand:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(15, 39, 71, 0.24);
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.12);
+      color: white;
+      font-size: 0.9rem;
+      box-shadow: none;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-links a,
+    .nav-links button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-weight: 700;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      border: none;
+      background: transparent;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active,
+    .nav-dropdown:hover > a,
+    .nav-dropdown.is-open > a,
+    .nav-dropdown:focus-within > a {
+      background: var(--navy);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .nav-dropdown {
+      position: relative;
+      padding-bottom: 14px;
+      margin-bottom: -14px;
+    }
+
+    .nav-dropdown > a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-dropdown-content {
+      position: absolute;
+      top: calc(100% - 2px);
+      left: 0;
+      min-width: 240px;
+      padding: 8px;
+      display: block;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+      background: rgba(15, 39, 71, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(11, 25, 48, 0.25);
+      backdrop-filter: blur(14px);
+      z-index: 10000;
+    }
+
+    .nav-dropdown-content::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -14px;
+      height: 14px;
+    }
+
+    .nav-dropdown-content a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .nav-dropdown-content a:hover {
+      background: var(--navy);
+      color: #fff;
+      transform: none;
+    }
+
+    .nav-dropdown.is-open .nav-dropdown-content,
+    .nav-dropdown:hover .nav-dropdown-content,
+    .nav-dropdown:focus-within .nav-dropdown-content {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+
+    .games-hero {
+      padding: 56px 0 24px;
+    }
+
+    .games-hero-panel {
+      background: linear-gradient(135deg, rgba(15, 39, 71, 0.98), rgba(24, 55, 97, 0.94));
+      color: white;
+      border-radius: 30px;
+      box-shadow: 0 18px 40px rgba(15,39,71,0.2);
+      overflow: hidden;
+      position: relative;
+      isolation: isolate;
+      padding: 52px 44px;
+      text-align: center;
+    }
+
+    .games-hero-panel::before,
+    .games-hero-panel::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      z-index: -1;
+    }
+
+    .games-hero-panel::before {
+      width: 260px;
+      height: 260px;
+      top: -110px;
+      right: -30px;
+    }
+
+    .games-hero-panel::after {
+      width: 220px;
+      height: 220px;
+      bottom: -110px;
+      left: -40px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+
+    .games-hero-panel h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+
+    .games-hero-panel p {
+      max-width: 58ch;
+      margin: 16px auto 0;
+      color: rgba(255,255,255,0.86);
+      font-size: 1.06rem;
+      line-height: 1.7;
+    }
+
+    .section-intro h3 {
+      margin-bottom: 12px;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .section-intro p {
+      color: var(--muted);
+      font-size: 1.02rem !important;
+      line-height: 1.7;
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 30px;
+      align-items: stretch;
+    }
+
+    .game-card {
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      text-align: center;
+      height: 100%;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 12px;
+    }
+
+    .game-card h4 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      color: var(--navy);
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+    }
+
+    .game-card p {
+      line-height: 1.6;
+    }
+
+    .game-desc,
+    .gear-info,
+    .challenge-explanation,
+    .progress-meta,
+    .gear-score,
+    .challenge-score {
+      color: var(--muted);
+    }
+
+    .game-test-line,
+    #gearBadge,
+    #fastenerBadge,
+    #fastenerPerformanceBadge,
+    #materialBadge {
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .challenge-prompt,
+    .final-message,
+    #gearProgress,
+    #fastenerProgress {
+      background: linear-gradient(180deg, #f9fbff, #f3f7fc);
+      border: 1px solid rgba(15, 39, 71, 0.07);
+      border-left: none;
+      padding: 18px;
+      border-radius: 18px;
+      text-align: left;
+      margin: 18px 0;
+      line-height: 1.6;
+      font-weight: 600;
+    }
+
+    .challenge-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      background: #edf3fa;
+      color: var(--navy);
+      border: 1px solid rgba(15, 39, 71, 0.08);
+    }
+
+    .progress-shell {
+      width: 100%;
+      height: 10px;
+      background: #e8eef6;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--navy), var(--accent));
+      transition: width 0.3s ease;
+    }
+
+    .game-buttons,
+    .gear-buttons,
+    .button-row-bottom,
+    .difficulty-wrap,
+    .fastener-difficulty-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .game-buttons button,
+    .gear-buttons button,
+    .difficulty-btn,
+    .fastener-difficulty-btn,
+    .resume-button,
+    .reset-button {
+      margin: 0;
+      padding: 13px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(15,39,71,0.12);
+      background: white;
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(15,39,71,0.08);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+      min-height: 50px;
+      text-decoration: none;
+    }
+
+    .game-buttons button:hover,
+    .gear-buttons button:hover,
+    .difficulty-btn:hover,
+    .fastener-difficulty-btn:hover,
+    .resume-button:hover,
+    .reset-button:hover,
+    .difficulty-btn.active-difficulty,
+    .fastener-difficulty-btn.active-difficulty {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 22px rgba(15,39,71,0.12);
+      background: var(--navy);
+      color: white;
+      border-color: transparent;
+    }
+
+    .resume-button {
+      background: var(--accent);
+      color: #1d2b3d;
+      box-shadow: 0 14px 24px rgba(242, 201, 76, 0.28);
+    }
+
+    .reset-button {
+      background: rgba(255,255,255,0.72);
+    }
+
+    .game-buttons button.correct,
+    .gear-buttons button.correct {
+      background-color: var(--success) !important;
+      color: #0b3d02 !important;
+      border-color: rgba(24,140,77,0.25) !important;
+    }
+
+    .game-buttons button.wrong,
+    .gear-buttons button.wrong {
+      background-color: var(--error) !important;
+      color: #6d0000 !important;
+      border-color: rgba(178,67,67,0.2) !important;
+    }
+
+    .gear-img {
+      width: 220px;
+      max-width: 100%;
+      border-radius: 16px;
+      margin: 18px auto;
+      display: block;
+      box-shadow: 0 12px 24px rgba(15,39,71,0.12);
+      transition: transform 0.25s ease;
+    }
+
+    .gear-img:hover {
+      transform: scale(1.03);
+    }
+
+    #backToTopBtn {
+      background: var(--navy);
+      box-shadow: 0 10px 24px rgba(15,39,71,0.22);
+    }
+
+    #backToTopBtn:hover {
+      background: var(--accent);
+      color: #1d2b3d;
+      box-shadow: 0 0 18px rgba(242,201,76,0.45);
+    }
+
+    footer {
+      background: transparent;
+      color: var(--muted);
+      padding: 18px 0 40px;
+    }
+
+    footer p,
+    footer a {
+      color: inherit;
+    }
+
+    @media (max-width: 768px) {
+      body { padding-top: 68px; }
+      .games-hero { padding-top: 28px; }
+      .games-hero-panel { padding: 30px 22px; border-radius: 24px; }
+      .game-grid { grid-template-columns: 1fr; gap: 18px; }
+      .game-card { padding: 20px 16px; }
+      .game-buttons button,
+      .gear-buttons button,
+      .difficulty-btn,
+      .fastener-difficulty-btn,
+      .resume-button,
+      .reset-button {
+        width: 100%;
+        max-width: 100%;
+        font-size: 16px;
+      }
+      .button-row-bottom {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+
+@media (max-width: 640px) {
+      body { padding-top: 150px; }
+      .nav { padding: 0; }
+      .nav-links { width: 100%; justify-content: center; }
+      .nav-links a { text-align: center; }
+    }
+
+</style>
+</head>
+<body>
+
+  <div id="home"></div>
+
+    
+  <header class="site-header">
+    <div class="shell nav" aria-label="Primary navigation">
+      <a class="brand" href="index.html" aria-label="Jacob V. Shankel home page" data-nav-target="index.html">
+        <span class="brand-mark">JVS</span>
+        <span>Jacob V. Shankel</span>
+      </a>
+      <nav class="nav-links">
+        <div class="nav-dropdown">
+          <a href="index.html#portfolio" class="nav-dropdown-toggle" data-nav-target="index.html#portfolio">Portfolio <span aria-hidden="true">▾</span></a>
+          <div class="nav-dropdown-content">
+            <a href="index.html#capstone-projects" data-nav-target="index.html#capstone-projects">Capstone Projects</a>
+            <a href="index.html#school-projects" data-nav-target="index.html#school-projects">School Projects</a>
+            <a href="index.html#cad-projects" data-nav-target="index.html#cad-projects">CAD Models &amp; Drawings</a>
+            <a href="index.html#research" data-nav-target="index.html#research">Research</a>
+          </div>
+        </div>
+        <a href="interactive-engineering-games.html" data-nav-target="interactive-engineering-games.html">Engineering Games</a>
+        <a href="aboutme.html" data-nav-target="aboutme.html">About Me</a>
+        <a href="index.html#resume" data-nav-target="index.html#resume">Resume</a>
+        <a href="index.html#contact" data-nav-target="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+
+<header class="w3-container games-hero">
+  <div class="w3-content" style="max-width:980px;">
+    <div class="games-hero-panel">
+      <span class="eyebrow">Interactive profile · mechanical intuition · design tradeoffs</span>
+      <h1>Interactive Engineering Games</h1>
+      <p>Explore hands-on engineering challenges focused on component recognition, material tradeoffs, and practical hardware decisions in a cleaner, more modern experience.</p>
+      <a href="index.html#portfolio" class="resume-button" style="margin-top:24px; display:inline-block;">Back to Portfolio</a>
+    </div>
+  </div>
+</header>
+
+<section id="games" class="w3-container w3-padding-64" style="background-color:transparent;">
+  <div class="w3-content" style="max-width:1200px;">
+    <div class="section-intro">
+      <h3 class="w3-center w3-xlarge">Interactive Engineering Games</h3>
+      <hr style="width:60px; margin:auto; margin-bottom:30px;">
+      <p style="font-size:18px;">
+        Try quick engineering challenges built around mechanical design decisions, hardware knowledge, and component selection.
+      </p>
+    </div>
+
+    <div class="game-grid">
+      <div class="game-card" id="gear-game">
+        <h4>Gear Identification Challenge</h4>
+        <p class="game-desc">Identify common gear types from their geometry and application.</p>
+        <p class="game-test-line">What this tests: component recognition</p>
+
+        <div class="difficulty-wrap">
+          <strong>Select Difficulty:</strong><br>
+          <button id="easyBtn" class="difficulty-btn" onclick="setDifficulty('easy')">Easy</button>
+          <button id="mediumBtn" class="difficulty-btn" onclick="setDifficulty('medium')">Medium</button>
+          <button id="hardBtn" class="difficulty-btn" onclick="setDifficulty('hard')">Hard</button>
+        </div>
+
+        <p id="gearDifficultyLabel" class="challenge-tag">EASY LEVEL</p>
+
+        <div id="gearProgress" class="challenge-prompt">
+          <strong>Level Progress</strong>
+          <div class="progress-shell"><div id="gearProgressFill" class="progress-fill"></div></div>
+          <div class="progress-meta">
+            <span id="gearQuestionCounter">Question 1 of 1</span>
+            <span id="gearCompletionText">0% complete</span>
+          </div>
+        </div>
+
+        <p id="gearBadge" class="game-test-line" style="margin-top:12px;"></p>
+        <p class="streak-row">🔥 Streak: <span id="gearStreak">0</span></p>
+
+        <div id="gearPrompt" class="challenge-prompt">
+          <span class="question-counter">Question 1 of 1</span>
+          <strong>Scenario:</strong> Review the gear image below and identify the component type.
+        </div>
+
+        <img id="gearImage" src="spur.jpg" class="gear-img" alt="Gear quiz image">
+
+        <div id="gearButtons" class="gear-buttons"></div>
+
+        <p id="gearResult" class="challenge-result"></p>
+        <p id="gearInfo" class="gear-info challenge-explanation"></p>
+        <p class="gear-score challenge-score">Score: <span id="score">0</span></p>
+        <div id="gearFinalMessage" class="final-message" style="display:none;"></div>
+        <div class="button-row-bottom">
+          <button class="resume-button" onclick="nextGear()">Next Question</button>
+          <button class="reset-button" onclick="resetGearScore()">Reset Score</button>
+        </div>
+      </div>
+
+      <div class="game-card" id="material-game">
+        <h4>Material Selection Challenge</h4>
+        <p class="game-desc">Choose the best material for realistic engineering design scenarios involving weight, corrosion, strength, and thermal performance.</p>
+        <p class="game-test-line">What this tests: design tradeoff judgment</p>
+
+        <div id="materialPrompt" class="challenge-prompt"></div>
+
+        <div class="game-buttons">
+          <button onclick="checkMaterial('steel')">Steel</button>
+          <button onclick="checkMaterial('aluminum')">Aluminum</button>
+          <button onclick="checkMaterial('stainless steel')">Stainless Steel</button>
+          <button onclick="checkMaterial('carbon fiber')">Carbon Fiber</button>
+          <button onclick="checkMaterial('titanium')">Titanium</button>
+        </div>
+
+        <p id="materialResult" class="challenge-result"></p>
+        <p id="materialInfo" class="challenge-explanation"></p>
+        <p class="challenge-score">Score: <span id="materialScore">0</span></p>
+        <p id="materialBadge" class="game-test-line" style="margin-top:10px;"></p>
+        <div class="button-row-bottom">
+          <button class="resume-button" onclick="nextMaterial()">Next Question</button>
+          <button class="reset-button" onclick="resetMaterialScore()">Reset Score</button>
+        </div>
+      </div>
+
+      <div class="game-card" id="fastener-game">
+        <h4>Fastener Selection Challenge</h4>
+        <p class="game-desc">Pick the strongest fastening choice for the use case shown below.</p>
+        <p class="game-test-line">What this tests: practical hardware selection</p>
+
+        <div class="fastener-difficulty-wrap">
+          <strong>Select Difficulty:</strong><br>
+          <button id="fastenerEasyBtn" class="fastener-difficulty-btn" onclick="setFastenerDifficulty('easy')">Easy</button>
+          <button id="fastenerMediumBtn" class="fastener-difficulty-btn" onclick="setFastenerDifficulty('medium')">Medium</button>
+          <button id="fastenerHardBtn" class="fastener-difficulty-btn" onclick="setFastenerDifficulty('hard')">Hard</button>
+        </div>
+
+        <p id="fastenerDifficultyLabel" class="challenge-tag">EASY LEVEL</p>
+
+        <div id="fastenerProgress" class="challenge-prompt">
+          <strong>Level Progress</strong>
+          <div class="progress-shell"><div id="fastenerProgressFill" class="progress-fill"></div></div>
+          <div class="progress-meta">
+            <span id="fastenerQuestionCounter">Question 1 of 1</span>
+            <span id="fastenerCompletionText">0% complete</span>
+          </div>
+        </div>
+
+        <p id="fastenerBadge" class="game-test-line" style="margin-top:12px;"></p>
+        <p id="fastenerPerformanceBadge" class="game-test-line"></p>
+        <p class="streak-row">🔥 Streak: <span id="fastenerStreak">0</span></p>
+
+        <div id="fastenerPrompt" class="challenge-prompt"></div>
+
+        <div id="fastenerButtons" class="game-buttons"></div>
+
+        <p id="fastenerResult" class="challenge-result"></p>
+        <p id="fastenerInfo" class="challenge-explanation"></p>
+        <p class="challenge-score">Score: <span id="fastenerScore">0</span></p>
+        <div id="fastenerFinalMessage" class="final-message" style="display:none;"></div>
+        <div class="button-row-bottom">
+          <button class="resume-button" onclick="nextFastener()">Next Question</button>
+          <button class="reset-button" onclick="resetFastenerScore()">Reset Score</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="w3-container" style="background-color:transparent; padding-bottom:40px;">
+  <div class="w3-content" style="max-width:1200px; text-align:center;">
+    <p id="globalBadge" class="final-message" style="display:none; max-width:700px; margin:0 auto;"></p>
+  </div>
+</section>
+
+  <!-- BACK TO TOP -->
+  <button onclick="topFunction()" id="backToTopBtn" title="Go to top">↑</button>
+
+  <!-- FOOTER -->
+  <footer class="w3-center">
+    <p>© <span id="year"></span> Jacob V. Shankel | Mechanical Engineer</p>
+    <p>
+      <a href="https://www.linkedin.com/in/jacobvshankel/" target="_blank" rel="noopener">
+        <i class="fa fa-linkedin w3-hover-opacity w3-xlarge"></i>
+      </a>
+    </p>
+    <p class="w3-small">Built with HTML & W3.CSS</p>
+  </footer>
+
+
+
+<script>
+  function topFunction() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  window.addEventListener('scroll', function() {
+    const btn = document.getElementById("backToTopBtn");
+    if (!btn) return;
+    btn.style.display = document.documentElement.scrollTop > 300 ? "block" : "none";
+  });
+
+  function setMobileMenuState(isOpen) {
+    const mobileMenu = document.getElementById("mobileMenu");
+    const toggleBtn = document.getElementById("mobileMenuToggle");
+    const icon = document.getElementById("mobileMenuIcon");
+    if (!mobileMenu) return;
+    mobileMenu.classList.toggle("show", isOpen);
+    if (toggleBtn) toggleBtn.classList.toggle("is-open", isOpen);
+    if (icon) {
+      icon.classList.toggle("fa-bars", !isOpen);
+      icon.classList.toggle("fa-times", isOpen);
+    }
+  }
+
+  function toggleMobileMenu() {
+    const mobileMenu = document.getElementById("mobileMenu");
+    if (!mobileMenu) return;
+    setMobileMenuState(!mobileMenu.classList.contains("show"));
+  }
+
+  function closeMobileMenu() {
+    setMobileMenuState(false);
+    document.querySelectorAll('.mobile-dropdown').forEach(d => d.classList.remove('is-open'));
+    document.querySelectorAll('.mobile-dropdown button').forEach(b => b.classList.remove('is-open'));
+  }
+
+  function toggleMobileDropdown(id, btn) {
+    const wrap = document.getElementById(id);
+    if (wrap) wrap.classList.toggle("is-open");
+    if (btn) btn.classList.toggle("is-open");
+  }
+
+  const gearQuestions = {
+    easy: [
+      { id: "gear-easy-1", src: "spur.jpg", answer: "spur", info: "Spur gears have straight teeth parallel to the axis. They are simple, efficient, and widely used in watches, gear motors, and machinery." },
+      { id: "gear-easy-2", src: "helical.jpg", answer: "helical", info: "Helical gears have angled teeth that allow smoother and quieter operation than spur gears. They are common in higher-speed systems like transmissions." },
+      { id: "gear-easy-3", src: "bevel.jpg", answer: "bevel", info: "Bevel gears are cone-shaped and transmit power between intersecting shafts, often at 90 degrees." },
+      { id: "gear-easy-4", src: "worm.jpg", answer: "worm", info: "Worm gears use a screw-like worm and wheel to achieve high torque, large reduction ratios, and in some cases self-locking behavior." }
+    ],
+    medium: [
+      { id: "gear-medium-1", src: "rack.jpg", answer: "rack", info: "Rack and pinion systems convert rotational motion into linear motion and are commonly used in steering systems and industrial machinery." },
+      { id: "gear-medium-2", src: "internal.jpg", answer: "internal", info: "Internal gears have teeth cut inside a hollow cylinder and are often used in compact planetary gear systems." },
+      { id: "gear-medium-3", src: "spiralbevel.jpg", answer: "spiral bevel", info: "Spiral bevel gears use curved teeth for smoother operation, lower vibration, and greater strength than straight bevel gears." },
+      { id: "gear-medium-4", src: "miter.jpg", answer: "miter", info: "Miter gears are bevel gears with a 1:1 ratio used to change shaft direction without changing speed." }
+    ],
+    hard: [
+      { id: "gear-hard-1", src: "herringbone.jpg", answer: "herringbone", info: "Herringbone gears, also called double helical gears, use a V-shaped tooth pattern to cancel axial thrust in heavy-duty systems." },
+      { id: "gear-hard-2", src: "hypoid.jpg", answer: "hypoid", info: "Hypoid gears are a type of spiral bevel gear with offset shafts, commonly used in automotive differentials for compact power transfer." }
+    ]
+  };
+
+  const gearOptionsByLevel = {
+    easy: ["spur", "helical", "bevel", "worm"],
+    medium: ["rack", "internal", "spiral bevel", "miter"],
+    hard: ["herringbone", "hypoid"]
+  };
+
+  const gearButtonLabels = {
+    "spur": "Spur",
+    "helical": "Helical",
+    "bevel": "Bevel",
+    "worm": "Worm",
+    "rack": "Rack &amp; Pinion",
+    "internal": "Internal",
+    "spiral bevel": "Spiral Bevel",
+    "miter": "Miter",
+    "herringbone": "Herringbone",
+    "hypoid": "Hypoid"
+  };
+
+  const materialQuestions = [
+    { prompt: "You are designing a lightweight bike frame and want high stiffness with the lowest possible weight.", tag: "Lightweight structural design", answer: "carbon fiber", info: "Carbon fiber is often chosen when very low weight and high stiffness matter more than cost and ease of manufacturing." },
+    { prompt: "You need an affordable structural bracket for general-purpose shop equipment where cost matters more than weight.", tag: "Low-cost fabrication", answer: "steel", info: "Steel is commonly selected here because it is strong, affordable, easy to fabricate, and widely available." },
+    { prompt: "You are choosing a corrosion-resistant material for outdoor equipment that will see frequent rain and moisture.", tag: "Corrosion resistance", answer: "stainless steel", info: "Stainless steel provides strong corrosion resistance and is a common choice for harsh outdoor or wet environments." },
+    { prompt: "You need a good balance of low weight, machinability, and corrosion resistance for a consumer product housing.", tag: "Balanced design tradeoff", answer: "aluminum", info: "Aluminum is often the best all-around choice when you want low weight, good manufacturability, and decent corrosion resistance." },
+    { prompt: "You are designing a marine component exposed to saltwater and corrosion.", tag: "Corrosion resistance", answer: "stainless steel", info: "Stainless steel resists corrosion due to its chromium content, making it ideal for marine environments." },
+    { prompt: "You need a component with very high strength-to-weight ratio for aerospace use.", tag: "High performance", answer: "titanium", info: "Titanium provides excellent strength while remaining relatively lightweight and corrosion resistant." },
+    { prompt: "You are designing a heat sink for electronics and need high thermal conductivity.", tag: "Thermal performance", answer: "aluminum", info: "Aluminum has excellent thermal conductivity and is widely used in heat dissipation applications." }
+  ];
+
+  const fastenerQuestions = {
+    easy: [
+      { id: "fastener-easy-1", prompt: "You want to permanently join thin sheet metal panels quickly and economically.", tag: "Permanent sheet metal joint", answer: "rivet", info: "Rivets provide a fast, permanent fastening solution commonly used in sheet metal assembly.", wrongInfo: { "standard bolt": "Bolts are removable, so they are less efficient when permanence is the goal.", "weld": "A weld can work, but it is usually slower and less economical for thin sheet panels at scale." } },
+      { id: "fastener-easy-2", prompt: "You need a joint that can be disassembled repeatedly during maintenance.", tag: "Serviceable assembly", answer: "standard bolt", info: "Standard bolts are commonly used where repeated disassembly is required without creating a permanent bond.", wrongInfo: { "rivet": "A rivet is permanent, so it makes routine service harder.", "weld": "A weld is not meant for repeated teardown during maintenance." } },
+      { id: "fastener-easy-3", prompt: "You need a permanent structural connection with maximum permanence and no future disassembly.", tag: "Permanent structural connection", answer: "weld", info: "A weld is the strongest permanent option when the design does not need to be taken apart later.", wrongInfo: { "standard bolt": "A bolted joint is serviceable, but it is not as permanent as a weld here.", "rivet": "Rivets are permanent, but welding is stronger for a structural joint like this." } },
+      { id: "fastener-easy-4", prompt: "A removable machine guard needs a simple fastener that technicians can take apart and reinstall often.", tag: "Frequent maintenance", answer: "standard bolt", info: "A standard bolt is ideal when the joint must stay serviceable and be removed many times.", wrongInfo: { "rivet": "Rivets are permanent and would slow routine guard removal.", "weld": "Welding would eliminate the serviceability the guard needs." } },
+      { id: "fastener-easy-5", prompt: "You are assembling a lightweight aluminum panel where speed and permanent attachment matter more than future disassembly.", tag: "Fast permanent assembly", answer: "rivet", info: "Rivets are often chosen for lightweight panel assemblies because they are fast, economical, and permanent.", wrongInfo: { "standard bolt": "A bolt adds removability that this panel does not need.", "weld": "Welding can distort lightweight panels and is less production-friendly than riveting here." } }
+    ],
+    medium: [
+      { id: "fastener-medium-1", prompt: "A bolted assembly experiences frequent vibration and must remain removable for service.", tag: "Vibration-resistant joint", answer: "nylock nut", info: "A nylock nut resists loosening under vibration while still allowing the joint to be disassembled.", wrongInfo: { "lock washer": "A lock washer helps, but it is usually weaker than a nylock nut under repeated vibration.", "threadlocker": "Threadlocker improves retention, but a nylock nut is the stronger removable choice for vibration." } },
+      { id: "fastener-medium-2", prompt: "You already have a threaded fastener and want additional resistance to loosening without changing the hardware.", tag: "Thread security", answer: "threadlocker", info: "Threadlocker adds resistance to loosening on threaded assemblies without requiring a different nut or bolt.", wrongInfo: { "nylock nut": "A nylock nut would require swapping hardware rather than improving the existing setup directly.", "lock washer": "A lock washer helps somewhat, but threadlocker is the best add-on when keeping the same threaded hardware." } },
+      { id: "fastener-medium-3", prompt: "You need a locking aid for a bolted joint under moderate vibration.", tag: "Locking support", answer: "lock washer", info: "A lock washer can help reduce loosening in moderate vibration environments, though it is not always the strongest solution for severe vibration.", wrongInfo: { "nylock nut": "A nylock nut is stronger overall, but this question asks for a locking aid rather than a different primary nut choice.", "threadlocker": "Threadlocker can work, but a lock washer is the more direct support component for moderate vibration in this setup." } },
+      { id: "fastener-medium-4", prompt: "A small electric motor mount sees repeated vibration, and the bolts still need to be removable during service.", tag: "Service plus vibration", answer: "nylock nut", info: "Nylock nuts are a strong choice when you need both vibration resistance and future removal.", wrongInfo: { "lock washer": "A lock washer is usually not as dependable as a nylock nut for repeated vibration.", "threadlocker": "Threadlocker helps, but a nylock nut gives a stronger reusable mechanical lock in this case." } },
+      { id: "fastener-medium-5", prompt: "A threaded bracket keeps backing off during testing, and you want to improve retention without redesigning the joint.", tag: "Improve existing threaded joint", answer: "threadlocker", info: "Threadlocker is useful when you want better resistance to loosening while keeping the current threaded hardware.", wrongInfo: { "nylock nut": "A nylock nut changes the hardware, which the prompt says to avoid.", "lock washer": "A lock washer may help, but threadlocker is the cleaner upgrade when you want to keep the joint design intact." } }
+    ],
+    hard: [
+      { id: "fastener-hard-1", prompt: "A machine panel must be serviced regularly but also resist vibration during operation.", tag: "Maintenance vs vibration", answer: "nylock nut", info: "A nylock nut balances removability with improved vibration resistance better than a standard nut in many serviceable machine assemblies.", wrongInfo: { "rivet": "A rivet is permanent, so it conflicts with regular service needs.", "weld": "A welded panel would sacrifice removability completely." } },
+      { id: "fastener-hard-2", prompt: "A lightweight enclosure must be assembled quickly at scale with no disassembly expected after manufacturing.", tag: "Production efficiency", answer: "rivet", info: "Rivets are ideal for fast, repeatable permanent assembly in lightweight enclosures and sheet-based products.", wrongInfo: { "nylock nut": "A nylock nut adds serviceability and assembly time that this enclosure does not need.", "weld": "Welding is slower and often less efficient than riveting for lightweight enclosure production." } },
+      { id: "fastener-hard-3", prompt: "A structural frame joint must be permanent and maximize strength, with no service access required later.", tag: "Maximum permanence", answer: "weld", info: "Welding is the preferred solution when maximum permanence and structural integrity matter more than future disassembly.", wrongInfo: { "nylock nut": "A nylock nut is removable and not as permanent as a weld.", "rivet": "Rivets are permanent, but welding is usually stronger for this type of structural frame joint." } },
+      { id: "fastener-hard-4", prompt: "A conveyor support bracket uses bolts and nuts, must survive heavy vibration, and still be removable during shutdown maintenance.", tag: "Heavy vibration service joint", answer: "nylock nut", info: "For removable bolted joints under vibration, a nylock nut is usually stronger than a plain nut setup.", wrongInfo: { "rivet": "A rivet would eliminate removability for shutdown maintenance.", "weld": "A weld would make the bracket permanent instead of serviceable." } },
+      { id: "fastener-hard-5", prompt: "A production team needs a permanent fastening method for thin sheet parts that can be installed quickly on repeat builds.", tag: "High-volume permanent fastening", answer: "rivet", info: "Rivets are well suited to repetitive manufacturing where thin parts must be joined permanently and efficiently.", wrongInfo: { "nylock nut": "A nylock nut slows assembly and adds removability that the build does not need.", "weld": "Welding can work, but riveting is typically faster and better matched to thin repeat-build sheet parts." } },
+      { id: "fastener-hard-6", prompt: "A welded machine base is being designed for maximum rigidity, and the joint will never need to come apart.", tag: "Rigid permanent structure", answer: "weld", info: "Welding gives the most permanent structural connection when serviceability is not required.", wrongInfo: { "nylock nut": "A bolted joint is removable and less rigid than the welded option described.", "rivet": "Rivets are permanent, but a weld is stronger and stiffer for a machine base." } }
+    ]
+  };
+
+  const fastenerOptionsByLevel = {
+    easy: ["standard bolt", "rivet", "weld"],
+    medium: ["nylock nut", "lock washer", "threadlocker"],
+    hard: ["nylock nut", "rivet", "weld"]
+  };
+
+  const fastenerButtonLabels = {
+    "standard bolt": "Standard Bolt",
+    "nylock nut": "Nylock Nut",
+    "lock washer": "Lock Washer",
+    "rivet": "Rivet",
+    "threadlocker": "Threadlocker",
+    "weld": "Weld"
+  };
+
+  function shuffleArray(arr) {
+    const copy = [...arr];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
+  const gearQuestionOrder = {
+    easy: shuffleArray(gearQuestions.easy),
+    medium: shuffleArray(gearQuestions.medium),
+    hard: shuffleArray(gearQuestions.hard)
+  };
+
+  const fastenerQuestionOrder = {
+    easy: shuffleArray(fastenerQuestions.easy),
+    medium: shuffleArray(fastenerQuestions.medium),
+    hard: shuffleArray(fastenerQuestions.hard)
+  };
+
+  let currentDifficulty = "easy";
+  let currentGear = 0;
+  let score = 0;
+  let gearStreak = 0;
+  let gearAdvanceTimeout = null;
+
+  let currentMaterial = 0;
+  let materialScore = 0;
+  let materialAnsweredCorrectly = new Set();
+  let materialCompleted = false;
+
+  let currentFastenerDifficulty = "easy";
+  let currentFastener = 0;
+  let fastenerScore = 0;
+  let fastenerStreak = 0;
+  let fastenerAdvanceTimeout = null;
+
+  const completedLevels = { easy: false, medium: false, hard: false };
+  const correctlyAnsweredGearQuestions = { easy: new Set(), medium: new Set(), hard: new Set() };
+
+  const completedFastenerLevels = { easy: false, medium: false, hard: false };
+  const correctlyAnsweredFastenerQuestions = { easy: new Set(), medium: new Set(), hard: new Set() };
+
+  function getGearQuestionsForLevel(level) {
+    return gearQuestionOrder[level] || [];
+  }
+
+  function getFastenerQuestionsForLevel(level) {
+    return fastenerQuestionOrder[level] || [];
+  }
+
+  function getCurrentGearQuestion() {
+    return getGearQuestionsForLevel(currentDifficulty)[currentGear];
+  }
+
+  function getCurrentFastenerQuestion() {
+    return getFastenerQuestionsForLevel(currentFastenerDifficulty)[currentFastener];
+  }
+
+  function updateDifficultyButtons() {
+    document.querySelectorAll(".difficulty-btn").forEach(btn => {
+      btn.classList.remove("active-difficulty", "locked-difficulty");
+      btn.disabled = false;
+    });
+    const activeBtn = document.getElementById(currentDifficulty + "Btn");
+    if (activeBtn) activeBtn.classList.add("active-difficulty");
+  }
+
+  function updateProgress() {
+    const total = getGearQuestionsForLevel(currentDifficulty).length || 1;
+    const completedCount = correctlyAnsweredGearQuestions[currentDifficulty].size;
+    const percent = Math.round((completedCount / total) * 100);
+    const progressFill = document.getElementById("gearProgressFill");
+    const completionText = document.getElementById("gearCompletionText");
+    const counter = document.getElementById("gearQuestionCounter");
+
+    if (progressFill) progressFill.style.width = percent + "%";
+    if (completionText) completionText.textContent = percent + "% complete";
+    if (counter) counter.textContent = `Question ${currentGear + 1} of ${total}`;
+  }
+
+  function updateBadge() {
+    const badge = document.getElementById("gearBadge");
+    if (!badge) return;
+    if (completedLevels.easy && completedLevels.medium && completedLevels.hard) badge.textContent = "🏆 Gear Master";
+    else if (completedLevels.easy && completedLevels.medium) badge.textContent = "🥈 Advanced Gear Learner";
+    else if (completedLevels.easy) badge.textContent = "🥉 Fundamentals Complete";
+    else badge.textContent = "Choose any level to begin.";
+  }
+
+  function updateGearStreak() {
+    const streakEl = document.getElementById("gearStreak");
+    if (streakEl) streakEl.textContent = gearStreak;
+  }
+
+  function showGearFinalMessage() {
+    const box = document.getElementById("gearFinalMessage");
+    if (!box) return;
+    if (completedLevels.easy && completedLevels.medium && completedLevels.hard) {
+      box.style.display = "block";
+      box.textContent = "Final Results: Gear Master unlocked. You cleared Easy, Medium, and Hard.";
+    } else {
+      box.style.display = "none";
+      box.textContent = "";
+    }
+  }
+
+  function disableGearButtons(selectedChoice, isCorrect) {
+    const q = getCurrentGearQuestion();
+    document.querySelectorAll("#gearButtons button").forEach(btn => {
+      btn.disabled = true;
+      const optionValue = btn.getAttribute("data-option");
+      if (optionValue === selectedChoice) btn.classList.add(isCorrect ? "correct" : "wrong");
+      if (optionValue === q.answer) btn.classList.add("correct");
+    });
+  }
+
+  function renderGearButtons() {
+    const wrap = document.getElementById("gearButtons");
+    const q = getCurrentGearQuestion();
+    if (!wrap || !q) return;
+
+    wrap.innerHTML = "";
+    shuffleArray(gearOptionsByLevel[currentDifficulty] || []).forEach(option => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "gear-option";
+      btn.innerHTML = gearButtonLabels[option] || option;
+      btn.setAttribute("data-option", option);
+      btn.onclick = function() { checkAnswer(option); };
+      wrap.appendChild(btn);
+    });
+  }
+
+  function setDifficulty(level) {
+    clearTimeout(gearAdvanceTimeout);
+    currentDifficulty = level;
+    currentGear = 0;
+    score = correctlyAnsweredGearQuestions[level].size;
+    const scoreEl = document.getElementById("score");
+    if (scoreEl) scoreEl.textContent = score;
+    const label = document.getElementById("gearDifficultyLabel");
+    if (label) label.textContent = level.toUpperCase() + " LEVEL";
+    updateDifficultyButtons();
+    renderGear();
+    updateGlobalBadge();
+  }
+
+  function renderGear() {
+    const q = getCurrentGearQuestion();
+    if (!q) return;
+    document.getElementById("gearImage").src = q.src;
+    document.getElementById("gearImage").alt = q.answer + " gear";
+    document.getElementById("gearResult").textContent = "";
+    document.getElementById("gearInfo").textContent = "";
+    const total = getGearQuestionsForLevel(currentDifficulty).length;
+    document.getElementById("gearPrompt").innerHTML = `<span class="question-counter">Question ${currentGear + 1} of ${total}</span><strong>Scenario:</strong> Review the gear image below and identify the component type.`;
+    renderGearButtons();
+    updateProgress();
+    showGearFinalMessage();
+  }
+
+  function checkAnswer(choice) {
+    clearTimeout(gearAdvanceTimeout);
+    const q = getCurrentGearQuestion();
+    const result = document.getElementById("gearResult");
+    const info = document.getElementById("gearInfo");
+    const scoreEl = document.getElementById("score");
+    const alreadyCorrect = correctlyAnsweredGearQuestions[currentDifficulty].has(q.id);
+    const isCorrect = choice === q.answer;
+
+    disableGearButtons(choice, isCorrect);
+
+    if (isCorrect) {
+      if (!alreadyCorrect) {
+        gearStreak += 1;
+        score += gearStreak >= 3 ? 2 : 1;
+        correctlyAnsweredGearQuestions[currentDifficulty].add(q.id);
+      }
+      result.textContent = "Correct — this is the right gear type.";
+      if (scoreEl) scoreEl.textContent = score;
+      info.textContent = q.info;
+      updateGearStreak();
+      updateProgress();
+      updateGlobalBadge();
+    } else {
+      gearStreak = 0;
+      result.textContent = "Close, but the correct answer is " + (gearButtonLabels[q.answer] || q.answer) + ".";
+      info.textContent = q.info;
+      updateGearStreak();
+      updateGlobalBadge();
+    }
+  }
+
+  function nextGear() {
+    clearTimeout(gearAdvanceTimeout);
+    const total = getGearQuestionsForLevel(currentDifficulty).length;
+    if (correctlyAnsweredGearQuestions[currentDifficulty].size === total) {
+      completedLevels[currentDifficulty] = true;
+      updateProgress();
+      updateBadge();
+      updateDifficultyButtons();
+      showGearFinalMessage();
+      updateGlobalBadge();
+    }
+    currentGear = (currentGear + 1) % total;
+    renderGear();
+  }
+
+  function resetGearScore() {
+    clearTimeout(gearAdvanceTimeout);
+    score = 0;
+    currentGear = 0;
+    gearStreak = 0;
+    correctlyAnsweredGearQuestions.easy.clear();
+    correctlyAnsweredGearQuestions.medium.clear();
+    correctlyAnsweredGearQuestions.hard.clear();
+    completedLevels.easy = false;
+    completedLevels.medium = false;
+    completedLevels.hard = false;
+    gearQuestionOrder.easy = shuffleArray(gearQuestions.easy);
+    gearQuestionOrder.medium = shuffleArray(gearQuestions.medium);
+    gearQuestionOrder.hard = shuffleArray(gearQuestions.hard);
+    document.getElementById("score").textContent = score;
+    document.getElementById("gearResult").textContent = "";
+    document.getElementById("gearInfo").textContent = "";
+    updateGearStreak();
+    updateProgress();
+    updateBadge();
+    showGearFinalMessage();
+    updateGlobalBadge();
+    setDifficulty("easy");
+  }
+
+  function renderMaterial() {
+    const q = materialQuestions[currentMaterial];
+    document.getElementById("materialPrompt").innerHTML = "<strong>Scenario:</strong> " + q.prompt + "<br><span class=\"challenge-tag\">" + q.tag + "</span>";
+    document.getElementById("materialResult").textContent = "";
+    document.getElementById("materialInfo").textContent = "";
+  }
+
+  function checkMaterial(choice) {
+    const q = materialQuestions[currentMaterial];
+    const result = document.getElementById("materialResult");
+    const info = document.getElementById("materialInfo");
+    const scoreEl = document.getElementById("materialScore");
+    const alreadyCorrect = materialAnsweredCorrectly.has(currentMaterial);
+    if (choice === q.answer) {
+      if (!alreadyCorrect) {
+        materialScore += 1;
+        materialAnsweredCorrectly.add(currentMaterial);
+      }
+      result.textContent = "Correct — this is the best choice for this application.";
+      if (scoreEl) scoreEl.textContent = materialScore;
+    } else {
+      result.textContent = "Close, but the stronger engineering choice here is " + q.answer + ".";
+    }
+    info.textContent = q.info;
+    updateMaterialBadge();
+    updateGlobalBadge();
+  }
+
+  function nextMaterial() {
+    currentMaterial = (currentMaterial + 1) % materialQuestions.length;
+    renderMaterial();
+  }
+
+  function resetMaterialScore() {
+    materialScore = 0;
+    currentMaterial = 0;
+    materialAnsweredCorrectly.clear();
+    materialCompleted = false;
+    document.getElementById("materialScore").textContent = materialScore;
+    document.getElementById("materialResult").textContent = "";
+    document.getElementById("materialInfo").textContent = "";
+    const badge = document.getElementById("materialBadge");
+    if (badge) badge.textContent = "";
+    renderMaterial();
+    updateMaterialBadge();
+    updateGlobalBadge();
+  }
+
+  function updateMaterialBadge() {
+    const badge = document.getElementById("materialBadge");
+    if (!badge) return;
+    const total = materialQuestions.length || 1;
+    const correctCount = materialAnsweredCorrectly.size;
+
+    if (correctCount === total) {
+      badge.textContent = "🏆 Material Master";
+      materialCompleted = true;
+    } else if (correctCount >= Math.ceil(total * 0.7)) {
+      badge.textContent = "🥈 Strong Material Selection Skills";
+      materialCompleted = false;
+    } else if (correctCount >= Math.ceil(total * 0.4)) {
+      badge.textContent = "🥉 Material Fundamentals";
+      materialCompleted = false;
+    } else {
+      badge.textContent = "Choose materials and build your score.";
+      materialCompleted = false;
+    }
+  }
+
+  function updateFastenerPerformanceBadge() {
+    const badge = document.getElementById("fastenerPerformanceBadge");
+    if (!badge) return;
+    const total = getFastenerQuestionsForLevel(currentFastenerDifficulty).length || 1;
+    const correctCount = correctlyAnsweredFastenerQuestions[currentFastenerDifficulty].size;
+
+    if (correctCount === total) badge.textContent = "🏆 Perfect Level Score";
+    else if (correctCount >= Math.ceil(total * 0.7)) badge.textContent = "🥈 Strong Fastener Judgment";
+    else if (correctCount >= Math.ceil(total * 0.4)) badge.textContent = "🥉 Good Fastener Fundamentals";
+    else badge.textContent = "Answer correctly to earn a level badge.";
+  }
+
+  function updateGlobalBadge() {
+    const badge = document.getElementById("globalBadge");
+    if (!badge) return;
+
+    const allGearComplete = completedLevels.easy && completedLevels.medium && completedLevels.hard;
+    const allFastenerComplete = completedFastenerLevels.easy && completedFastenerLevels.medium && completedFastenerLevels.hard;
+
+    if (allGearComplete && allFastenerComplete && materialCompleted) {
+      badge.style.display = "block";
+      badge.textContent = "🏆 ENGINEERING MASTER — You completed Gear, Material, and Fastener challenges.";
+    } else if (allGearComplete && allFastenerComplete) {
+      badge.style.display = "block";
+      badge.textContent = "🥈 Hardware Specialist — Finish the Material Challenge for full Engineering Master status.";
+    } else if (allGearComplete || allFastenerComplete || materialCompleted) {
+      badge.style.display = "block";
+      badge.textContent = "🥉 Challenge Progress — Keep going to unlock the full Engineering Master badge.";
+    } else {
+      badge.style.display = "none";
+      badge.textContent = "";
+    }
+  }
+
+  function updateFastenerDifficultyButtons() {
+    document.querySelectorAll(".fastener-difficulty-btn").forEach(btn => {
+      btn.classList.remove("active-difficulty", "locked-difficulty");
+      btn.disabled = false;
+    });
+    const id = "fastener" + currentFastenerDifficulty.charAt(0).toUpperCase() + currentFastenerDifficulty.slice(1) + "Btn";
+    const activeBtn = document.getElementById(id);
+    if (activeBtn) activeBtn.classList.add("active-difficulty");
+  }
+
+  function updateFastenerProgress() {
+    const total = getFastenerQuestionsForLevel(currentFastenerDifficulty).length || 1;
+    const completedCount = correctlyAnsweredFastenerQuestions[currentFastenerDifficulty].size;
+    const percent = Math.round((completedCount / total) * 100);
+    const progressFill = document.getElementById("fastenerProgressFill");
+    const completionText = document.getElementById("fastenerCompletionText");
+    const counter = document.getElementById("fastenerQuestionCounter");
+
+    if (progressFill) progressFill.style.width = percent + "%";
+    if (completionText) completionText.textContent = percent + "% complete";
+    if (counter) counter.textContent = `Question ${currentFastener + 1} of ${total}`;
+  }
+
+  function updateFastenerBadge() {
+    const badge = document.getElementById("fastenerBadge");
+    if (!badge) return;
+    if (completedFastenerLevels.easy && completedFastenerLevels.medium && completedFastenerLevels.hard) badge.textContent = "🏆 Fastener Master";
+    else if (completedFastenerLevels.easy && completedFastenerLevels.medium) badge.textContent = "🥈 Advanced Fastener Learner";
+    else if (completedFastenerLevels.easy) badge.textContent = "🥉 Fastener Fundamentals Complete";
+    else badge.textContent = "Choose any level to begin.";
+  }
+
+  function updateFastenerStreak() {
+    const streakEl = document.getElementById("fastenerStreak");
+    if (streakEl) streakEl.textContent = fastenerStreak;
+  }
+
+  function showFastenerFinalMessage() {
+    const box = document.getElementById("fastenerFinalMessage");
+    if (!box) return;
+    if (completedFastenerLevels.easy && completedFastenerLevels.medium && completedFastenerLevels.hard) {
+      box.style.display = "block";
+      box.textContent = "Final Results: Fastener Master unlocked. You cleared Easy, Medium, and Hard.";
+    } else {
+      box.style.display = "none";
+      box.textContent = "";
+    }
+  }
+
+  function disableFastenerButtons(selectedChoice, isCorrect) {
+    const q = getCurrentFastenerQuestion();
+    document.querySelectorAll("#fastenerButtons button").forEach(btn => {
+      btn.disabled = true;
+      const optionValue = btn.getAttribute("data-option");
+      if (optionValue === selectedChoice) btn.classList.add(isCorrect ? "correct" : "wrong");
+      if (optionValue === q.answer) btn.classList.add("correct");
+    });
+  }
+
+  function renderFastenerButtons() {
+    const wrap = document.getElementById("fastenerButtons");
+    const q = getCurrentFastenerQuestion();
+    if (!wrap || !q) return;
+    wrap.innerHTML = "";
+
+    shuffleArray(fastenerOptionsByLevel[currentFastenerDifficulty] || []).forEach(option => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "fastener-option";
+      btn.textContent = fastenerButtonLabels[option] || option;
+      btn.setAttribute("data-option", option);
+      btn.onclick = function() { checkFastener(option); };
+      wrap.appendChild(btn);
+    });
+  }
+
+  function setFastenerDifficulty(level) {
+    clearTimeout(fastenerAdvanceTimeout);
+    currentFastenerDifficulty = level;
+    currentFastener = 0;
+    fastenerScore = correctlyAnsweredFastenerQuestions[level].size;
+    document.getElementById("fastenerScore").textContent = fastenerScore;
+    document.getElementById("fastenerDifficultyLabel").textContent = level.toUpperCase() + " LEVEL";
+    updateFastenerDifficultyButtons();
+    renderFastener();
+    updateFastenerPerformanceBadge();
+    updateGlobalBadge();
+  }
+
+  function renderFastener() {
+    const q = getCurrentFastenerQuestion();
+    if (!q) return;
+    const total = getFastenerQuestionsForLevel(currentFastenerDifficulty).length;
+    document.getElementById("fastenerPrompt").innerHTML = `<span class="question-counter">Question ${currentFastener + 1} of ${total}</span><strong>Scenario:</strong> ${q.prompt}<br><span class="challenge-tag">${q.tag}</span>`;
+    document.getElementById("fastenerResult").textContent = "";
+    document.getElementById("fastenerInfo").textContent = "";
+    renderFastenerButtons();
+    updateFastenerProgress();
+    showFastenerFinalMessage();
+  }
+
+  function checkFastener(choice) {
+    clearTimeout(fastenerAdvanceTimeout);
+    const q = getCurrentFastenerQuestion();
+    const result = document.getElementById("fastenerResult");
+    const info = document.getElementById("fastenerInfo");
+    const scoreEl = document.getElementById("fastenerScore");
+    const alreadyCorrect = correctlyAnsweredFastenerQuestions[currentFastenerDifficulty].has(q.id);
+    const isCorrect = choice === q.answer;
+
+    disableFastenerButtons(choice, isCorrect);
+
+    if (isCorrect) {
+      if (!alreadyCorrect) {
+        fastenerStreak += 1;
+        fastenerScore += fastenerStreak >= 3 ? 2 : 1;
+        correctlyAnsweredFastenerQuestions[currentFastenerDifficulty].add(q.id);
+      }
+      result.textContent = "Correct — this is the best choice for this application.";
+      if (scoreEl) scoreEl.textContent = fastenerScore;
+      info.textContent = q.info;
+      updateFastenerStreak();
+      updateFastenerProgress();
+      updateFastenerPerformanceBadge();
+      updateGlobalBadge();
+    } else {
+      fastenerStreak = 0;
+      result.textContent = "Close, but the stronger engineering choice here is " + (fastenerButtonLabels[q.answer] || q.answer) + ".";
+      const extraWhy = q.wrongInfo && q.wrongInfo[choice] ? " " + q.wrongInfo[choice] : "";
+      info.textContent = q.info + extraWhy;
+      updateFastenerStreak();
+      updateFastenerPerformanceBadge();
+      updateGlobalBadge();
+    }
+  }
+
+  function nextFastener() {
+    clearTimeout(fastenerAdvanceTimeout);
+    const total = getFastenerQuestionsForLevel(currentFastenerDifficulty).length;
+    if (correctlyAnsweredFastenerQuestions[currentFastenerDifficulty].size === total) {
+      completedFastenerLevels[currentFastenerDifficulty] = true;
+      updateFastenerProgress();
+      updateFastenerBadge();
+      updateFastenerDifficultyButtons();
+      showFastenerFinalMessage();
+      updateFastenerPerformanceBadge();
+      updateGlobalBadge();
+    }
+    currentFastener = (currentFastener + 1) % total;
+    renderFastener();
+  }
+
+  function resetFastenerScore() {
+    clearTimeout(fastenerAdvanceTimeout);
+    fastenerScore = 0;
+    currentFastener = 0;
+    fastenerStreak = 0;
+    completedFastenerLevels.easy = false;
+    completedFastenerLevels.medium = false;
+    completedFastenerLevels.hard = false;
+    correctlyAnsweredFastenerQuestions.easy.clear();
+    correctlyAnsweredFastenerQuestions.medium.clear();
+    correctlyAnsweredFastenerQuestions.hard.clear();
+    fastenerQuestionOrder.easy = shuffleArray(fastenerQuestions.easy);
+    fastenerQuestionOrder.medium = shuffleArray(fastenerQuestions.medium);
+    fastenerQuestionOrder.hard = shuffleArray(fastenerQuestions.hard);
+    document.getElementById("fastenerScore").textContent = fastenerScore;
+    document.getElementById("fastenerResult").textContent = "";
+    document.getElementById("fastenerInfo").textContent = "";
+    updateFastenerStreak();
+    updateFastenerProgress();
+    updateFastenerBadge();
+    updateFastenerPerformanceBadge();
+    showFastenerFinalMessage();
+    updateGlobalBadge();
+    setFastenerDifficulty("easy");
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const year = document.getElementById("year");
+    if (year) year.textContent = new Date().getFullYear();
+
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 768) closeMobileMenu();
+    });
+
+    updateGearStreak();
+    updateProgress();
+    updateBadge();
+    updateDifficultyButtons();
+    setDifficulty("easy");
+
+    renderMaterial();
+
+    updateFastenerStreak();
+    updateFastenerProgress();
+    updateFastenerBadge();
+    updateFastenerDifficultyButtons();
+    setFastenerDifficulty("easy");
+  });
+</script>
+
+
+
+
+<script>
+  (() => {
+    const page = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    const hash = window.location.hash.toLowerCase();
+    const current = `${page}${hash}`;
+
+    document.querySelectorAll('[data-nav-target]').forEach(link => {
+      const target = (link.getAttribute('data-nav-target') || '').toLowerCase();
+      const targetPage = target.split('#')[0] || 'index.html';
+      const isIndexDropdownChild = target.startsWith('index.html#capstone-projects')
+        || target.startsWith('index.html#school-projects')
+        || target.startsWith('index.html#cad-projects')
+        || target.startsWith('index.html#research');
+
+      let isActive = false;
+
+      if (target === current) {
+        isActive = true;
+      } else if (!hash && page === targetPage && (target === page || target === `${page}#portfolio`)) {
+        isActive = true;
+      } else if (page === 'index.html' && !hash && target === 'index.html#portfolio') {
+        isActive = true;
+      } else if (page === 'index.html' && hash && isIndexDropdownChild && target === current) {
+        isActive = true;
+      } else if (page === 'index.html' && hash && ['#capstone-projects', '#school-projects', '#cad-projects', '#research', '#portfolio'].includes(hash) && target === 'index.html#portfolio') {
+        isActive = true;
+      }
+
+      if (isActive) {
+        link.classList.add('active');
+        if (!link.hasAttribute('aria-current')) {
+          link.setAttribute('aria-current', 'page');
+        }
+      }
+    });
+
+    document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+      let closeTimer;
+      const open = () => {
+        clearTimeout(closeTimer);
+        dropdown.classList.add('is-open');
+      };
+      const close = () => {
+        closeTimer = setTimeout(() => {
+          dropdown.classList.remove('is-open');
+        }, 220);
+      };
+
+      dropdown.addEventListener('mouseenter', open);
+      dropdown.addEventListener('mouseleave', close);
+      dropdown.addEventListener('focusin', open);
+      dropdown.addEventListener('focusout', () => {
+        setTimeout(() => {
+          if (!dropdown.contains(document.activeElement)) {
+            dropdown.classList.remove('is-open');
+          }
+        }, 0);
+      });
+    });
+  })();
+</script>
+
+</body>
+
+</html>
