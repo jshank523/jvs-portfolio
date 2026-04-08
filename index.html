@@ -9,399 +9,775 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" />
 
   <style>
+
+    :root {
+      --bg: #f4f7fb;
+      --surface: rgba(255, 255, 255, 0.9);
+      --surface-strong: #ffffff;
+      --text: #132238;
+      --muted: #5d6b7f;
+      --navy: #0f2747;
+      --navy-2: #183761;
+      --accent: #f2c94c;
+      --accent-2: #fff2c4;
+      --border: rgba(15, 39, 71, 0.1);
+      --shadow: 0 18px 45px rgba(11, 25, 48, 0.12);
+      --radius: 24px;
+      --radius-sm: 16px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
-      background-color: #ffffff;
-      color: #000000;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      padding-top: 70px; /* offset for fixed navbar */
+      margin: 0;
+      padding-top: 96px;
+      font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(242, 201, 76, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(24, 55, 97, 0.12), transparent 24%),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+      min-height: 100vh;
     }
 
-    /* Sticky navbar */
+    a { color: inherit; text-decoration: none; }
+
+    .w3-content {
+      width: min(calc(100% - 32px), var(--max)) !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+
     #navbar {
       position: fixed;
       top: 0;
+      left: 0;
       width: 100%;
-      z-index: 999;
-      background-color: #001f3f; /* navy */
-      color: white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 14px 18px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(15, 39, 71, 0.08);
+      box-shadow: none;
+      overflow: visible;
     }
 
-    /* Gold hover */
+    #navbar .w3-bar-item,
+    #navbar .w3-button,
+    #navbar a,
+    #navbar button {
+      float: none !important;
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      min-height: 46px;
+      padding: 10px 16px !important;
+      background: transparent !important;
+      color: var(--muted) !important;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      transition: 0.2s ease;
+      border: none;
+    }
+
+    #navbar a:hover,
+    #navbar button:hover,
     .w3-hover-gold:hover,
     .dropdown-content a:hover,
     .w3-button:hover {
-      background-color: #FFD700 !important;
-      color: #001f3f !important;
+      background: var(--navy) !important;
+      color: #fff !important;
+      transform: translateY(-1px);
     }
 
-    /* Dropdown */
+    .brand {
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 16px !important;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, var(--navy), var(--navy-2)) !important;
+      color: #fff !important;
+      box-shadow: 0 10px 24px rgba(15, 39, 71, 0.2);
+      gap: 12px;
+      margin-right: 8px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.12);
+      color: white;
+      font-size: 0.9rem;
+      box-shadow: none;
+    }
+
+    .w3-dropdown-hover { position: relative; padding-bottom: 14px; margin-bottom: -14px; }
+
     .dropdown-content {
-      background-color: #001f3f;
-      border-radius: 6px;
-      min-width: 220px;
+      position: absolute;
+      top: calc(100% - 2px);
+      left: 0;
+      z-index: 10000;
+      min-width: 240px;
+      padding: 8px;
+      border-radius: 20px;
+      background: rgba(15, 39, 71, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 40px rgba(11, 25, 48, 0.25);
     }
-    .dropdown-content a {
-      color: white !important;
-      font-weight: 500;
-    }
-    .fa-caret-down { margin-left: 6px; }
 
-    /* Media tiles (images + video) */
-    .project-media {
+    .dropdown-content::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -14px;
+      height: 14px;
+    }
+
+    .dropdown-content a {
       width: 100%;
-      border-radius: 10px;
+      justify-content: flex-start !important;
+      color: rgba(255,255,255,0.88) !important;
+      border-radius: 14px !important;
+      font-weight: 600;
+    }
+
+    .w3-dropdown-hover .dropdown-content {
+      display: block !important;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+    }
+
+    .w3-dropdown-hover.is-open .dropdown-content,
+    .w3-dropdown-hover:hover .dropdown-content,
+    .w3-dropdown-hover:focus-within .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    header.w3-container {
+      padding-top: 48px !important;
+      padding-bottom: 36px !important;
+      background: transparent !important;
+    }
+
+    header .w3-content {
+      background: linear-gradient(135deg, rgba(15, 39, 71, 0.98), rgba(24, 55, 97, 0.94));
+      color: white;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      isolation: isolate;
+      padding: 12px 0;
+    }
+
+    header .w3-content::before,
+    header .w3-content::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      z-index: -1;
+    }
+    header .w3-content::before {
+      width: 300px; height: 300px; top: -120px; right: -40px;
+    }
+    header .w3-content::after {
+      width: 220px; height: 220px; bottom: -100px; left: -60px;
+    }
+
+    header .w3-row-padding {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 28px 28px;
+    }
+
+    header .w3-col.m4,
+    header .w3-col.m8 {
+      float: none;
+    }
+
+    header .w3-col.m4 {
+      width: 34%;
+      text-align: center;
+    }
+    header .w3-col.m8 {
+      width: 66%;
+      text-align: left !important;
+    }
+
+    header img[alt="Jacob V. Shankel"] {
+      width: min(240px, 80%) !important;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 26px !important;
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: 0 18px 36px rgba(0,0,0,0.24) !important;
+    }
+
+    h1, h2, h3, h4 {
+      letter-spacing: -0.03em;
+    }
+    header h1 {
+      color: white;
+      font-size: clamp(2.6rem, 5vw, 4.4rem) !important;
+      line-height: 1.02;
+      margin: 0 0 10px !important;
+    }
+    header h3 {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: rgba(255,255,255,0.95) !important;
+      margin: 0 !important;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    header p {
+      color: rgba(255,255,255,0.86);
+      font-size: 1.06rem !important;
+      line-height: 1.7 !important;
+      max-width: 62ch;
+    }
+
+    .resume-button,
+    .contact-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font-weight: 700;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      font-size: 0.96rem;
+      text-decoration: none;
+    }
+    .resume-button {
+      background: var(--accent);
+      color: #1d2b3d !important;
+      box-shadow: 0 14px 24px rgba(242, 201, 76, 0.28);
+    }
+    .contact-button {
+      background: var(--navy);
+      color: white !important;
+      box-shadow: 0 12px 22px rgba(15, 39, 71, 0.18);
+      margin: 8px;
+    }
+    .resume-button:hover,
+    .contact-button:hover {
+      transform: translateY(-2px);
+    }
+
+    section.w3-container {
+      padding-top: 26px !important;
+      padding-bottom: 58px !important;
+      background: transparent !important;
+    }
+
+    section > .w3-content > h2,
+    section > .w3-content > h3 {
       margin-bottom: 10px;
-      cursor: pointer;
+      font-size: clamp(1.8rem, 3vw, 2.5rem) !important;
+    }
+
+    hr {
+      border: none !important;
+      height: 4px;
+      width: 82px !important;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--navy), var(--accent));
+      margin-top: 14px !important;
+      margin-bottom: 38px !important;
+      opacity: 1;
+    }
+
+    #portfolio > .w3-content > div,
+    #resume > .w3-content,
+    #contact > .w3-content {
+      position: relative;
+    }
+
+    .w3-row-padding.w3-margin-bottom,
+    .w3-row-padding.w3-margin-top,
+    #research .w3-row-padding,
+    #resume .w3-row-padding.w3-margin-top {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      margin-top: 0 !important;
+      margin-bottom: 24px !important;
+      padding: 26px !important;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .w3-row-padding::before,
+    .w3-row-padding::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    #capstone-projects > .w3-row-padding,
+    #school-projects > .w3-row-padding,
+    #research .w3-row-padding,
+    #resume .w3-row-padding.w3-margin-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .w3-col.m6,
+    .w3-col.m12,
+    .w3-half,
+    .w3-col.m4,
+    .w3-col.s6 {
+      float: none !important;
+      padding: 0 8px !important;
+    }
+
+    #capstone-projects > .w3-row-padding > .w3-col.m6,
+    #research .w3-col.m6,
+    #school-projects .w3-col.m6,
+    #resume .w3-half {
+      flex: 1 1 320px;
+      width: auto !important;
+    }
+
+    #school-projects .w3-col.m12 { width: 100% !important; }
+
+    .cad-image-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .project-media,
+    .edu-photo,
+    .video-wrapper video {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 22px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(15, 39, 71, 0.08);
+      box-shadow: 0 12px 24px rgba(15, 39, 71, 0.12);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
       display: block;
     }
-    .project-media:hover {
-      transform: scale(1.02);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-    video.project-media {
-      cursor: default; /* don’t imply it opens lightbox */
-      background: #000;
+    .project-media:hover,
+    .edu-photo:hover,
+    .video-wrapper video:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 32px rgba(15, 39, 71, 0.16);
     }
 
-    hr { border: 2px solid #000; }
+    .video-wrapper {
+      max-width: none;
+      margin: 0;
+    }
 
-    footer {
-      background-color: #001f3f;
+    .tools-used {
+      margin-top: 14px;
+      padding: 16px;
+      background: linear-gradient(180deg, #f9fbff, #f3f7fc);
+      border: 1px solid rgba(15, 39, 71, 0.07);
+      border-left: none;
+      border-radius: 18px;
+      font-size: 15px;
+      color: var(--muted);
+    }
+    .tools-used strong { color: var(--navy); }
+    .tool-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 8px 8px 0 0;
+      padding: 7px 12px;
+      background: #edf3fa;
+      color: var(--navy);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 1px solid rgba(15, 39, 71, 0.08);
+    }
+
+    .capstone-subsection {
+      margin-top: 20px;
+      padding-left: 0;
+      border-left: none;
+    }
+
+    .cap-accordion,
+    .edu-accordion {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      text-align: left;
+      padding: 14px 16px;
+      margin-top: 12px;
+      background: var(--navy);
       color: white;
-      padding: 40px 0;
+      border: none;
+      border-radius: 18px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+      box-shadow: 0 12px 24px rgba(15, 39, 71, 0.14);
+    }
+    .cap-accordion:hover,
+    .edu-accordion:hover {
+      background: linear-gradient(135deg, var(--navy), var(--navy-2));
+      transform: translateY(-1px);
     }
 
-    /* LIGHTBOX */
+    .cap-panel,
+    .edu-panel {
+      display: none;
+      margin-top: 10px;
+      padding: 18px;
+      background: #f9fbff;
+      border: 1px solid rgba(15, 39, 71, 0.08);
+      border-radius: 18px;
+      color: var(--text);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+
+    .edu-arrow,
+    .cap-acc-arrow { transition: transform 0.25s ease; }
+    .edu-accordion.is-open .edu-arrow,
+    .cap-accordion.is-open .cap-acc-arrow { transform: rotate(180deg); }
+
+    ul { padding-left: 20px; }
+    li { margin-bottom: 8px; }
+    p { line-height: 1.7; }
+
+    #resume > .w3-content,
+    #contact > .w3-content {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      padding: 34px 26px;
+    }
+
+    #contact .w3-margin-top {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
     #lightbox {
       display: none;
       position: fixed;
+      inset: 0;
       z-index: 9999;
-      padding-top: 60px;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.9);
+      padding: 48px 24px;
+      background-color: rgba(8, 17, 32, 0.92);
+      backdrop-filter: blur(10px);
     }
     #lightbox img {
       margin: auto;
       display: block;
-      max-width: 85%;
-      border-radius: 12px;
+      max-width: min(92%, 1100px);
+      max-height: 86vh;
+      border-radius: 24px;
+      box-shadow: 0 24px 40px rgba(0,0,0,0.35);
     }
     #lightbox span {
       position: absolute;
-      top: 25px;
-      right: 35px;
+      top: 18px;
+      right: 28px;
       color: #fff;
-      font-size: 44px;
-      font-weight: bold;
+      font-size: 42px;
+      font-weight: 700;
       cursor: pointer;
     }
 
-    /* Contact buttons */
-    .contact-button {
-      display: inline-block;
-      margin: 10px 15px;
-      padding: 14px 26px;
-      background-color: #001f3f;
-      color: white;
-      border-radius: 8px;
-      font-size: 18px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-    .contact-button:hover {
-      background-color: #FFD700;
-      color: #001f3f;
-      border: 2px solid #001f3f;
-      box-shadow: 0 0 15px rgba(255,215,0,0.6);
-      transform: scale(1.03);
-    }
-    .contact-button i { margin-right: 8px; }
-
-   .edu-accordion {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-
-  text-align: left;
-  padding: 16px 20px;
-  margin-top: 12px;
-
-  background-color: #001f3f;
-  color: white;
-  border: none;
-  border-radius: 8px;
-
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s ease;
-}
-/* Video container */
-.video-wrapper {
-  max-width: 420px;      /* controls overall size */
-  margin: 0 auto;        /* center it */
-}
-
-/* Video itself */
-.video-wrapper video {
-  width: 100%;
-  border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
-}
-
-.edu-accordion:hover {
-  background-color: #FFD700;
-  color: #001f3f;
-}
-
-.edu-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.edu-icon {
-  font-size: 18px;
-  opacity: 0.95;
-}
-
-/* Arrow rotation animation */
-.edu-arrow {
-  transition: transform 0.25s ease;
-}
-
-/* When open */
-.edu-accordion.is-open .edu-arrow {
-  transform: rotate(180deg);
-}
-
-/* Panel styling */
-.edu-panel {
-  display: none;
-  padding: 18px;
-  margin-top: 8px;
-  border-radius: 8px;
-  background-color: #ffffff;
-  border: 1px solid rgba(0,0,0,0.15);
-}
-
-/* Photos */
-.edu-photo {
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
-  transition: transform 0.2s ease;
-}
-
-.edu-photo:hover {
-  transform: scale(1.03);
-}
-
-
-
-    /* Resume button */
-    .resume-button {
-      display: inline-block;
-      background-color: #001f3f;
-      color: white;
-      font-size: 18px;
-      font-weight: 600;
-      padding: 14px 28px;
-      border-radius: 8px;
-      text-decoration: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      border: 2px solid transparent;
-      transition: all 0.3s ease;
-    }
-    .resume-button:hover {
-      background-color: #FFD700;
-      color: #001f3f;
-      border: 2px solid #001f3f;
-      box-shadow: 0 0 15px rgba(255,215,0,0.6);
-      transform: scale(1.03);
-    }
-
-    /* Back to top */
     #backToTopBtn {
       display: none;
       position: fixed;
-      bottom: 30px;
-      right: 30px;
+      bottom: 24px;
+      right: 24px;
       z-index: 999;
-      font-size: 22px;
+      width: 54px;
+      height: 54px;
       border: none;
       outline: none;
-      background-color: #001f3f;
+      background: var(--navy);
       color: white;
       cursor: pointer;
-      padding: 14px 18px;
       border-radius: 50%;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: all 0.3s ease;
+      box-shadow: 0 18px 28px rgba(15, 39, 71, 0.2);
+      transition: 0.2s ease;
     }
     #backToTopBtn:hover {
-      background-color: #FFD700;
-      color: #001f3f;
-      box-shadow: 0 0 15px rgba(255,215,0,0.6);
-      transform: scale(1.1);
+      background: var(--accent);
+      color: var(--navy);
+      transform: translateY(-2px);
     }
-    /* Make sure dropdown can appear above everything */
-#navbar { overflow: visible; }
 
-.w3-dropdown-hover { position: relative; }
+    footer {
+      background: transparent;
+      color: var(--muted);
+      padding: 0 0 36px;
+    }
 
-/* Force dropdown menu to overlay content */
-.dropdown-content {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 10000;
-  background-color: #001f3f;
-  min-width: 220px;
-  border-radius: 6px;
-}
+    @media (max-width: 700px) {
+      .cad-image-pair {
+        grid-template-columns: 1fr;
+      }
 
-.dropdown-content a { color: white !important; }
-/* Capstone accordions */
-.cap-accordion {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+      .project-media {
+        height: 200px;
+      }
+    }
 
-  text-align: left;
-  padding: 12px 16px;
-  margin-top: 10px;
+    @media (max-width: 980px) {
+      body { padding-top: 132px; }
+      header .w3-row-padding,
+      #capstone-projects > .w3-row-padding,
+      #school-projects > .w3-row-padding,
+      #research .w3-row-padding,
+      #resume .w3-row-padding.w3-margin-top {
+        flex-direction: column;
+      }
+      header .w3-col.m4,
+      header .w3-col.m8 { width: 100%; }
+      header .w3-col.m8 { text-align: center !important; }
+      header p { margin-left: auto; margin-right: auto; }
+    }
 
-  background-color: #001f3f;
-  color: white;
-  border: none;
-  border-radius: 8px;
+    @media (max-width: 640px) {
+      body { padding-top: 160px; }
+      #navbar {
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+      #navbar .w3-bar-item,
+      #navbar .w3-button,
+      #navbar a,
+      #navbar button {
+        width: auto;
+      }
+      header .w3-row-padding,
+      .w3-row-padding.w3-margin-bottom,
+      .w3-row-padding.w3-margin-top,
+      #research .w3-row-padding,
+      #resume .w3-row-padding.w3-margin-top,
+      #resume > .w3-content,
+      #contact > .w3-content {
+        padding: 20px !important;
+      }
+      .contact-button,
+      .resume-button { width: 100%; }
+      #contact .w3-margin-top { align-items: stretch; }
+    }
 
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s ease;
-}
+  
+    .shell {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
 
-.cap-accordion:hover {
-  background-color: #FFD700;
-  color: #001f3f;
-}
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 14px 18px;
+      backdrop-filter: blur(18px);
+      background: rgba(255, 255, 255, 0.82);
+      border-bottom: 1px solid rgba(15, 39, 71, 0.08);
+      overflow: visible;
+    }
 
-.cap-acc-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+    .nav {
+      width: min(calc(100% - 32px), var(--max));
+      min-height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin: 0 auto;
+    }
 
-.cap-acc-icon { opacity: 0.95; }
+    .brand {
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 16px !important;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, var(--navy), var(--navy-2)) !important;
+      color: #fff !important;
+      box-shadow: 0 10px 24px rgba(15, 39, 71, 0.2);
+      gap: 12px;
+      margin-right: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-.cap-acc-arrow { transition: transform 0.25s ease; }
+    .brand:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(15, 39, 71, 0.24);
+    }
 
-.cap-accordion.is-open .cap-acc-arrow {
-  transform: rotate(180deg);
-}
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.12);
+      color: white;
+      font-size: 0.9rem;
+      box-shadow: none;
+    }
 
-.cap-panel {
-  display: none;
-  padding: 14px 16px;
-  margin-top: 8px;
-  border-radius: 8px;
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.15);
-}
-/* Nested accordion container */
-.capstone-subsection {
-  margin-top: 20px;
-  padding-left: 20px;
-  border-left: 4px solid #001f3f;
-}
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+    }
 
-/* Nested accordion buttons */
-.cap-accordion {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  text-align: left;
-  padding: 12px 16px;
-  margin-top: 10px;
+    .nav-links a,
+    .nav-links button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-weight: 700;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      border: none;
+      background: transparent;
+    }
 
-  background-color: #001f3f;
-  color: white;
-  border: none;
-  border-radius: 6px;
+    .nav-links a:hover,
+    .nav-links a.active,
+    .nav-dropdown:hover > a,
+    .nav-dropdown.is-open > a,
+    .nav-dropdown:focus-within > a,
+    .nav-dropdown > a.active {
+      background: var(--navy);
+      color: #fff;
+      transform: translateY(-1px);
+    }
 
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s ease;
-}
+    .nav-dropdown {
+      position: relative;
+      padding-bottom: 14px;
+      margin-bottom: -14px;
+    }
 
-.cap-accordion:hover {
-  background-color: #FFD700;
-  color: #001f3f;
-}
+    .nav-dropdown > a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-/* Arrow animation */
-.cap-acc-arrow {
-  transition: transform 0.25s ease;
-}
+    .nav-dropdown-content {
+      position: absolute;
+      top: calc(100% - 2px);
+      left: 0;
+      min-width: 240px;
+      padding: 8px;
+      display: block;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+      background: rgba(15, 39, 71, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(11, 25, 48, 0.25);
+      backdrop-filter: blur(14px);
+      z-index: 10000;
+    }
 
-.cap-accordion.is-open .cap-acc-arrow {
-  transform: rotate(180deg);
-}
+    .nav-dropdown-content::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -14px;
+      height: 14px;
+    }
 
-/* Panel styling */
-.cap-panel {
-  display: none;
-  margin: 8px 0 12px 0;
-  padding: 14px 18px;
-  background-color: #f9f9f9;
-  border-left: 4px solid #001f3f;
-  border-radius: 6px;
-  font-size: 15px;
-}
-/* Tools Used Tag Box */
-.tools-used {
-  margin-top: 12px;
-  padding: 12px;
-  background-color: #f5f5f5;
-  border-left: 5px solid #001f3f;
-  border-radius: 6px;
-  font-size: 15px;
-}
+    .nav-dropdown-content a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: rgba(255,255,255,0.88);
+    }
 
-.tools-used strong {
-  color: #001f3f;
-}
+    .nav-dropdown-content a:hover {
+      background: var(--navy);
+      color: #fff;
+      transform: none;
+    }
 
-.tool-tag {
-  display: inline-block;
-  margin: 4px 6px 0 0;
-  padding: 6px 10px;
-  background-color: #001f3f;
-  color: white;
-  border-radius: 6px;
-  font-size: 13px;
-}
+    .nav-dropdown.is-open .nav-dropdown-content,
+    .nav-dropdown:hover .nav-dropdown-content,
+    .nav-dropdown:focus-within .nav-dropdown-content {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
 
   </style>
 </head>
@@ -411,25 +787,31 @@
   <div id="home"></div>
 
   <!-- NAVIGATION BAR -->
-<nav class="w3-bar" id="navbar">
-  <a href="#home" class="w3-bar-item w3-button w3-hover-gold">Home</a>
 
-  <!-- Portfolio Dropdown -->
-  <div class="w3-dropdown-hover w3-bar-item">
-    <button class="w3-button w3-hover-gold">
-      Portfolio <i class="fa fa-caret-down"></i>
-    </button>
-
-    <div class="w3-dropdown-content w3-bar-block w3-card dropdown-content">
-      <a href="#capstone-projects" class="w3-bar-item w3-button">Capstone Projects</a>
-      <a href="#school-projects" class="w3-bar-item w3-button">School Projects</a>
-      <a href="#research" class="w3-bar-item w3-button">Research</a>
+  <header class="site-header">
+    <div class="shell nav" aria-label="Primary navigation">
+      <a class="brand" href="index.html" aria-label="Jacob V. Shankel home page" data-nav-target="index.html">
+        <span class="brand-mark">JVS</span>
+        <span>Jacob V. Shankel</span>
+      </a>
+      <nav class="nav-links">
+        <div class="nav-dropdown">
+          <a href="index.html#portfolio" class="nav-dropdown-toggle" data-nav-target="index.html#portfolio">Portfolio <span aria-hidden="true">▾</span></a>
+          <div class="nav-dropdown-content">
+  <a href="index.html#capstone-projects" data-nav-target="index.html#capstone-projects">Capstone Projects</a>
+  <a href="index.html#school-projects" data-nav-target="index.html#school-projects">School Projects</a>
+  <a href="index.html#cad-projects" data-nav-target="index.html#cad-projects">CAD Models & Drawings</a>
+  <a href="index.html#research" data-nav-target="index.html#research">Research</a>
+</div>
+        </div>
+        <a href="interactive-engineering-games.html" data-nav-target="interactive-engineering-games.html">Engineering Games</a>
+        <a href="aboutme.html" data-nav-target="aboutme.html">About Me</a>
+        <a href="index.html#resume" data-nav-target="index.html#resume">Resume</a>
+        <a href="index.html#contact" data-nav-target="index.html#contact">Contact</a>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <a href="#resume" class="w3-bar-item w3-button w3-hover-gold">Resume</a>
-  <a href="#contact" class="w3-bar-item w3-button w3-hover-gold">Contact</a>
-</nav>
 
 
   <!-- HEADER -->
@@ -690,7 +1072,116 @@ Experienced in client-driven design, system integration, and iterative testing t
     </div>
   </div>
 </div>
+<!-- ===================== -->
+<!-- CAD DESIGN PORTFOLIO -->
+<!-- ===================== -->
+<div id="cad-projects" class="w3-padding-32">
+  <h3 class="w3-center w3-xlarge">CAD Design Portfolio</h3>
+  <hr style="width:60px; margin:auto; margin-bottom:40px;">
 
+  
+
+  <!-- DUAL MOUNT BRACKET -->
+  <div class="w3-row-padding w3-margin-bottom">
+    <div class="w3-col m6">
+      <div class="cad-image-pair">
+        <img src="Screenshot 2026-04-07 213802.png" class="project-media" onclick="openLightbox(this)" alt="Dual Mount Bracket CAD model">
+        <img src="Screenshot 2026-04-07 214757.png" class="project-media" onclick="openLightbox(this)" alt="Dual Mount Bracket drawing">
+      </div>
+    </div>
+
+    <div class="w3-col m6">
+      <h4>Dual Mount Bracket</h4>
+
+      <p>
+        Designed a dual-mount bracket to support cylindrical components while maintaining structural rigidity under load. The geometry incorporates a triangular gusset to reinforce the connection between mounting points, reducing bending and improving overall stiffness.
+      </p>
+
+      <div class="tools-used">
+        <strong>Key Design Decisions:</strong>
+        <ul>
+          <li>Added gusset to improve load distribution and stiffness</li>
+          <li>Used concentric bosses for accurate alignment of cylindrical components</li>
+          <li>Positioned mounting holes to balance stability and manufacturability</li>
+        </ul>
+
+        <strong>Skills Demonstrated:</strong><br>
+        <span class="tool-tag">Feature-Based Modeling</span>
+        <span class="tool-tag">Structural Design</span>
+        <span class="tool-tag">Load Distribution</span>
+        <span class="tool-tag">Design for Strength</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LINKAGE BRACKET -->
+  <div class="w3-row-padding w3-margin-bottom">
+    <div class="w3-col m6">
+      <div class="cad-image-pair">
+        <img src="Screenshot 2026-04-07 213117.png" class="project-media" onclick="openLightbox(this)" alt="Linkage bracket CAD model">
+        <img src="Screenshot 2026-04-07 214454.png" class="project-media" onclick="openLightbox(this)" alt="Linkage bracket drawing">
+      </div>
+    </div>
+
+    <div class="w3-col m6">
+      <h4>Linkage / Pivot Bracket</h4>
+
+      <p>
+       Designed a linkage-style bracket to enable controlled rotational motion through a pinned joint while supporting vertical loading. The geometry maintains alignment between critical features to ensure smooth operation and structural integrity under load.
+      </p>
+
+      <div class="tools-used">
+        <strong>Key Design Decisions:</strong>
+        <ul>
+          <li>Designed cylindrical boss for pin-based rotation</li>
+          <li>Maintained alignment between vertical and base features</li>
+          <li>Added fillets to reduce stress concentrations</li>
+        </ul>
+
+        <strong>Skills Demonstrated:</strong><br>
+        <span class="tool-tag">Multi-Plane Modeling</span>
+        <span class="tool-tag">Mechanical Joints</span>
+        <span class="tool-tag">Functional Design</span>
+        <span class="tool-tag">Feature Integration</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLANGE -->
+  <div class="w3-row-padding w3-margin-bottom">
+    <div class="w3-col m6">
+      <div class="cad-image-pair">
+        <img src="Screenshot 2026-04-07 213546.png" class="project-media" onclick="openLightbox(this)" alt="Flange CAD model">
+        <img src="Screenshot 2026-04-07 215408.png" class="project-media" onclick="openLightbox(this)" alt="Flange drawing">
+      </div>
+    </div>
+
+    <div class="w3-col m6">
+      <h4>Flange Component</h4>
+
+      <p>
+        Created a circular flange with a central bore and evenly distributed bolt pattern.
+        The design emphasizes symmetry, alignment, and secure mounting capability.
+      </p>
+
+      <div class="tools-used">
+        <strong>Key Design Decisions:</strong>
+        <ul>
+          <li>Used circular pattern for consistent bolt spacing</li>
+          <li>Maintained concentric geometry for alignment</li>
+          <li>Designed for balanced load distribution</li>
+        </ul>
+
+        <strong>Skills Demonstrated:</strong><br>
+        <span class="tool-tag">Circular Pattern</span>
+        <span class="tool-tag">Symmetry</span>
+        <span class="tool-tag">Precision Modeling</span>
+        <span class="tool-tag">Geometric Control</span>
+      </div>
+    </div>
+  </div>
+
+</div>
 
       <!-- RESEARCH -->
       <div id="research" class="w3-padding-32" style="background-color:#f8f8f8;">
@@ -707,7 +1198,7 @@ Experienced in client-driven design, system integration, and iterative testing t
 Worked with a faculty advisor to develop a process for <strong>recycling used plastic dining hall silverware</strong> into usable <strong>3D printer filament</strong>. The project focused on evaluating material properties, processing methods, and consistency of recycled plastics for additive manufacturing applications.
 </p>
 <p>
-My role included <strong>material preparation and shredding.</strong>. The project demonstrated the feasibility of repurposing campus waste into functional manufacturing material while promoting sustainable engineering practices.
+My role included <strong>material preparation and shredding.</strong> The project demonstrated the feasibility of repurposing campus waste into functional manufacturing material while promoting sustainable engineering practices.
 <div class="tools-used">
   <strong>Tools & Skills Used:</strong><br>
   <span class="tool-tag">Material Processing</span>
@@ -913,5 +1404,115 @@ My role included <strong>material preparation and shredding.</strong>. The proje
     panel.style.display = isOpen ? "none" : "block";
     btn.classList.toggle("is-open", !isOpen);
   }
+
+  const gearQuestions = [
+    { src: "spur.jpg", answer: "spur", info: "Spur gears have straight teeth and transmit motion between parallel shafts." },
+    { src: "bevel.jpg", answer: "bevel", info: "Bevel gears are used to transmit motion between intersecting shafts, often at 90°." },
+    { src: "worm.jpg", answer: "worm", info: "Worm gears use a screw-like gear to achieve high reduction ratios and compact layouts." },
+    { src: "helical.jpg", answer: "helical", info: "Helical gears have angled teeth for smoother and quieter operation than spur gears." }
+  ];
+
+  let currentGear = 0;
+  let score = 0;
+
+  function renderGear() {
+    const q = gearQuestions[currentGear];
+    const img = document.getElementById('gearImage');
+    const result = document.getElementById('gearResult');
+    const info = document.getElementById('gearInfo');
+    if (!img || !result || !info) return;
+    img.src = q.src;
+    img.alt = q.answer + ' gear';
+    result.textContent = '';
+    info.textContent = '';
+  }
+
+  function checkAnswer(choice) {
+    const q = gearQuestions[currentGear];
+    const result = document.getElementById('gearResult');
+    const info = document.getElementById('gearInfo');
+    const scoreEl = document.getElementById('score');
+    if (choice === q.answer) {
+      result.textContent = 'Correct!';
+      score += 1;
+      scoreEl.textContent = score;
+    } else {
+      result.textContent = 'Not quite.';
+    }
+    info.textContent = q.info;
+  }
+
+  function nextGear() {
+    currentGear = (currentGear + 1) % gearQuestions.length;
+    renderGear();
+  }
+
+  renderGear();
 </script>
 
+
+
+<script>
+  (() => {
+    const page = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    const hash = window.location.hash.toLowerCase();
+    const current = `${page}${hash}`;
+
+    document.querySelectorAll('[data-nav-target]').forEach(link => {
+      const target = (link.getAttribute('data-nav-target') || '').toLowerCase();
+      const targetPage = target.split('#')[0] || 'index.html';
+     const isIndexDropdownChild = target.startsWith('index.html#capstone-projects')
+  || target.startsWith('index.html#school-projects')
+  || target.startsWith('index.html#cad-projects')
+  || target.startsWith('index.html#research');
+
+      let isActive = false;
+
+      if (target === current) {
+        isActive = true;
+      } else if (!hash && page === targetPage && (target === page || target === `${page}#portfolio`)) {
+        isActive = true;
+      } else if (page === 'index.html' && !hash && target === 'index.html#portfolio') {
+        isActive = true;
+      } else if (page === 'index.html' && hash && isIndexDropdownChild && target === current) {
+        isActive = true;
+    } else if (page === 'index.html' && hash && ['#capstone-projects', '#school-projects', '#cad-drawings', '#research', '#portfolio'].includes(hash) && target === 'index.html#portfolio') {
+  isActive = true;
+}
+
+      if (isActive) {
+        link.classList.add('active');
+        if (!link.hasAttribute('aria-current')) {
+          link.setAttribute('aria-current', 'page');
+        }
+      }
+    });
+
+    document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+      let closeTimer;
+      const open = () => {
+        clearTimeout(closeTimer);
+        dropdown.classList.add('is-open');
+      };
+      const close = () => {
+        closeTimer = setTimeout(() => {
+          dropdown.classList.remove('is-open');
+        }, 220);
+      };
+
+      dropdown.addEventListener('mouseenter', open);
+      dropdown.addEventListener('mouseleave', close);
+      dropdown.addEventListener('focusin', open);
+      dropdown.addEventListener('focusout', () => {
+        setTimeout(() => {
+          if (!dropdown.contains(document.activeElement)) {
+            dropdown.classList.remove('is-open');
+          }
+        }, 0);
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
