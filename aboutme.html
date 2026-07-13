@@ -628,27 +628,34 @@
       border: 1px solid rgba(15, 39, 71, 0.12);
     }
 
-    .footer {
-      background: transparent;
-      color: var(--muted);
-      padding: 0 0 36px;
-    }
+footer {
+  background: transparent;
+  color: var(--muted);
+  padding: 0 0 36px;
+  text-align: center;
+}
 
-    .footer .footer-inner {
-      width: min(calc(100% - 32px), 700px);
-      margin: 0 auto;
-      text-align: center;
-    }
+footer p {
+  margin: 1em 0;
+}
 
-    .footer p {
-      margin: 0 0 12px;
-      line-height: 1.7;
-    }
+footer .w3-small {
+  font-size: 12px;
+}
 
-    .footer a {
-      color: inherit;
-    }
+footer .w3-xlarge {
+  font-size: 24px;
+}
 
+footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+footer a:hover .fa-linkedin {
+  color: #0A66C2;
+  transform: translateY(-1px);
+}
 
     .activity-grid {
       display: grid;
@@ -988,6 +995,8 @@
     }
 
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="icon" type="image/png" href="Jfavicon.v2.png">
 </head>
 <body>
   
@@ -998,20 +1007,25 @@
         <span>Jacob V. Shankel</span>
       </a>
       <nav class="nav-links">
-        <div class="nav-dropdown">
-          <a href="index.html#portfolio" class="nav-dropdown-toggle" data-nav-target="index.html#portfolio">Portfolio <span aria-hidden="true">▾</span></a>
-          <div class="nav-dropdown-content">
-            <a href="index.html#capstone-projects" data-nav-target="index.html#capstone-projects">Capstone Projects</a>
-            <a href="index.html#school-projects" data-nav-target="index.html#school-projects">School Projects</a>
-            <a href="index.html#cad-projects" data-nav-target="index.html#cad-projects">CAD Models &amp; Drawings</a>
-            <a href="index.html#research" data-nav-target="index.html#research">Research</a>
-          </div>
-        </div>
-        <a href="interactive-engineering-games.html" data-nav-target="interactive-engineering-games.html">Engineering Games</a>
-        <a href="aboutme.html" data-nav-target="aboutme.html">About Me</a>
-        <a href="index.html#resume" data-nav-target="index.html#resume">Resume</a>
-        <a href="index.html#contact" data-nav-target="index.html#contact">Contact</a>
-      </nav>
+  <div class="nav-dropdown">
+    <a href="index.html#portfolio" class="nav-dropdown-toggle" data-nav-target="index.html#portfolio">
+      Portfolio <span aria-hidden="true">▾</span>
+    </a>
+
+    <div class="nav-dropdown-content">
+      <a href="index.html#personal-projects" data-nav-target="index.html#personal-projects">Personal Projects</a>
+      <a href="index.html#capstone-projects" data-nav-target="index.html#capstone-projects">Capstone Projects</a>
+      <a href="index.html#school-projects" data-nav-target="index.html#school-projects">School Projects</a>
+      <a href="index.html#cad-projects" data-nav-target="index.html#cad-projects">CAD Models &amp; Drawings</a>
+      <a href="index.html#research" data-nav-target="index.html#research">Research</a>
+    </div>
+  </div>
+
+  <a href="interactive-engineering-games.html" data-nav-target="interactive-engineering-games.html">Engineering Games</a>
+  <a href="aboutme.html" data-nav-target="aboutme.html">About Me</a>
+  <a href="index.html#resume" data-nav-target="index.html#resume">Resume</a>
+  <a href="index.html#contact" data-nav-target="index.html#contact">Contact</a>
+</nav>
     </div>
   </header>
 
@@ -1256,21 +1270,24 @@
     </div>
   </div>
 
-  <footer class="footer">
-    <div class="footer-inner">
-      <p>© <span id="year"></span> Jacob V. Shankel | Mechanical Engineer</p>
-      <p>
-        <a href="https://www.linkedin.com/in/jacobvshankel/" target="_blank" rel="noopener" aria-label="LinkedIn profile">
-          LinkedIn
-        </a>
-      </p>
-      <p>Built with HTML &amp; CSS</p>
-    </div>
-  </footer>
+  <footer class="w3-center">
+  <p>© <span id="year"></span> Jacob V. Shankel | Mechanical Engineer</p>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  <p>
+    <a href="https://www.linkedin.com/in/jacobvshankel/" target="_blank" rel="noopener">
+      <i class="fa fa-linkedin w3-hover-opacity w3-xlarge"></i>
+    </a>
+    <a href="https://github.com/jshank523" target="_blank" rel="noopener" style="margin-left:18px;">
+    <i class="fa fa-github w3-hover-opacity w3-xlarge"></i>
+  </a>
+  </p>
+
+  <p class="w3-small">Built with HTML, CSS, JavaScript & W3.CSS</p>
+</footer>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 
   <script>
     const lightbox = document.getElementById("lightbox");
@@ -1507,7 +1524,8 @@
       const target = (link.getAttribute('data-nav-target') || '').toLowerCase();
       const targetPage = normalizePage(target.split('#')[0] || 'index.html');
       const normalizedTarget = target.includes('#') ? `${targetPage}#${target.split('#')[1]}` : targetPage;
-      const isIndexDropdownChild = normalizedTarget.startsWith('index.html#capstone-projects')
+      const isIndexDropdownChild = normalizedTarget.startsWith('index.html#personal-projects')
+  || normalizedTarget.startsWith('index.html#capstone-projects')
         || normalizedTarget.startsWith('index.html#school-projects')
         || normalizedTarget.startsWith('index.html#cad-projects')
         || normalizedTarget.startsWith('index.html#research');
@@ -1522,7 +1540,7 @@
         isActive = true;
       } else if (page === 'index.html' && hash && isIndexDropdownChild && normalizedTarget === current) {
         isActive = true;
-      } else if (page === 'index.html' && hash && ['#capstone-projects', '#school-projects', '#cad-projects', '#research', '#portfolio'].includes(hash) && normalizedTarget === 'index.html#portfolio') {
+      } else if (page === 'index.html' && hash && ['#personal-projects', '#capstone-projects', '#school-projects', '#cad-projects', '#research', '#portfolio'].includes(hash) && normalizedTarget === 'index.html#portfolio') {
         isActive = true;
       }
 
