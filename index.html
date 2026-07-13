@@ -109,21 +109,36 @@
       transform: translateY(-1px);
     }
 
-    .brand {
-      display: inline-flex !important;
-      align-items: center;
-      justify-content: center;
-      min-height: 46px;
-      padding: 10px 16px !important;
-      border-radius: 999px;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      background: linear-gradient(135deg, var(--navy), var(--navy-2)) !important;
-      color: #fff !important;
-      box-shadow: 0 10px 24px rgba(15, 39, 71, 0.2);
-      gap: 12px;
-      margin-right: 8px;
-    }
+    #navbar .brand{
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:center;
+  min-height:46px;
+  padding:10px 16px !important;
+  border-radius:999px;
+  font-size:1rem !important;
+  font-weight:800;
+  letter-spacing:0.02em;
+  background:linear-gradient(135deg, var(--navy), var(--navy-2)) !important;
+  color:white !important;
+  box-shadow:0 10px 24px rgba(15,39,71,0.2);
+  gap:12px;
+  margin-right:8px;
+  line-height:1;
+}
+
+#navbar .brand-mark{
+  width:32px;
+  height:32px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,0.12);
+  color:white;
+  font-size:0.9rem;
+  font-weight:800;
+  line-height:1;
+}
 
     .brand-mark {
       width: 32px;
@@ -359,6 +374,7 @@
       display: none !important;
     }
 
+    #personal-projects > .w3-row-padding,
     #capstone-projects > .w3-row-padding,
     #school-projects > .w3-row-padding,
     #research .w3-row-padding,
@@ -378,6 +394,7 @@
       padding: 0 8px !important;
     }
 
+    #personal-projects > .w3-row-padding > .w3-col.m6,
     #capstone-projects > .w3-row-padding > .w3-col.m6,
     #research .w3-col.m6,
     #school-projects .w3-col.m6,
@@ -396,11 +413,26 @@
     }
 
     .project-media,
-    .edu-photo,
-    .video-wrapper video {
+.edu-photo,
+.video-wrapper video {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  object-position: center;
+  background: #fff;
+  border-radius: 22px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(15, 39, 71, 0.08);
+  box-shadow: 0 12px 24px rgba(15, 39, 71, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: block;
+}
+
+    .radar-hero {
       width: 100%;
-      height: 180px;
-      object-fit: contain;
+      height: 265px;
+      object-fit: cover;
+      object-position: center;
       background: #fff;
       border-radius: 22px;
       margin-bottom: 10px;
@@ -408,7 +440,46 @@
       box-shadow: 0 12px 24px rgba(15, 39, 71, 0.12);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       display: block;
+      cursor: pointer;
     }
+
+    .radar-hero:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 32px rgba(15, 39, 71, 0.16);
+    }
+    .radar-gallery{
+    display:flex;
+    gap:12px;
+    margin-top:15px;
+}
+
+.gallery-thumb{
+    flex:1;
+    height:110px;
+    object-fit:cover;
+    border-radius:14px;
+    cursor:pointer;
+    border:1px solid rgba(15,39,71,.08);
+    box-shadow:0 8px 18px rgba(15,39,71,.12);
+    transition:.25s;
+}
+
+.gallery-thumb:hover{
+    transform:translateY(-3px);
+    box-shadow:0 14px 26px rgba(15,39,71,.18);
+}
+
+.radar-video{
+    width:100%;
+    height:230px;
+    object-fit:cover;
+    border-radius:18px;
+    margin-top:18px;
+    background:#000;
+    border:1px solid rgba(15,39,71,.08);
+    box-shadow:0 10px 22px rgba(15,39,71,.14);
+    display:block;
+}
     .project-media:hover,
     .edu-photo:hover,
     .video-wrapper video:hover {
@@ -579,11 +650,20 @@
       .project-media {
         height: 200px;
       }
+
+      .radar-hero {
+        height: 220px;
+      }
+
+      .radar-video {
+        height: 220px;
+      }
     }
 
     @media (max-width: 980px) {
       body { padding-top: 132px; }
       header .w3-row-padding,
+      #personal-projects > .w3-row-padding,
       #capstone-projects > .w3-row-padding,
       #school-projects > .w3-row-padding,
       #research .w3-row-padding,
@@ -788,6 +868,56 @@
       pointer-events: auto;
       transform: translateY(0);
     }
+    .printer-gallery{
+  width:100%;
+}
+
+.printer-hero{
+  width:100%;
+  height:300px;
+  object-fit:cover;
+  object-position:center;
+  border-radius:22px;
+  border:1px solid rgba(15,39,71,.08);
+  box-shadow:0 12px 24px rgba(15,39,71,.12);
+  cursor:pointer;
+  display:block;
+}
+
+.printer-thumbs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:14px;
+}
+
+.printer-thumbs img{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  border-radius:16px;
+  border:1px solid rgba(15,39,71,.08);
+  box-shadow:0 8px 18px rgba(15,39,71,.12);
+  cursor:pointer;
+  display:block;
+}
+
+.printer-receipt{
+  width:100%;
+  height:230px;
+  object-fit:cover;
+  object-position:center;
+  margin-top:14px;
+  border-radius:18px;
+  border:1px solid rgba(15,39,71,.08);
+  box-shadow:0 10px 22px rgba(15,39,71,.14);
+  cursor:pointer;
+  display:block;
+}
+footer a:hover .fa-linkedin{
+    color:#0A66C2;    /* LinkedIn blue */
+    transform: translateY(-1px);
+}
 
   </style>
 </head>
@@ -808,6 +938,7 @@
         <div class="nav-dropdown">
           <a href="index.html#portfolio" class="nav-dropdown-toggle" data-nav-target="index.html#portfolio">Portfolio <span aria-hidden="true">▾</span></a>
           <div class="nav-dropdown-content">
+  <a href="index.html#personal-projects" data-nav-target="index.html#personal-projects">Personal Projects</a>
   <a href="index.html#capstone-projects" data-nav-target="index.html#capstone-projects">Capstone Projects</a>
   <a href="index.html#school-projects" data-nav-target="index.html#school-projects">School Projects</a>
   <a href="index.html#cad-projects" data-nav-target="index.html#cad-projects">CAD Models & Drawings</a>
@@ -864,6 +995,175 @@ Experienced in client-driven design, system integration, and iterative testing t
     <div class="w3-content" style="max-width:1200px;">
       <h2 class="w3-center w3-xxlarge">Portfolio</h2>
       <hr style="width:80px; border:3px solid #001f3f; margin:auto; margin-bottom:50px;">
+
+      <!-- PERSONAL PROJECTS -->
+      <div id="personal-projects" class="w3-padding-32">
+        <h3 class="w3-center w3-xlarge">Personal Projects</h3>
+        <hr style="width:60px; margin:auto; margin-bottom:40px;">
+
+        <!-- Personal Project: Radar Vision -->
+        <div class="w3-row-padding w3-margin-bottom">
+          <div class="w3-col m6">
+            <img src="RADARVISION.png"
+     alt="Radar Vision desktop aircraft radar display"
+     class="radar-hero"
+     onclick="openLightbox(this)">
+
+<div class="radar-gallery">
+
+    <img src="RADARVISION1.png"
+         class="gallery-thumb"
+         onclick="openLightbox(this)"
+         alt="Inside electronics">
+
+    <img src="RADARVISION2.png"
+         class="gallery-thumb"
+         onclick="openLightbox(this)"
+         alt="Rear view">
+
+</div>
+
+<video class="radar-video" controls muted loop playsinline preload="metadata">
+    <source src="IMG_4793.MOV" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<p style="text-align:center; font-style:italic; margin-top:12px;">
+    Custom 3D-printed aircraft radar display
+</p>
+          </div>
+
+          <div class="w3-col m6">
+            <h4>Personal Project — Radar Vision</h4>
+            <p>
+              Designed and fabricated a custom mid-century modern-inspired enclosure for an open-source ESP32 aircraft radar project. The project involved CAD design, 3D printing, soldering and wiring electronics, hardware integration, software configuration, and final assembly to create a polished desktop display.
+            </p>
+
+            <div class="tools-used">
+              <strong>Tools & Skills Used:</strong><br>
+              <span class="tool-tag">CAD</span>
+              <span class="tool-tag">3D Printing</span>
+              <span class="tool-tag">Electronics Integration</span>
+              <span class="tool-tag">Product Design</span>
+            </div>
+
+            <div class="capstone-subsection">
+              <button class="cap-accordion" onclick="toggleCap('radarTab1', this)">
+                <span>
+                  <i class="fa fa-cube"></i> Enclosure Design & Fabrication
+                </span>
+                <i class="fa fa-chevron-down cap-acc-arrow"></i>
+              </button>
+
+              <div id="radarTab1" class="cap-panel">
+                <p>
+The enclosure was designed in CAD with a focus on product aesthetics, manufacturability, and ease of assembly. Inspired by mid-century modern television designs, the housing incorporates mounting features for the display, controls, and electronics, along with a removable rear panel secured by embedded magnets for tool-free access. The geometry was optimized for reliable 3D printing while producing a clean, consumer-style appearance.
+</p>
+              </div>
+
+              <button class="cap-accordion" onclick="toggleCap('radarTab2', this)">
+                <span>
+                  <i class="fa fa-microchip"></i> Electronics, Software & Integration
+                </span>
+                <i class="fa fa-chevron-down cap-acc-arrow"></i>
+              </button>
+
+              <div id="radarTab2" class="cap-panel">
+                <p>
+This project required integrating the display, controls, and electronics into a custom-designed enclosure while ensuring reliable electrical connections and clean internal cable routing. I soldered and assembled the hardware, configured the open-source ESP32 radar software, and performed system testing to verify proper functionality. The completed device highlights skills in electronics assembly, system integration, debugging, and product development.
+</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+<!-- Personal Project: Idea Printer -->
+<div class="w3-row-padding w3-margin-bottom">
+
+  <div class="w3-col m6">
+  <img src="IMG_4794.jpeg"
+       alt="Idea Printer front view"
+       class="radar-hero"
+       onclick="openLightbox(this)">
+
+  <div class="radar-gallery">
+    <img src="IMG_4795.jpeg"
+         class="gallery-thumb"
+         onclick="openLightbox(this)"
+         alt="Idea Printer side view">
+
+    <img src="IMG_4796.jpeg"
+         class="gallery-thumb"
+         onclick="openLightbox(this)"
+         alt="Idea Printer internal view">
+  </div>
+
+  <img src="IMG_4801.jpeg"
+       alt="Printed idea receipt"
+       class="radar-video"
+       onclick="openLightbox(this)"
+       style="object-fit:cover; background:white;">
+
+  <p style="text-align:center; font-style:italic; margin-top:12px;">
+    Cloud-connected desktop idea printer
+  </p>
+</div>
+
+  <div class="w3-col m6">
+    <h4>Personal Project — Idea Printer</h4>
+
+    <p>
+      Designed and built a custom desktop idea printer that turns text messages into physical reminder notes. By integrating a Telegram bot with a cloud automation workflow, ideas can be submitted from anywhere and automatically printed as receipt-sized notes to pin on an idea board.
+    </p>
+
+    <div class="tools-used">
+      <strong>Tools & Skills Used:</strong><br>
+      <span class="tool-tag">CAD</span>
+      <span class="tool-tag">3D Printing</span>
+      <span class="tool-tag">Telegram Bot API</span>
+      <span class="tool-tag">Automation</span>
+      <span class="tool-tag">API Integration</span>
+      <span class="tool-tag">Hardware Integration</span>
+      <span class="tool-tag">Product Design</span>
+    </div>
+
+    <div class="capstone-subsection">
+      <button class="cap-accordion" onclick="toggleCap('printerTab1', this)">
+        <span><i class="fa fa-cube"></i> Product Design & Enclosure</span>
+        <i class="fa fa-chevron-down cap-acc-arrow"></i>
+      </button>
+
+      <div id="printerTab1" class="cap-panel">
+        <p>
+          The enclosure was designed to turn a standard thermal receipt printer into a compact desktop appliance. The housing provides access to the paper slot, controls, and power while giving the printer a cleaner finished appearance. The design was optimized for 3D printing and practical assembly.
+        </p>
+      </div>
+
+      <button class="cap-accordion" onclick="toggleCap('printerTab2', this)">
+        <span><i class="fa fa-code"></i> Software & Automation</span>
+        <i class="fa fa-chevron-down cap-acc-arrow"></i>
+      </button>
+
+      <div id="printerTab2" class="cap-panel">
+        <p>
+          A Telegram bot receives ideas from my phone and sends them through an automation workflow to the receipt printer at home. This allows quick ideas to be captured from anywhere and turned into physical notes that can be saved, organized, or pinned to a board.
+        </p>
+      </div>
+
+      <button class="cap-accordion" onclick="toggleCap('printerTab3', this)">
+        <span><i class="fa fa-microchip"></i> Hardware Integration</span>
+        <i class="fa fa-chevron-down cap-acc-arrow"></i>
+      </button>
+
+      <div id="printerTab3" class="cap-panel">
+        <p>
+          The project integrates the thermal printer, custom enclosure, power connections, and cloud-connected messaging workflow into a functional desktop system. The final build demonstrates hardware packaging, system integration, automation, and practical product development.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
       <!-- CAPSTONE PROJECTS -->
       <div id="capstone-projects" class="w3-padding-32">
@@ -1399,9 +1699,12 @@ My role included <strong>material preparation and shredding.</strong> The projec
     <a href="https://www.linkedin.com/in/jacobvshankel/" target="_blank" rel="noopener">
       <i class="fa fa-linkedin w3-hover-opacity w3-xlarge"></i>
     </a>
+    <a href="https://github.com/jshank523" target="_blank" rel="noopener" style="margin-left:18px;">
+    <i class="fa fa-github w3-hover-opacity w3-xlarge"></i>
+  </a>
   </p>
 
-  <p class="w3-small">Built with HTML & W3.CSS</p>
+  <p class="w3-small">Built with HTML, CSS, JavaScript & W3.CSS</p>
 </footer>
 
 <script>
@@ -1471,7 +1774,8 @@ My role included <strong>material preparation and shredding.</strong> The projec
     document.querySelectorAll('[data-nav-target]').forEach(link => {
       const target = (link.getAttribute('data-nav-target') || '').toLowerCase();
       const targetPage = target.split('#')[0] || 'index.html';
-     const isIndexDropdownChild = target.startsWith('index.html#capstone-projects')
+     const isIndexDropdownChild = target.startsWith('index.html#personal-projects')
+  || target.startsWith('index.html#capstone-projects')
   || target.startsWith('index.html#school-projects')
   || target.startsWith('index.html#cad-projects')
   || target.startsWith('index.html#research');
@@ -1486,7 +1790,7 @@ My role included <strong>material preparation and shredding.</strong> The projec
         isActive = true;
       } else if (page === 'index.html' && hash && isIndexDropdownChild && target === current) {
         isActive = true;
-    } else if (page === 'index.html' && hash && ['#capstone-projects', '#school-projects', '#cad-drawings', '#research', '#portfolio'].includes(hash) && target === 'index.html#portfolio') {
+    } else if (page === 'index.html' && hash && ['#personal-projects', '#capstone-projects', '#school-projects', '#cad-projects', '#research', '#portfolio'].includes(hash) && target === 'index.html#portfolio') {
   isActive = true;
 }
 
