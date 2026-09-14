@@ -914,10 +914,59 @@
   cursor:pointer;
   display:block;
 }
+
+    .collection-intro {
+      margin: 0 8px 24px;
+      padding: 22px 24px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(15,39,71,.98), rgba(24,55,97,.94));
+      color: #fff;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .collection-intro h4 {
+      margin: 0 0 6px;
+      font-size: 1.35rem;
+      color: #fff;
+    }
+
+    .collection-kicker {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: .8rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .collection-intro p {
+      margin: 0;
+      max-width: 78ch;
+      color: rgba(255,255,255,.86);
+    }
+
 footer a:hover .fa-linkedin{
     color:#0A66C2;    /* LinkedIn blue */
     transform: translateY(-1px);
 }
+
+  
+    /* Keep portrait demo media compact and readable inside project cards. */
+    .mecanum-demo-video {
+      height: 300px;
+      object-fit: contain;
+      object-position: center;
+      background: #050b0f;
+      border-radius: 18px;
+    }
+
+    @media (max-width: 700px) {
+      .mecanum-demo-video {
+        height: 260px;
+      }
+    }
 
   </style>
 </head>
@@ -1001,6 +1050,15 @@ Experienced in client-driven design, system integration, and iterative testing t
         <h3 class="w3-center w3-xlarge">Personal Projects</h3>
         <hr style="width:60px; margin:auto; margin-bottom:40px;">
 
+
+        <div class="collection-intro">
+          <span class="collection-kicker">Connected Products Collection</span>
+          <h4>Mid-Century Modern × Embedded Electronics</h4>
+          <p>
+            A growing collection of connected desktop products that pair modern embedded electronics and software with a cohesive mid-century-inspired design language. The goal of each project is to package functional development hardware into a finished product that feels intentional, accessible, and at home in a shared living space.
+          </p>
+        </div>
+
         <!-- Personal Project: Radar Vision -->
         <div class="w3-row-padding w3-margin-bottom">
           <div class="w3-col m6">
@@ -1034,7 +1092,7 @@ Experienced in client-driven design, system integration, and iterative testing t
           </div>
 
           <div class="w3-col m6">
-            <h4>Personal Project — Radar Vision</h4>
+            <h4>Connected Product — Radar Vision</h4>
             <p>
               Designed and fabricated a custom mid-century modern-inspired enclosure for an open-source ESP32 aircraft radar project. The project involved CAD design, 3D printing, soldering and wiring electronics, hardware integration, software configuration, and final assembly to create a polished desktop display.
             </p>
@@ -1076,44 +1134,142 @@ This project required integrating the display, controls, and electronics into a 
             </div>
           </div>
         </div>
-      
+
+
+        <!-- Connected Product: Spotify Jukebox -->
+        <div class="w3-row-padding w3-margin-bottom">
+          <div class="w3-col m6">
+            <img src="SPOTIFY_JUKEBOX_FRONT.jpeg"
+                 alt="Spotify Jukebox front view with active music interface"
+                 class="radar-hero"
+                 onclick="openLightbox(this)">
+
+            <div class="radar-gallery">
+              <img src="SPOTIFY_JUKEBOX_STATUS.jpeg"
+                   class="gallery-thumb"
+                   onclick="openLightbox(this)"
+                   alt="Spotify Jukebox system status screen">
+
+              <img src="SPOTIFY_JUKEBOX_REAR.jpeg"
+                   class="gallery-thumb"
+                   onclick="openLightbox(this)"
+                   alt="Spotify Jukebox rear enclosure and ventilation">
+
+            </div>
+
+            <video class="radar-video" controls muted loop playsinline preload="metadata"
+                   style="object-fit:cover; object-position:center; background:#050b0f;">
+              <source src="SPOTIFY_JUKEBOX_DEMO.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+
+            <p style="text-align:center; font-style:italic; margin-top:12px;">
+              Mid-century-inspired ESP32 touchscreen controller for shared Spotify playback
+            </p>
+          </div>
+
+          <div class="w3-col m6">
+            <h4>Connected Product — Spotify Jukebox</h4>
+            <p>
+              Designed and built a tabletop Spotify controller around a CYD ESP32 touchscreen display. The device connects to my Spotify account and provides a persistent view of the current track along with direct controls for play/pause, next track, and previous track. I created it as a more convenient shared-room interface so a group can quickly see what is playing or control playback without repeatedly passing around or unlocking a phone.
+            </p>
+            <p>
+              I developed the enclosure to visually complement my Radar Vision project, using a jukebox-inspired form and the same mid-century-modern design direction to create a small family of connected products. The enclosure integrates the touchscreen, speaker opening, decorative trim, rear ventilation, and a removable stylus that stores directly on the front of the product when not in use.
+            </p>
+
+            <div class="tools-used">
+              <strong>Tools & Skills Used:</strong><br>
+              <span class="tool-tag">CAD</span>
+              <span class="tool-tag">3D Printing</span>
+              <span class="tool-tag">ESP32</span>
+              <span class="tool-tag">Touchscreen UI</span>
+              <span class="tool-tag">Spotify Integration</span>
+              <span class="tool-tag">Embedded Systems</span>
+              <span class="tool-tag">Product Design</span>
+              <span class="tool-tag">Hardware Integration</span>
+            </div>
+
+            <div class="capstone-subsection">
+              <button class="cap-accordion" onclick="toggleCap('jukeboxTab1', this)">
+                <span><i class="fa fa-cube"></i> Product Design & Enclosure</span>
+                <i class="fa fa-chevron-down cap-acc-arrow"></i>
+              </button>
+
+              <div id="jukeboxTab1" class="cap-panel">
+                <p>
+                  The enclosure was designed as a companion piece to Radar Vision, carrying the same retro product-design language into a jukebox-inspired form. The housing organizes the touchscreen, front details, speaker opening, rear ventilation, cable access, and internal electronics while maintaining a finished consumer-product appearance. A removable stylus is integrated into the front of the enclosure so it remains accessible without becoming a separate loose accessory.
+                </p>
+              </div>
+
+              <button class="cap-accordion" onclick="toggleCap('jukeboxTab2', this)">
+                <span><i class="fa fa-music"></i> Spotify Control & Touchscreen Interface</span>
+                <i class="fa fa-chevron-down cap-acc-arrow"></i>
+              </button>
+
+              <div id="jukeboxTab2" class="cap-panel">
+                <p>
+                  A CYD ESP32 touchscreen connects to my Spotify account and serves as the dedicated control interface. When playback is active, the display shows the current music information and provides direct controls to pause or resume playback, advance to the next song, or return to the previous song. This turns a phone-based streaming service into a persistent physical interface that is easier to use in a shared setting.
+                </p>
+              </div>
+
+              <button class="cap-accordion" onclick="toggleCap('jukeboxTab3', this)">
+                <span><i class="fa fa-users"></i> User Experience & System Integration</span>
+                <i class="fa fa-chevron-down cap-acc-arrow"></i>
+              </button>
+
+              <div id="jukeboxTab3" class="cap-panel">
+                <p>
+                  The project was motivated by a simple usability problem: when music is playing for a group, checking the current song or changing playback through a personal phone can interrupt the experience. The jukebox creates a visible, dedicated interaction point for the room. Integrating the ESP32 display into a purpose-built enclosure helped turn the electronics and software into a more approachable physical product rather than a standalone development board.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
 <!-- Personal Project: Idea Printer -->
 <div class="w3-row-padding w3-margin-bottom">
 
   <div class="w3-col m6">
-  <img src="IMG_4794.jpeg"
-       alt="Idea Printer front view"
-       class="radar-hero"
-       onclick="openLightbox(this)">
+    <img src="IMG_4794.jpeg"
+         alt="Idea Printer front view"
+         class="radar-hero"
+         onclick="openLightbox(this)">
 
-  <div class="radar-gallery">
-    <img src="IMG_4795.jpeg"
-         class="gallery-thumb"
-         onclick="openLightbox(this)"
-         alt="Idea Printer side view">
+    <div class="radar-gallery">
+      <img src="IMG_4795.jpeg"
+           class="gallery-thumb"
+           onclick="openLightbox(this)"
+           alt="Idea Printer side view">
 
-    <img src="IMG_4796.jpeg"
-         class="gallery-thumb"
-         onclick="openLightbox(this)"
-         alt="Idea Printer internal view">
+      <img src="IMG_4796.jpeg"
+           class="gallery-thumb"
+           onclick="openLightbox(this)"
+           alt="Idea Printer internal view">
+    </div>
+
+    <div class="radar-gallery" style="margin-top:14px;">
+      <img src="IMG_4801.jpeg"
+           class="gallery-thumb"
+           onclick="openLightbox(this)"
+           alt="Printed idea receipt">
+
+      <!-- Replace this filename with your reminder receipt image when ready -->
+      <img src="REMINDER_RECEIPT.jpeg"
+           class="gallery-thumb"
+           onclick="openLightbox(this)"
+           alt="Printed reminder receipt">
+    </div>
+
+    <p style="text-align:center; font-style:italic; margin-top:12px;">
+      One custom thermal-printer platform supporting both idea capture and reminder generation
+    </p>
   </div>
 
-  <img src="IMG_4801.jpeg"
-       alt="Printed idea receipt"
-       class="radar-video"
-       onclick="openLightbox(this)"
-       style="object-fit:cover; background:white;">
-
-  <p style="text-align:center; font-style:italic; margin-top:12px;">
-    Cloud-connected desktop idea printer
-  </p>
-</div>
-
   <div class="w3-col m6">
-    <h4>Personal Project — Idea Printer</h4>
+    <h4>Personal Project — Idea & Reminder Printer</h4>
 
     <p>
-      Designed and built a custom desktop idea printer that turns text messages into physical reminder notes. By integrating a Telegram bot with a cloud automation workflow, ideas can be submitted from anywhere and automatically printed as receipt-sized notes to pin on an idea board.
+      Designed and built a custom desktop thermal-printer system that converts Telegram messages into physical receipt-sized notes. The same apparatus supports two separate workflows: an idea printer for capturing spontaneous thoughts and a reminder generator that prints actionable reminders through a different Telegram bot and automation setup.
     </p>
 
     <div class="tools-used">
@@ -1124,6 +1280,9 @@ This project required integrating the display, controls, and electronics into a 
       <span class="tool-tag">Automation</span>
       <span class="tool-tag">API Integration</span>
       <span class="tool-tag">Hardware Integration</span>
+      <span class="tool-tag">Soldering & Wiring</span>
+      <span class="tool-tag">Electrical Troubleshooting</span>
+      <span class="tool-tag">Multimeter Testing</span>
       <span class="tool-tag">Product Design</span>
     </div>
 
@@ -1135,34 +1294,153 @@ This project required integrating the display, controls, and electronics into a 
 
       <div id="printerTab1" class="cap-panel">
         <p>
-          The enclosure was designed to turn a standard thermal receipt printer into a compact desktop appliance. The housing provides access to the paper slot, controls, and power while giving the printer a cleaner finished appearance. The design was optimized for 3D printing and practical assembly.
+          The enclosure was designed to turn a standard thermal receipt printer into a compact desktop appliance. The housing provides access to the paper slot, controls, and power while giving the printer a cleaner finished appearance. The design was optimized for 3D printing, practical assembly, and reuse across multiple software workflows.
         </p>
       </div>
 
       <button class="cap-accordion" onclick="toggleCap('printerTab2', this)">
-        <span><i class="fa fa-code"></i> Software & Automation</span>
+        <span><i class="fa fa-lightbulb-o"></i> Idea Printer Workflow</span>
         <i class="fa fa-chevron-down cap-acc-arrow"></i>
       </button>
 
       <div id="printerTab2" class="cap-panel">
         <p>
-          A Telegram bot receives ideas from my phone and sends them through an automation workflow to the receipt printer at home. This allows quick ideas to be captured from anywhere and turned into physical notes that can be saved, organized, or pinned to a board.
+          The idea-printer workflow uses a dedicated Telegram bot to receive short thoughts from my phone and route them through a cloud automation process to the printer at home. This lets ideas be captured immediately from anywhere and converted into physical notes that can be organized or pinned to an idea board.
         </p>
       </div>
 
       <button class="cap-accordion" onclick="toggleCap('printerTab3', this)">
-        <span><i class="fa fa-microchip"></i> Hardware Integration</span>
+        <span><i class="fa fa-bell"></i> Reminder Generator Workflow</span>
         <i class="fa fa-chevron-down cap-acc-arrow"></i>
       </button>
 
       <div id="printerTab3" class="cap-panel">
         <p>
-          The project integrates the thermal printer, custom enclosure, power connections, and cloud-connected messaging workflow into a functional desktop system. The final build demonstrates hardware packaging, system integration, automation, and practical product development.
+          A second, independently configured Telegram bot uses the same physical printer as a reminder generator. Messages sent through this workflow are processed separately from idea submissions and printed as physical reminder slips, allowing one piece of hardware to serve two distinct personal-productivity functions.
+        </p>
+      </div>
+
+      <button class="cap-accordion" onclick="toggleCap('printerTab4', this)">
+        <span><i class="fa fa-microchip"></i> Hardware & System Integration</span>
+        <i class="fa fa-chevron-down cap-acc-arrow"></i>
+      </button>
+
+      <div id="printerTab4" class="cap-panel">
+        <p>
+          Both workflows share the same thermal printer, custom enclosure, power connections, and physical output system while remaining separate at the bot and automation level. The completed platform demonstrates hardware packaging, system integration, cloud automation, workflow design, and practical product development.
         </p>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Personal Project: 4-Wheel Mecanum Robot -->
+<div class="w3-row-padding w3-margin-bottom">
+  <div class="w3-col m6">
+    <!-- Replace these filenames with your robot photos/video when ready -->
+    <img src="MECANUM_ROBOT_FRONT.jpeg"
+         alt="Four-wheel mecanum robot with custom character-inspired upper enclosure"
+         class="radar-hero"
+         onclick="openLightbox(this)">
+
+    <div class="radar-gallery">
+      <img src="MECANUM_ROBOT_REAR.jpeg"
+           class="gallery-thumb"
+           onclick="openLightbox(this)"
+           alt="Mecanum robot side view">
+
+      <img src="MECANUM_ROBOT_ELECTRONICS_1.jpeg"
+           class="gallery-thumb"
+           onclick="openLightbox(this)"
+           alt="Mecanum robot chassis and electronics">
+      <img src="MECANUM_ROBOT_ELECTRONICS_2.jpeg"
+           class="gallery-thumb"
+           onclick="openLightbox(this)"
+           alt="Mecanum robot electronics and wiring with enclosure removed">
+    </div>
+
+    <img src="Screenshot 2026-09-08 210205.png"
+         alt="Mr. Roboto Wi-Fi control hub and mecanum robot controller"
+         class="radar-video"
+         onclick="openLightbox(this)"
+         style="object-fit:cover; object-position:center; background:#050b0f;">
+
+    <video class="radar-video mecanum-demo-video" controls muted loop playsinline preload="metadata">
+      <source src="MECANUM_ROBOT_DEMO.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+
+    <p style="text-align:center; font-style:italic; margin-top:12px;">
+      Forum-inspired mecanum platform with my custom upper enclosure and Wi-Fi control hub
+    </p>
+  </div>
+
+  <div class="w3-col m6">
+    <h4>Personal Project — 4-Wheel Mecanum Robot</h4>
+
+    <p>
+      After finding a four-wheel mecanum robot build on an online forum, I used the project as the foundation for my own build. The underlying chassis, drivetrain concept, and core robot design came from that forum project; my main mechanical design contribution was the custom 3D-printed upper enclosure. I designed the top of the robot to give the finished platform a playful, one-eyed character-inspired appearance while packaging it around the existing mecanum hardware without interfering with wheel movement or access to the electronics.
+    </p>
+
+    <p>
+      I also developed a browser-based Wi-Fi control interface called <strong>Mr. Roboto</strong>. When the robot is powered from its batteries, the user can connect to the robot over Wi-Fi and open the Mr. Roboto page to control movement and view robot information. I designed the page as more than a single-robot controller: its home-page structure is intended to support multiple robots, allowing it to function as a centralized remote-control hub for additional Wi-Fi-connected projects.
+    </p>
+
+    <div class="tools-used">
+      <strong>Tools & Skills Used:</strong><br>
+      <span class="tool-tag">CAD</span>
+      <span class="tool-tag">3D Printing</span>
+      <span class="tool-tag">Mecanum Drive</span>
+      <span class="tool-tag">Robotics</span>
+      <span class="tool-tag">Soldering & Wiring</span>
+      <span class="tool-tag">Multimeter Testing</span>
+      <span class="tool-tag">Electrical Troubleshooting</span>
+      <span class="tool-tag">Wi-Fi Control</span>
+      <span class="tool-tag">Web Interface Design</span>
+      <span class="tool-tag">Hardware Integration</span>
+    </div>
+
+    <div class="capstone-subsection">
+      <button class="cap-accordion" onclick="toggleCap('mecanumTab1', this)">
+        <span><i class="fa fa-cube"></i> My Design Contribution — Upper Enclosure</span>
+        <i class="fa fa-chevron-down cap-acc-arrow"></i>
+      </button>
+
+      <div id="mecanumTab1" class="cap-panel">
+        <p>
+          I did not design the complete mecanum robot from scratch. The base robot and drivetrain were based on the online forum build that inspired the project. My mechanical design work focused on the upper enclosure: I modeled a custom body that fit over the existing chassis while maintaining wheel clearance, access to components, and practical mounting points. The enclosure was then 3D printed and integrated with the forum-based platform to create a more finished and recognizable product-style appearance.
+        </p>
+      </div>
+
+      <button class="cap-accordion" onclick="toggleCap('mecanumTab2', this)">
+        <span><i class="fa fa-wifi"></i> Mr. Roboto — Wi-Fi Remote Hub</span>
+        <i class="fa fa-chevron-down cap-acc-arrow"></i>
+      </button>
+
+      <div id="mecanumTab2" class="cap-panel">
+        <p>
+          To make the robot easier to operate, I designed a web-based controller called <strong>Mr. Roboto</strong>. With the batteries connected and the robot powered on, the robot provides a Wi-Fi connection that allows the user to access the control page from another device. The interface includes movement and rotation controls, speed adjustment, operating modes, a stop control, and telemetry-style information.
+        </p>
+        <p>
+          I structured Mr. Roboto as a home page rather than a controller tied permanently to one machine. The concept allows multiple compatible robots to be represented from the same interface, turning the page into a reusable remote hub for future Wi-Fi-controlled robotics projects.
+        </p>
+      </div>
+
+      <button class="cap-accordion" onclick="toggleCap('mecanumTab3', this)">
+        <span><i class="fa fa-wrench"></i> Soldering, Debugging & Integration</span>
+        <i class="fa fa-chevron-down cap-acc-arrow"></i>
+      </button>
+
+      <div id="mecanumTab3" class="cap-panel">
+        <p>
+          This was one of my first larger soldering projects, so the initial wiring and solder joints were not especially clean and I encountered several electrical issues during assembly. Rather than replacing the system or abandoning the build, I worked through the problems using trial and error, continuity checks, and voltage measurements with a multimeter. That process helped me locate poor connections, correct faulty solder joints, and verify the wiring until the robot operated reliably.
+        </p>
+        <p>
+          The project became valuable hands-on practice in soldering, electrical troubleshooting, hardware integration, and systematic debugging. It also reinforced the importance of testing individual connections and subsystems instead of treating the finished assembly as a single black box when something goes wrong.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
       <!-- CAPSTONE PROJECTS -->
